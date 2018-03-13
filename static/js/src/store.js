@@ -9,7 +9,10 @@ const store = new Vuex.Store({
     state: {
         geneInput: [],
         listName: '',
-        subnetwork: {}
+        subnetwork: {
+            nodes: [],
+            links: []
+        }
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {

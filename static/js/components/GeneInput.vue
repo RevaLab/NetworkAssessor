@@ -33,6 +33,7 @@
                     'getSubnetwork',
                     this.geneList
                 )
+                this.$router.push('/network')
             }
         }
     }
