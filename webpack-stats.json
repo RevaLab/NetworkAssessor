@@ -1,1 +1,1 @@
-{"status":"done","chunks":{"main":[{"name":"app.js","path":"/Users/anna/PycharmProjects/go_server_sinai/static/bundles/app.js"}]}}
+{"status":"done","chunks":{"main":[{"name":"app.js","path":"/Users/anna/PycharmProjects/go_server_sinai/static/bundles/app.js"}]},"error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve '../src/store.js' in '/Users/anna/PycharmProjects/go_server_sinai/static/js'"}

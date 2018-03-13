@@ -4,6 +4,8 @@
   "description": "GO Server",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
+    "build:watch": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -32,6 +34,7 @@
     "babel-loader": "^7.1.4",
     "vue-resource": "^1.5.0",
     "vue-template-compiler": "^2.5.15",
+    "vuex": "^3.0.1",
     "webpack-bundle-tracker": "^0.3.0"
   }
 }
