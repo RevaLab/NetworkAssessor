@@ -19,7 +19,7 @@ const store = new Vuex.Store({
             console.log(geneInput);
             geneInput = geneInput.split('\n').join('_n_');
             api.get(
-                '/backend/'
+                `/api/subnetwork/${geneInput}`
             ).then(
                 response => {
                     console.log(response);

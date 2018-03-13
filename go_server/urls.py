@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     path('backend/', include('backend.urls')),
+    path('api/subnetwork/', include('Subnetwork.urls'))
 ]
