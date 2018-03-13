@@ -1,5 +1,6 @@
 <template>
     <div class="Demo">
+            <h3>WHATTUP</h3>
         <input v-model="message" placeholder="edit me">
         <p>Message is: {{ message }}</p>
 

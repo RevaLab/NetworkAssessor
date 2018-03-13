@@ -25,7 +25,7 @@ SECRET_KEY = 'od@knq)8%_^u*v1lu+c_kj*)1ldx4)l%*-89o8x@uy3bw=%+$1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['calina01.pythonanywhere.com']
+ALLOWED_HOSTS = ['calina01.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
