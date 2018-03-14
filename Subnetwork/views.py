@@ -14,3 +14,7 @@ def index(request, gene_list):
     for node in json_sub['nodes']:
         node['queryList'] = True
     return JsonResponse(json_sub)
+
+
+def pathways(request, pathway_list):
+    biogrid = pickle.load(open('static/biogrid.pkl', 'rb'))
