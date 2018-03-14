@@ -1,11 +1,10 @@
 <template>
     <div class="network-controls">
-        <div class="form__field">
             <div class="form__checkbox">
                 <input type="checkbox" id="checkbox" v-model="checked">
                 <label for="checkbox">{{ pathwayName }}</label>
             </div>
-            <div class="form__input">
+            <div class="color-selector">
                 <swatches v-model="color" />
           </div>
         </div>
@@ -64,6 +63,13 @@
     }
 </script>
 
-<style scoped>
+<style>
+.network-controls {
+    display: flex;
+}
+
+.color-selector {
+    margin-left: 5px;
+}
 
 </style>

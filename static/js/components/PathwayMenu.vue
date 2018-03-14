@@ -28,7 +28,6 @@
                     'TGF-B_Signaling_path', 'TGFB_ext_path', 'WNT_ext_path',
                     'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path']
                 // pathways will eventually be an obj of pathway: genes, default_color
-
             }
         },
         components: {
@@ -37,6 +36,10 @@
     }
 </script>
 
-<style scoped>
+<style>
+.li {
+    display: flex;
+}
+
 
 </style>

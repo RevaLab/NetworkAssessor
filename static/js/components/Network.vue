@@ -1,6 +1,5 @@
 <template>
     <div class="network">
-        <h1>Network component</h1>
         <div v-if="subnetwork">
             <div id="d3-el"></div>
         </div>
@@ -49,8 +48,8 @@
 
         graph.links = edges;
 
-        let w = 1000;
-        let h = 1000;
+        let w = window.innerWidth;
+        let h = window.innerHeight;
 
         // let keyc = true, keys = true, keyt = true, keyr = true, keyx = true, keyd = true, keyl = true, keym = true,
         //     keyh = true, key1 = true, key2 = true, key3 = true, key0 = true
