@@ -4,3 +4,4 @@ db.sqlite3
 .idea
 venv/
 **/__pycache__/
+webpack-stats.json
