@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     state: {
         geneInput: [],
         listName: '',
-        selectedPathways: [],
+        selectedPathways: ['query-list'],
         subnetwork: {
             nodes: [],
             links: []

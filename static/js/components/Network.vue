@@ -21,7 +21,8 @@
         },
         watch: {
             subnetwork() {
-                run_d3(this.$store.state.subnetwork)
+                let selectedPathways = this.$store.state.selectedPathways
+                run_d3(this.$store.state.subnetwork, selectedPathways)
             }
         },
         updated() {
@@ -36,7 +37,7 @@
         }
     }
 
-    function run_d3(graph) {
+    function run_d3(graph, selectedPathways) {
         // clear previous svg
         let d3_node = document.querySelector('#d3-el');
         while (d3_node.firstChild) {
@@ -83,7 +84,7 @@
         let default_node_color = "#ccc";
         let default_link_color = "#b0b0b0";
         let nominal_base_node_size = 8;
-        let nominal_text_size = 10;
+        let nominal_text_size = 20;
         let max_text_size = 24;
         let nominal_stroke = 1.5;
         let max_stroke = 4.5;
@@ -163,7 +164,26 @@
                     return Math.PI * Math.pow(nominal_base_node_size, 2);
                 })
                 .type(function (d) {
-                    return "circle";
+                    let commonPathways = [];
+
+                    // checks if the gene's pathways are also in the selected pathways
+                    if (d['pathways']) {
+                        commonPathways = d['pathways'].filter(function(e) {
+                          return selectedPathways.indexOf(e) > -1;
+                        });
+                    }
+
+                    if (d['queryList'] && commonPathways.length) {
+                        d["type"] = "cross";
+                        return "cross"
+                    }
+
+                    if (d['queryList']) {
+                        d["type"] = "square";
+                        return "square";
+                    }
+
+                    return "circle"
                 }))
             .attr("class", function(d) {
                 let classes = '';
@@ -178,7 +198,6 @@
 
                 return classes;
             })
-
             .style(tocolor, function (d) {
                 return default_node_color;
             })
