@@ -145,6 +145,11 @@
                 .type(function (d) {
                     return "circle";
                 }))
+            .attr("class", function(d) {
+                if (d["queryList"]) {
+                    return 'queryList'
+                }
+            })
 
             .style(tocolor, function (d) {
                 return default_node_color;
@@ -180,7 +185,7 @@
                 function (d) {
                     d3.event.stopPropagation();
                     focus_node = d;
-                    set_focus(d);
+
                     if (highlight_node === null) {
                         set_highlight(d)
                     }
