@@ -235,6 +235,7 @@
             .on("mousedown",
                 function (d) {
                     d3.event.stopPropagation();
+                    // force.stop();
                     focus_node = d;
                     set_focus(d);
                     if (highlight_node === null) {
@@ -356,7 +357,7 @@
         resize();
 
         d3.select(window).on("resize", resize)
-            // .on("keydown", keydown);
+            .on("keydown", keydown);
 
         force.on("tick", function () {
             node.attr("transform", function (d) {
@@ -387,10 +388,17 @@
                 });
         });
 
+        force.on("end", function () {
+            svg.classed('hidden', false);
+            for (let i = 0; i < graph.nodes.length; i ++ ) {
+                graph.nodes[i]['fixed'] = true;
+                console.log(graph.nodes[i])
+            }
+        });
         function resize() {
             const width = window.innerWidth;
             const height = window.innerHeight;
-            svg.attr("width", width).attr("height", height);
+            svg.attr("width", width).attr("height", height).attr("class", "hidden");
 
             force.size([force.size()[0] + (width - w) / zoom.scale(), force.size()[1] + (height - h) / zoom.scale()]).resume();
             w = width;
@@ -405,10 +413,12 @@
           d3.select(this).classed("fixed", d.fixed = true);
         }
 
-        // function keydown() {
-        //     if (d3.event.keyCode == 32) {
-        //         force.stop();
-        //     }
+        function keydown() {
+            if (d3.event.keyCode == 32) {
+                d3.event.preventDefault();
+                force.stop();
+
+            }
         //     else if (d3.event.keyCode >= 48 && d3.event.keyCode <= 90 && !d3.event.ctrlKey && !d3.event.altKey && !d3.event.metaKey) {
         //         switch (String.fromCharCode(d3.event.keyCode)) {
         //             case "C": keyc = !keyc; break;
@@ -447,7 +457,7 @@
         //             set_highlight(highlight_node);
         //         } else { exit_highlight(); }
         //     }
-        // }
+        }
     }
 
 
@@ -463,5 +473,9 @@
     .link {
         stroke: #777;
         stroke-width: 2px;
+    }
+
+    .hidden {
+        visibility: hidden
     }
 </style>

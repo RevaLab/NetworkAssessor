@@ -1,7 +1,9 @@
 <template>
     <div class="network-container">
         <pathway-menu />
-        <network />
+        <div id="network-visualization">
+            <network />
+        </div>
     </div>
 </template>
 
