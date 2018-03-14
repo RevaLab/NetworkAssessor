@@ -129,7 +129,16 @@
             .links(graph.links)
             .start();
 
-        for (var i = 0; i < 100; ++i) force.tick();
+        for (var i = 0; i < 300; ++i) {
+            if (i === 290) {
+                for (let i = 0; i < graph.nodes.length; i ++ ) {
+                    graph.nodes[i]['fixed'] = true;
+                    console.log(graph.nodes[i])
+                }
+            }
+            force.tick();
+        }
+
         force.stop();
 
         const link = g.selectAll(".link")
