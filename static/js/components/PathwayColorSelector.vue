@@ -5,14 +5,23 @@
                 <label for="checkbox">{{ pathwayName }}</label>
             </div>
             <div class="color-selector">
-                <swatches
-                        v-model="color"
-                        colors="text-advanced"
-                        popover-to="right"
-                        shapes="circles"
-                />
+                <div v-if="queryList">
+                    <swatches
+                            v-model="color"
+                            colors="text-advanced"
+                            popover-to="right"
+                            shapes="squares"
+                    />
+                </div>
+                <div v-else>
+                    <swatches
+                            v-model="color"
+                            colors="text-advanced"
+                            popover-to="right"
+                            shapes="circles"
+                    />
+                </div>
           </div>
-        </div>
     </div>
 </template>
 
@@ -29,7 +38,7 @@
         },
         props: ['pathwayName'],
         computed: {
-          color: {
+            color: {
               get() {
                   return this.$store.state.pathwayColors[this.pathwayName]
               },
@@ -41,7 +50,10 @@
 
                   this.$store.dispatch('updatePathwayColors', pathway_color_data)
               }
-          }
+            },
+            queryList () {
+                return this.pathwayName === 'query-list'
+            }
         },
         watch: {
             checked: 'visualizePathway',

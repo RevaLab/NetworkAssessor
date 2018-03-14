@@ -81,9 +81,13 @@
             .charge(-2000)
             .size([w, h]);
 
+        let drag = force.drag()
+            .on("dragstart", dragstart);
+
+
         let default_node_color = "#ccc";
         let default_link_color = "#b0b0b0";
-        let nominal_base_node_size = 8;
+        let nominal_base_node_size = 20;
         let nominal_text_size = 20;
         let max_text_size = 24;
         let nominal_stroke = 1.5;
@@ -137,8 +141,8 @@
             .data(graph.nodes)
             .enter().append("g")
             .attr("class", "node")
-
-            .call(force.drag);
+            .call(drag);
+            // .call(force.drag);
 
         node.on(
             "dblclick.zoom",
@@ -232,14 +236,15 @@
                 function (d) {
                     d3.event.stopPropagation();
                     focus_node = d;
-
+                    set_focus(d);
                     if (highlight_node === null) {
                         set_highlight(d)
                     }
                 })
             .on("mouseout", function (d) {
                 exit_highlight();
-            });
+            })
+            .on("dblclick", dblclick);
 
         d3.select(window).on("mouseup",
             function () {
@@ -273,6 +278,26 @@
             }
         }
 
+        function set_focus(d)
+        {
+            if (highlight_trans<1)  {
+                circle.style("opacity", function(o) {
+                            if (isConnected(d, o)) {
+                                console.log(o)
+                                console.log(d)
+                            }
+                            return isConnected(d, o) ? 1 : highlight_trans;
+                        });
+
+                        text.style("opacity", function(o) {
+                            return isConnected(d, o) ? 1 : highlight_trans;
+                        });
+
+                        link.style("opacity", function(o) {
+                            return o.source.index === d.index || o.target.index === d.index ? 1 : highlight_trans;
+                        });
+                }
+        }
 
         function set_highlight(d) {
             svg.style("cursor", "pointer");
@@ -372,6 +397,14 @@
             h = height;
         }
 
+        function dblclick(d) {
+          d3.select(this).classed("fixed", d.fixed = false);
+        }
+
+        function dragstart(d) {
+          d3.select(this).classed("fixed", d.fixed = true);
+        }
+
         // function keydown() {
         //     if (d3.event.keyCode == 32) {
         //         force.stop();
@@ -415,8 +448,6 @@
         //         } else { exit_highlight(); }
         //     }
         // }
-
-
     }
 
 
