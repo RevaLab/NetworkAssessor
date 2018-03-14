@@ -1,19 +1,19 @@
 <template>
     <div class="network-container">
-        <pathway-color-selector />
+        <pathway-menu />
         <network />
     </div>
 </template>
 
 <script>
     import Network from './Network.vue'
-    import PathwayColorSelector from './PathwayColorSelector.vue'
+    import PathwayMenu from './PathwayMenu.vue'
 
     export default {
         name: "network-container",
         components: {
             Network,
-            PathwayColorSelector
+            PathwayMenu
         }
     }
 </script>

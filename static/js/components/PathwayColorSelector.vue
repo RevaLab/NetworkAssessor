@@ -23,9 +23,9 @@
             return {
                 color: '',
                 checked: false,
-                pathwayName: 'Query List'
             }
         },
+        props: ['pathwayName'],
         watch: {
             checked: 'visualizePathway',
             color: 'updateColor'

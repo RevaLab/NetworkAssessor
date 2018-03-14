@@ -29,10 +29,26 @@ const store = new Vuex.Store({
         getSubnetwork(store, geneInput) {
             const geneInputArr = geneInput.split('\n');
             geneInput = geneInputArr.join('_n_');
-            store.commit('ADD_GENE_INPUT', geneInputArr)
+            store.commit('ADD_GENE_INPUT', geneInputArr);
             api
                 .get(
-                    `/api/subnetwork/${geneInput}`
+                    `/api/subnetwork/submit_genes/${geneInput}`
+                )
+                .then(
+                    response => {
+                        store.commit('ADD_SUBNETWORK', response.body)
+                    }
+                )
+                .catch(
+                    error => {
+                        store.commit('API_FAIL', error)
+                    }
+                )
+        },
+        getPathwaySubnetwork(store, queryGenesPathwayData) {
+            api
+                .get(
+                    `api/subnetwork/select_pathways/${queryGenesPathwayData}`
                 )
                 .then(
                     response => {
