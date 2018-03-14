@@ -1,7 +1,7 @@
 <template>
     <div class="network">
         <h1>Network component</h1>
-        <div v-if="isReady">
+        <div v-if="subnetwork">
             <div id="d3-el"></div>
         </div>
         <div v-else>Loading...</div>
@@ -12,17 +12,28 @@
     export default {
         name: "network",
         data() {
-            return {}
+            return {
+            }
         },
         computed: {
-            isReady() { return this.$store.state.subnetwork }
+            subnetwork() {
+                return this.$store.state.subnetwork
+            }
         },
         watch: {
-            isReady() { run_d3(this.$store.state.subnetwork) }
+            subnetwork() {
+                run_d3(this.$store.state.subnetwork)
+            }
         },
     }
 
     function run_d3(graph) {
+        // clear previous svg
+        let d3_node = document.querySelector('#d3-el');
+        while (d3_node.firstChild) {
+            d3_node.removeChild(d3_node.firstChild);
+        }
+
         const edges = [];
 
         graph.links.forEach(function (e) {
@@ -117,7 +128,7 @@
             .enter().append("g")
             .attr("class", "node")
 
-            .call(force.drag)
+            .call(force.drag);
 
         node.on(
             "dblclick.zoom",
@@ -146,9 +157,17 @@
                     return "circle";
                 }))
             .attr("class", function(d) {
-                if (d["queryList"]) {
-                    return 'query-list'
+                let classes = '';
+
+                if (d["queryList"] ) {
+                    classes += 'query-list '
                 }
+
+                if (d["pathways"]) {
+                    classes += d["pathways"].join(" ")
+                }
+
+                return classes;
             })
 
             .style(tocolor, function (d) {

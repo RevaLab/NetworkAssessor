@@ -34,26 +34,27 @@
         },
         methods: {
             visualizePathway() {
-                const selectedPathways = this.$store.state.selectedPathways.concat([this.pathwayName]);
+                let selectedPathways = this.$store.state.selectedPathways;
                 const queryGenes = this.$store.state.geneInput;
 
                 if (this.checked) {
-                    const queryGenesPathwayData = {
-                        pathways: selectedPathways,
-                        queryGenes
-                    };
-                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
-                    this.$store.dispatch('addPathway', this.pathwayName);
+                    selectedPathways = selectedPathways.concat([this.pathwayName]);
                 } else {
-                    console.log('unchecked')
-
-                    // this.$store.dispatch('removePathway', this.pathwayName)
+                    let pw_index = selectedPathways.indexOf(this.pathwayName);
+                    selectedPathways = selectedPathways.splice(1, pw_index);
                 }
+
+                const queryGenesPathwayData = {
+                    pathways: selectedPathways,
+                    queryGenes: queryGenes
+                };
+
+                this.$store.dispatch('updateSelectedPathways', selectedPathways);
+                this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
             },
             updateColor() {
                 if (this.checked) {
-                    const nodes = document.querySelectorAll('.query-list');
-                    // querySelectorAll(.pathwayName)
+                    const nodes = document.querySelectorAll(`.${this.pathwayName}`);
                     nodes.forEach(node => {
                         node.style.fill = this.color;
                     });

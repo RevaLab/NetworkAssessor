@@ -19,20 +19,17 @@ const store = new Vuex.Store({
         'ADD_GENE_INPUT' (state, geneInput) {
             state.geneInput = geneInput
         },
-        'ADD_PATHWAY' (state, pathway) {
-            state.selectedPathways.push(pathway)
-        },
         'ADD_SUBNETWORK' (state, subnetwork) {
             state.subnetwork = subnetwork;
         },
         'API_FAIL' (state, error) {
             console.error(error)
         },
+        'UPDATE_SELECTED_PATHWAYS' (state, selectedPathways) {
+            state.selectedPathways = selectedPathways
+        },
     },
     actions: {
-        addPathway(store, pathway) {
-          store.commit('ADD_PATHWAY', pathway)
-        },
         getSubnetwork(store, geneInput) {
             const geneInputArr = geneInput.split('\n');
             geneInput = geneInputArr.join('_n_');
@@ -61,6 +58,7 @@ const store = new Vuex.Store({
                 )
                 .then(
                     response => {
+                        console.log(response.body)
                         store.commit('ADD_SUBNETWORK', response.body)
                     }
                 )
@@ -69,6 +67,9 @@ const store = new Vuex.Store({
                         store.commit('API_FAIL', error)
                     }
                 )
+        },
+        updateSelectedPathways(store, selectedPathways) {
+            store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways)
         }
     },
 });

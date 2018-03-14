@@ -15,7 +15,7 @@
         name: "pathway-menu",
         data() {
             return {
-                pathways: ['AKT_ext_path', 'Apoptosis_path', 'Apoptosis_ext_path', 'CALC_PKC_ext_path',
+                pathways: ['query-list', 'AKT_ext_path', 'Apoptosis_path', 'Apoptosis_ext_path', 'CALC_PKC_ext_path',
                     'Cellular_Architecture_and_Microenvironment_path', 'Cell_Cycle_Control_path',
                     'Cell_Cycle_ext_path', 'Chromatin_Remodeling-DNA_Methylation_path',
                     'DNA_Damage_path', 'ERK_ext_path', 'G-Protein_Signaling_path',
