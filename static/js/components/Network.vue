@@ -127,6 +127,9 @@
             .links(graph.links)
             .start();
 
+        force.stop();
+        for (var i = 0; i < 800; ++i) force.tick();
+
         const link = g.selectAll(".link")
             .data(graph.links)
             .enter().append("line")
@@ -389,7 +392,7 @@
         });
 
         force.on("end", function () {
-            svg.classed('hidden', false);
+            // svg.classed('hidden', false);
             for (let i = 0; i < graph.nodes.length; i ++ ) {
                 graph.nodes[i]['fixed'] = true;
                 console.log(graph.nodes[i])
@@ -398,7 +401,8 @@
         function resize() {
             const width = window.innerWidth;
             const height = window.innerHeight;
-            svg.attr("width", width).attr("height", height).attr("class", "hidden");
+            svg.attr("width", width).attr("height", height)
+                // .attr("class", "hidden");
 
             force.size([force.size()[0] + (width - w) / zoom.scale(), force.size()[1] + (height - h) / zoom.scale()]).resume();
             w = width;

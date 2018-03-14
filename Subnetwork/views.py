@@ -27,7 +27,7 @@ def pathway_graph(request):
     # load important pathways
     # pull out genes in selected pathways
     # create subnetwork with those genes + query genes
-
+    print(data)
     # separate query genes and selected pathways
     query_genes = data['queryGenes']
     pathway_list = data['pathways']
@@ -46,13 +46,26 @@ def pathway_graph(request):
 
     node_list = list(set(node_list))
 
-    # create subgraph from node list
-    subgraph = nx.Graph(biogrid.subgraph(node_list))
-    subgraph.remove_nodes_from(list(nx.isolates(subgraph)))
-    json_sub = json_graph.node_link_data(subgraph)
+    # create subgraph from node list, including all pathway genes
+    whole_subgraph = nx.Graph(biogrid.subgraph(node_list))
+
+    query_list_neighbors = []
+
+    for gene in query_genes:
+        try:
+            query_list_neighbors += whole_subgraph.neighbors(gene)
+        except nx.exception.NetworkXError:
+            pass
+
+    # create subgraph from node list, including only pathway genes with a query gene neighbor
+    first_degree_sub = nx.Graph(whole_subgraph.subgraph(query_list_neighbors + query_genes))
+    first_degree_sub.remove_nodes_from(list(nx.isolates(first_degree_sub)))
+
+    json_sub = json_graph.node_link_data(first_degree_sub)
     for node in json_sub['nodes']:
         if node['id'] in query_genes:
             node['queryList'] = 1
         else:
             node['queryList'] = 0
+
     return JsonResponse(json_sub)
