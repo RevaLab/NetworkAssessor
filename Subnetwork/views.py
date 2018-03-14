@@ -22,7 +22,6 @@ def index(request, gene_list):
 def pathway_graph(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
     else:
         data = {}
     # load important pathways
@@ -32,7 +31,6 @@ def pathway_graph(request):
     # separate query genes and selected pathways
     query_genes = data['queryGenes']
     pathway_list = data['pathways']
-    print(query_genes)
 
     # load databases
     biogrid = pickle.load(open('static/biogrid.pkl', 'rb'))
@@ -53,8 +51,6 @@ def pathway_graph(request):
     json_sub = json_graph.node_link_data(subgraph)
     for node in json_sub['nodes']:
         if node['id'] in query_genes:
-            # print(node['id'])
-            # print(query_genes)
             node['queryList'] = 1
         else:
             node['queryList'] = 0
