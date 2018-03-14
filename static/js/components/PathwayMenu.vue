@@ -1,7 +1,7 @@
 <template>
     <div class="pathway-menu">
         <ul id="pathways-ul">
-            <li v-for="(pathway, index) in pathways">
+            <li v-for="pathway in pathways">
                 <pathway-color-selector v-bind:pathwayName="pathway"/>
             </li>
         </ul>
@@ -27,6 +27,7 @@
                     'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path', 'RNA_Splicing_path',
                     'TGF-B_Signaling_path', 'TGFB_ext_path', 'WNT_ext_path',
                     'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path']
+                // pathways will eventually be an obj of pathway: genes, default_color
 
             }
         },

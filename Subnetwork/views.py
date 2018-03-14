@@ -1,9 +1,11 @@
+import json
 import pickle
 import networkx as nx
 from networkx.readwrite import json_graph
 
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -16,15 +18,19 @@ def index(request, gene_list):
     return JsonResponse(json_sub)
 
 
-def pathway_graph(request, query_genes_pw_data):
+@csrf_exempt
+def pathway_graph(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode('utf-8'))
+    else:
+        data = {}
     # load important pathways
     # pull out genes in selected pathways
     # create subnetwork with those genes + query genes
 
     # separate query genes and selected pathways
-    data = query_genes_pw_data.split('_t_')
-    query_genes = data[0].split('_n_')
-    pathway_list = data[1].split('_n_')
+    query_genes = data['queryGenes']
+    pathway_list = data['pathways']
 
     # load databases
     biogrid = pickle.load(open('static/biogrid.pkl', 'rb'))

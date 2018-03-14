@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     state: {
         geneInput: [],
         listName: '',
+        selectedPathways: [],
         subnetwork: {
             nodes: [],
             links: []
@@ -18,6 +19,9 @@ const store = new Vuex.Store({
         'ADD_GENE_INPUT' (state, geneInput) {
             state.geneInput = geneInput
         },
+        'ADD_PATHWAY' (state, pathway) {
+            state.selectedPathways.push(pathway)
+        },
         'ADD_SUBNETWORK' (state, subnetwork) {
             state.subnetwork = subnetwork;
         },
@@ -26,6 +30,9 @@ const store = new Vuex.Store({
         },
     },
     actions: {
+        addPathway(store, pathway) {
+          store.commit('ADD_PATHWAY', pathway)
+        },
         getSubnetwork(store, geneInput) {
             const geneInputArr = geneInput.split('\n');
             geneInput = geneInputArr.join('_n_');
@@ -46,9 +53,11 @@ const store = new Vuex.Store({
                 )
         },
         getPathwaySubnetwork(store, queryGenesPathwayData) {
+            console.log(queryGenesPathwayData);
             api
-                .get(
-                    `api/subnetwork/select_pathways/${queryGenesPathwayData}`
+                .post(
+                    'api/subnetwork/select_pathways/',
+                    queryGenesPathwayData
                 )
                 .then(
                     response => {

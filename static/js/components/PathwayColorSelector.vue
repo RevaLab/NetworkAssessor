@@ -1,6 +1,5 @@
 <template>
     <div class="network-controls">
-        <h3>pathway selector</h3>
         <div class="form__field">
             <div class="form__checkbox">
                 <input type="checkbox" id="checkbox" v-model="checked">
@@ -35,9 +34,20 @@
         },
         methods: {
             visualizePathway() {
-                if (this.checked) {
-                } else {
+                const selectedPathways = this.$store.state.selectedPathways.concat([this.pathwayName]);
+                const queryGenes = this.$store.state.geneInput;
 
+                if (this.checked) {
+                    const queryGenesPathwayData = {
+                        pathways: selectedPathways,
+                        queryGenes
+                    };
+                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+                    this.$store.dispatch('addPathway', this.pathwayName);
+                } else {
+                    console.log('unchecked')
+
+                    // this.$store.dispatch('removePathway', this.pathwayName)
                 }
             },
             updateColor() {
