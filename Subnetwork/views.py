@@ -47,7 +47,8 @@ def pathway_graph(request):
     node_list = list(set(node_list))
 
     # create subgraph from node list
-    subgraph = biogrid.subgraph(node_list)
+    subgraph = nx.Graph(biogrid.subgraph(node_list))
+    subgraph.remove_nodes_from(list(nx.isolates(subgraph)))
     json_sub = json_graph.node_link_data(subgraph)
     for node in json_sub['nodes']:
         if node['id'] in query_genes:

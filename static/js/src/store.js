@@ -105,7 +105,6 @@ const store = new Vuex.Store({
                     }
                 )
         },
-
         updateSelectedPathways(store, selectedPathways) {
             store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways)
         },
