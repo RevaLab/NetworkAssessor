@@ -147,7 +147,7 @@
                 }))
             .attr("class", function(d) {
                 if (d["queryList"]) {
-                    return 'queryList'
+                    return 'query-list'
                 }
             })
 

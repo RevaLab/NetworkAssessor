@@ -42,7 +42,11 @@
             },
             updateColor() {
                 if (this.checked) {
-                    console.log(this.color)
+                    const nodes = document.querySelectorAll('.query-list');
+                    // querySelectorAll(.pathwayName)
+                    nodes.forEach(node => {
+                        node.style.fill = this.color;
+                    });
                 }
             }
         }
