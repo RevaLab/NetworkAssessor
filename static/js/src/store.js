@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     state: {
         geneInput: [],
         listName: '',
+        networkDegree: 'first_degree',
         selectedPathways: ['query-list'],
         subnetwork: {
             nodes: [],

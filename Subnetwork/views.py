@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from .network_helpers import get_next_degree
+
 
 # Create your views here.
 def index(request, gene_list):
@@ -49,23 +51,32 @@ def pathway_graph(request):
     # create subgraph from node list, including all pathway genes
     whole_subgraph = nx.Graph(biogrid.subgraph(node_list))
 
-    query_list_neighbors = []
+    first_degree_sub = get_next_degree(query_genes, whole_subgraph)
+    second_degree_sub = get_next_degree(first_degree_sub.nodes(), whole_subgraph)
+    third_degree_sub = get_next_degree(second_degree_sub.nodes(), whole_subgraph)
 
-    for gene in query_genes:
-        try:
-            query_list_neighbors += whole_subgraph.neighbors(gene)
-        except nx.exception.NetworkXError:
-            pass
+    # subgraphs = [first_degree_sub, second_degree_sub, third_degree_sub]
 
-    # create subgraph from node list, including only pathway genes with a query gene neighbor
-    first_degree_sub = nx.Graph(whole_subgraph.subgraph(query_list_neighbors + query_genes))
-    first_degree_sub.remove_nodes_from(list(nx.isolates(first_degree_sub)))
+    all_subgraphs = {
+        'first_degree': first_degree_sub,
+        'second_degree': second_degree_sub,
+        'third_degree': third_degree_sub
+    }
 
-    json_sub = json_graph.node_link_data(first_degree_sub)
-    for node in json_sub['nodes']:
-        if node['id'] in query_genes:
-            node['queryList'] = 1
-        else:
-            node['queryList'] = 0
+    all_json_graphs = {
+        'first_degree': '',
+        'second_degree': '',
+        'third_degree': ''
+    }
 
-    return JsonResponse(json_sub)
+    for sub in all_subgraphs:
+        json_sub = json_graph.node_link_data(all_subgraphs[sub])
+        for node in json_sub['nodes']:
+            if node['id'] in query_genes:
+                node['queryList'] = 1
+            else:
+                node['queryList'] = 0
+        all_json_graphs[sub] = json_sub
+
+    return JsonResponse(all_json_graphs)
+

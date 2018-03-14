@@ -21,8 +21,10 @@
         },
         watch: {
             subnetwork() {
-                let selectedPathways = this.$store.state.selectedPathways
-                run_d3(this.$store.state.subnetwork, selectedPathways)
+                let selectedPathways = this.$store.state.selectedPathways;
+                let degree = this.$store.state.networkDegree;
+                run_d3(this.$store.state.subnetwork[degree],
+                    selectedPathways)
             }
         },
         updated() {
@@ -127,8 +129,8 @@
             .links(graph.links)
             .start();
 
+        for (var i = 0; i < 100; ++i) force.tick();
         force.stop();
-        for (var i = 0; i < 800; ++i) force.tick();
 
         const link = g.selectAll(".link")
             .data(graph.links)
