@@ -24,6 +24,16 @@
                 run_d3(this.$store.state.subnetwork)
             }
         },
+        updated() {
+            const selectedPathways = this.$store.state.selectedPathways;
+            const pathwayColors = this.$store.state.pathwayColors;
+            for (let i = 0; i < selectedPathways.length; i++) {
+                const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
+                nodes.forEach(node => {
+                    node.style.fill = pathwayColors[selectedPathways[i]];
+                });
+            }
+        }
     }
 
     function run_d3(graph) {

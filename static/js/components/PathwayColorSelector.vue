@@ -5,7 +5,12 @@
                 <label for="checkbox">{{ pathwayName }}</label>
             </div>
             <div class="color-selector">
-                <swatches v-model="color" />
+                <swatches
+                        v-model="color"
+                        colors="text-advanced"
+                        popover-to="right"
+                        shapes="circles"
+                />
           </div>
         </div>
     </div>
@@ -19,17 +24,36 @@
         name: "network-controls",
         data() {
             return {
-                color: '',
                 checked: false,
             }
         },
         props: ['pathwayName'],
+        computed: {
+          color: {
+              get() {
+                  return this.$store.state.pathwayColors[this.pathwayName]
+              },
+              set(hexValue) {
+                  let pathway_color_data = {
+                      pathway: this.pathwayName,
+                      color: hexValue
+                  };
+
+                  this.$store.dispatch('updatePathwayColors', pathway_color_data)
+              }
+          }
+        },
         watch: {
             checked: 'visualizePathway',
             color: 'updateColor'
         },
         components: {
             Swatches,
+        },
+        mounted() {
+            if (this.pathwayName === 'query-list') {
+                this.checked = true
+            }
         },
         methods: {
             visualizePathway() {
@@ -52,6 +76,9 @@
                 this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
             },
             updateColor() {
+                // update pathway colors in state
+                // if node is in selected pathways, change fill
+
                 if (this.checked) {
                     const nodes = document.querySelectorAll(`.${this.pathwayName}`);
                     nodes.forEach(node => {
