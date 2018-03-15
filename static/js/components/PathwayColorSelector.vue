@@ -1,27 +1,28 @@
 <template>
     <div class="network-controls">
+            <div v-if="queryList">
+                <span>Query List</span>
+                <swatches
+                        v-model="color"
+                        colors="text-advanced"
+                        popover-to="right"
+                        shapes="squares"
+                />
+            </div>
+        <div v-else>
             <div class="form__checkbox">
                 <input type="checkbox" id="checkbox" v-model="checked">
                 <label for="checkbox">{{ pathwayName }}</label>
             </div>
             <div class="color-selector">
-                <div v-if="queryList">
-                    <swatches
-                            v-model="color"
-                            colors="text-advanced"
-                            popover-to="right"
-                            shapes="squares"
-                    />
-                </div>
-                <div v-else>
-                    <swatches
-                            v-model="color"
-                            colors="text-advanced"
-                            popover-to="right"
-                            shapes="circles"
-                    />
-                </div>
-          </div>
+                <swatches
+                        v-model="color"
+                        colors="text-advanced"
+                        popover-to="right"
+                        shapes="circles"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
@@ -52,7 +53,16 @@
               }
             },
             queryList () {
-                return this.pathwayName === 'query-list'
+                // let isQueryList = ;
+
+                // if (isQueryList) {
+                //     const nodes = document.querySelectorAll(`.${this.pathwayName}`);
+                //         nodes.forEach(node => {
+                //             node.style.fill = this.color;
+                //         });
+                // }
+
+                return this.pathwayName === 'query-list';
             }
         },
         watch: {
@@ -62,10 +72,12 @@
         components: {
             Swatches,
         },
-        mounted() {
-            if (this.pathwayName === 'query-list') {
-                this.checked = true
-            }
+        mounted () {
+            // let queryListColor = this.$store.state.pathwayColors['query-list'];
+            // const nodes = document.querySelectorAll('.query-list');
+            // nodes.forEach(node => {
+            //     node.style.fill = queryListColor;
+            // });
         },
         methods: {
             visualizePathway() {
@@ -88,10 +100,7 @@
                 this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
             },
             updateColor() {
-                // update pathway colors in state
-                // if node is in selected pathways, change fill
-
-                if (this.checked) {
+                if (this.checked || this.queryList) {
                     const nodes = document.querySelectorAll(`.${this.pathwayName}`);
                     nodes.forEach(node => {
                         node.style.fill = this.color;

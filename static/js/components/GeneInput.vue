@@ -52,9 +52,17 @@
                   "MAP2K4"
             },
             submitGeneList() {
+                let geneInput = this.geneList.split('\n');
                 this.$store.dispatch(
-                    'getSubnetwork',
-                    this.geneList
+                    'getPathwaySubnetwork',
+                    {
+                        queryGenes: geneInput,
+                        pathways: ['query-list']
+                    }
+                );
+                this.$store.dispatch(
+                    'addGeneInput',
+                    geneInput
                 );
                 this.$router.push('/network');
             }
