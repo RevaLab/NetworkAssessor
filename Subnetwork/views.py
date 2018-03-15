@@ -29,7 +29,6 @@ def pathway_graph(request):
     # load important pathways
     # pull out genes in selected pathways
     # create subnetwork with those genes + query genes
-    print(data)
     # separate query genes and selected pathways
     query_genes = data['queryGenes']
     pathway_list = data['pathways']
@@ -71,11 +70,29 @@ def pathway_graph(request):
 
     for sub in all_subgraphs:
         json_sub = json_graph.node_link_data(all_subgraphs[sub])
-        for node in json_sub['nodes']:
-            if node['id'] in query_genes:
-                node['queryList'] = 1
-            else:
-                node['queryList'] = 0
+
+        nodes_index = {}
+        links_by_index = []
+
+        for idx, node in enumerate(json_sub['nodes']):
+            node_id = node['id']
+            nodes_index[node_id] = idx
+            if node_id in query_genes:
+                if node_id in query_genes:
+                    node['queryList'] = True
+                else:
+                    node['queryList'] = False
+
+        for link in json_sub['links']:
+            source = link['source']
+            target = link['target']
+            source_idx = nodes_index[source]
+            target_idx = nodes_index[target]
+            links_by_index.append(
+                {'source': source_idx, 'target': target_idx}
+            )
+        json_sub['links'] = links_by_index
+
         all_json_graphs[sub] = json_sub
 
     return JsonResponse(all_json_graphs)

@@ -11,10 +11,7 @@ const store = new Vuex.Store({
         listName: '',
         networkDegree: 'first_degree',
         selectedPathways: ['query-list'],
-        subnetwork: {
-            nodes: [],
-            links: []
-        },
+        subnetwork: {},
         pathwayColors: {
             'query-list': '#dd7e6b',
             'AKT_ext_path': '#ff9900',
@@ -57,6 +54,9 @@ const store = new Vuex.Store({
         },
         'API_FAIL' (state, error) {
             console.error(error)
+        },
+        'UPDATE_NETWORK_DEGREE' (state, degree) {
+            state.networkDegree = degree;
         },
         'UPDATE_PATHWAY_COLOR' (state, pathway_color_data) {
             let pathway = pathway_color_data['pathway'];
@@ -106,12 +106,15 @@ const store = new Vuex.Store({
                     }
                 )
         },
+        updateDegree(store, degree) {
+            store.commit('UPDATE_NETWORK_DEGREE', degree)
+        },
         updateSelectedPathways(store, selectedPathways) {
             store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways)
         },
         updatePathwayColors(store, pathway_color_data) {
             store.commit('UPDATE_PATHWAY_COLOR', pathway_color_data)
-        }
+        },
     },
 });
 

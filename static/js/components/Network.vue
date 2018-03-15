@@ -17,14 +17,27 @@
         computed: {
             subnetwork() {
                 return this.$store.state.subnetwork
+            },
+            networkDegree() {
+                return this.$store.state.networkDegree
             }
         },
         watch: {
             subnetwork() {
                 let selectedPathways = this.$store.state.selectedPathways;
-                let degree = this.$store.state.networkDegree;
-                run_d3(this.$store.state.subnetwork[degree],
+                run_d3(this.subnetwork[this.networkDegree],
                     selectedPathways)
+            },
+            networkDegree() {
+                let selectedPathways = this.$store.state.selectedPathways;
+                run_d3(this.subnetwork[this.networkDegree], selectedPathways)
+                const pathwayColors = this.$store.state.pathwayColors;
+                for (let i = 0; i < selectedPathways.length; i++) {
+                    const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
+                    nodes.forEach(node => {
+                    node.style.fill = pathwayColors[selectedPathways[i]];
+                });
+            }
             }
         },
         updated() {
@@ -41,31 +54,23 @@
 
     function run_d3(graph, selectedPathways) {
         // clear previous svg
-        let d3_node = document.querySelector('#d3-el');
-        while (d3_node.firstChild) {
-            d3_node.removeChild(d3_node.firstChild);
+        if (!graph) {
+            return;
         }
+        console.log('in rund3: ', graph)
 
-        const edges = [];
-
-        graph.links.forEach(function (e) {
-            const sourceNode = graph.nodes.filter(function (n) {
-                    return n.id === e.source;
-                })[0],
-                targetNode = graph.nodes.filter(function (n) {
-                    return n.id === e.target;
-                })[0];
-
-            edges.push({source: sourceNode, target: targetNode});
-        });
-
-        graph.links = edges;
+        let d3_node = document.querySelector('#d3-el');
+        if (d3_node !== null) {
+            while (d3_node.firstChild) {
+                d3_node.removeChild(d3_node.firstChild);
+            }
+        }
 
         let w = window.innerWidth;
         let h = window.innerHeight;
 
-        // let keyc = true, keys = true, keyt = true, keyr = true, keyx = true, keyd = true, keyl = true, keym = true,
-        //     keyh = true, key1 = true, key2 = true, key3 = true, key0 = true
+        let keyc = true, keys = true, keyt = true, keyr = true, keyx = true, keyd = true, keyl = true, keym = true,
+            keyh = true, key1 = true, key2 = true, key3 = true, key0 = true;
         let focus_node = null, highlight_node = null;
 
         let text_center = false;
@@ -133,7 +138,6 @@
             if (i === 290) {
                 for (let i = 0; i < graph.nodes.length; i ++ ) {
                     graph.nodes[i]['fixed'] = true;
-                    console.log(graph.nodes[i])
                 }
             }
             force.tick();
@@ -297,10 +301,6 @@
         {
             if (highlight_trans<1)  {
                 circle.style("opacity", function(o) {
-                            if (isConnected(d, o)) {
-                                console.log(o)
-                                console.log(d)
-                            }
                             return isConnected(d, o) ? 1 : highlight_trans;
                         });
 
@@ -406,7 +406,6 @@
             // svg.classed('hidden', false);
             for (let i = 0; i < graph.nodes.length; i ++ ) {
                 graph.nodes[i]['fixed'] = true;
-                console.log(graph.nodes[i])
             }
         });
         function resize() {
@@ -420,6 +419,7 @@
             h = height;
         }
 
+        // STICKY NODES FUNCTIONS
         function dblclick(d) {
           d3.select(this).classed("fixed", d.fixed = false);
         }
@@ -428,51 +428,108 @@
           d3.select(this).classed("fixed", d.fixed = true);
         }
 
+        // KEYBOARD SHORTCUT FUNCTIONS
         function keydown() {
             if (d3.event.keyCode == 32) {
                 d3.event.preventDefault();
                 force.stop();
-
             }
-        //     else if (d3.event.keyCode >= 48 && d3.event.keyCode <= 90 && !d3.event.ctrlKey && !d3.event.altKey && !d3.event.metaKey) {
-        //         switch (String.fromCharCode(d3.event.keyCode)) {
-        //             case "C": keyc = !keyc; break;
-        //             case "S": keys = !keys; break;
-        //             case "T": keyt = !keyt; break;
-        //             case "R": keyr = !keyr; break;
-        //             case "X": keyx = !keyx; break;
-        //             case "D": keyd = !keyd; break;
-        //             case "L": keyl = !keyl; break;
-        //             case "M": keym = !keym; break;
-        //             case "H": keyh = !keyh; break;
-        //             case "1": key1 = !key1; break;
-        //             case "2": key2 = !key2; break;
-        //             case "3": key3 = !key3; break;
-        //             case "0": key0 = !key0; break;
-        //         }
-        //     }
-        //
-        //     link.style("display", function(d) {
-        //         let flag = vis_by_type(d.source.type) && vis_by_type(d.target.type) && vis_by_node_score(d.source.score)&&vis_by_node_score(d.target.score)&&vis_by_link_score(d.score);
-        //             linkedByIndex[d.source.index + "," + d.target.index] = flag;
-        //           return flag?"inline":"none";
-        //     });
-        //
-        //     node.style("display", function(d) {
-        //         return (key0||hasConnections(d))&&vis_by_type(d.type)&&vis_by_node_score(d.score)?"inline":"none";
-        //     });
-        //
-        //     text.style("display", function(d) {
-        //         return (key0||hasConnections(d))&&vis_by_type(d.type)&&vis_by_node_score(d.score)?"inline":"none";
-        //     });
-        //
-        //     if (highlight_node !== null) {
-        //         if ((key0||hasConnections(highlight_node))&&vis_by_type(highlight_node.type)&&vis_by_node_score(highlight_node.score)) {
-        //             if (focus_node!==null) set_focus(focus_node);
-        //             set_highlight(highlight_node);
-        //         } else { exit_highlight(); }
-        //     }
+            else if (d3.event.keyCode >= 48 && d3.event.keyCode <= 90 && !d3.event.ctrlKey && !d3.event.altKey && !d3.event.metaKey) {
+                console.log('you pressed: ', d3.event.keyCode);
+                console.log('you pressed: ', String.fromCharCode(d3.event.keyCode));
+
+                switch (String.fromCharCode(d3.event.keyCode)) {
+                    case "C": keyc = !keyc; break;
+                    case "S": keys = !keys; break;
+                    case "T": keyt = !keyt; break;
+                    case "R": keyr = !keyr; break;
+                    case "X": keyx = !keyx; break;
+                    case "D": keyd = !keyd; break;
+                    case "L": keyl = !keyl; break;
+                    case "M": keym = !keym; break;
+                    case "H": keyh = !keyh; break;
+                    case "1": key1 = !key1; break;
+                    case "2": key2 = !key2; break;
+                    case "3": key3 = !key3; break;
+                    case "0": key0 = !key0; break;
+                }
+            }
+
+            link.style("display", function(d) {
+                let flag = vis_by_type(d.source.type)
+                    && vis_by_type(d.target.type);
+                    // && vis_by_node_score(d.source.score)&&vis_by_node_score(d.target.score)&&vis_by_link_score(d.score);
+                    linkedByIndex[d.source.index + "," + d.target.index] = flag;
+                  return flag?"inline":"none";
+            });
+
+            node.style("display", function(d) {
+                return (key0||hasConnections(d))&&vis_by_type(d.type)
+                // &&vis_by_node_score(d.score)
+                    ?"inline":"none";
+            });
+
+            text.style("display", function(d) {
+                return (key0||hasConnections(d))&&vis_by_type(d.type)
+                // &&vis_by_node_score(d.score)
+                    ?"inline":"none";
+            });
+
+            if (highlight_node !== null) {
+                if ((key0||hasConnections(highlight_node))&&vis_by_type(highlight_node.type)
+                    // &&vis_by_node_score(highlight_node.score)
+                ){
+                    if (focus_node!==null) set_focus(focus_node);
+                    set_highlight(highlight_node);
+                } else { exit_highlight(); }
+            }
         }
+
+        function vis_by_type(type) {
+            switch (type) {
+                case "circle":
+                    return keyc;
+                case "square":
+                    return keys;
+                case "triangle-up":
+                    return keyt;
+                case "diamond":
+                    return keyr;
+                case "cross":
+                    return keyx;
+                case "triangle-down":
+                    return keyd;
+                default:
+                    return true;
+            }
+
+            // function vis_by_node_score(score)
+            // {
+            //     if (isNumber(score))
+            //     {
+            //     if (score>=0.666) return keyh;
+            //     else if (score>=0.333) return keym;
+            //     else if (score>=0) return keyl;
+            //     }
+            //     return true;
+            // }
+            //
+            // function vis_by_link_score(score)
+            // {
+            //     if (isNumber(score))
+            //     {
+            //     if (score>=0.666) return key3;
+            //     else if (score>=0.333) return key2;
+            //     else if (score>=0) return key1;
+            // }
+            //     return true;
+            // }
+            //
+            // function isNumber(n) {
+            //   return !isNaN(parseFloat(n)) && isFinite(n);
+            // }
+        }
+
     }
 
 

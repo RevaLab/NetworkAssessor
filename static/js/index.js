@@ -5,14 +5,14 @@ import store from './src/store.js';
 
 import App from './App.vue'
 import GeneInput from "./components/GeneInput.vue";
-import NetworkContainer from "./components/NetworkContainer.vue";
+import TheNetworkContainer from "./components/TheNetworkContainer.vue";
 
 
 Vue.use(VueRouter);
 
 const routes = [
     { path: '/', component: GeneInput },
-    { path: '/network', component: NetworkContainer }
+    { path: '/network', component: TheNetworkContainer }
 ];
 
 const router = new VueRouter({ routes });
