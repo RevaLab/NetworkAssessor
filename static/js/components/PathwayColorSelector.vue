@@ -82,6 +82,7 @@
             visualizePathway() {
                 let selectedPathways = this.$store.state.selectedPathways;
                 const queryGenes = this.$store.state.geneInput;
+                const networkDatabase = this.$store.state.networkDatabase;
 
                 if (this.checked) {
                     selectedPathways = selectedPathways.concat([this.pathwayName]);
@@ -92,7 +93,8 @@
 
                 const queryGenesPathwayData = {
                     pathways: selectedPathways,
-                    queryGenes: queryGenes
+                    queryGenes: queryGenes,
+                    networkDatabase
                 };
 
                 this.$store.dispatch('updateSelectedPathways', selectedPathways);

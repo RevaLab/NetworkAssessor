@@ -1,10 +1,12 @@
 <template>
     <div class="network-controls">
+        <database-selector />
         <degree-selector />
     </div>
 </template>
 
 <script>
+    import DatabaseSelector from './DatabaseSelector.vue'
     import DegreeSelector from './DegreeSelector.vue'
 
     export default {
@@ -15,7 +17,8 @@
             }
         },
         components: {
-          DegreeSelector
+          DegreeSelector,
+            DatabaseSelector
         },
         methods: {
         }

@@ -23,9 +23,10 @@ def index(request):
     # separate query genes and selected pathways
     query_genes = data['queryGenes']
     pathway_list = data['pathways']
+    db = data['networkDatabase']
 
     # load databases
-    biogrid = pickle.load(open('static/hprd.pkl', 'rb'))
+    interaction_db = pickle.load(open('static/{}.pkl'.format(db), 'rb'))
     pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
     node_list = list(query_genes)
 
@@ -39,7 +40,7 @@ def index(request):
     node_list = list(set(node_list))
 
     # create subgraph from node list, including all pathway genes
-    whole_subgraph = nx.Graph(biogrid.subgraph(node_list))
+    whole_subgraph = nx.Graph(interaction_db.subgraph(node_list))
 
     first_degree_sub = get_next_degree(query_genes, whole_subgraph)
     second_degree_sub = get_next_degree(first_degree_sub.nodes(), whole_subgraph)

@@ -59,6 +59,9 @@ const store = new Vuex.Store({
         'UPDATE_NETWORK_DEGREE' (state, degree) {
             state.networkDegree = degree;
         },
+        'UPDATE_NETWORK_DATABASE' (state, database) {
+            state.networkDatabase = database;
+        },
         'UPDATE_PATHWAY_COLOR' (state, pathway_color_data) {
             let pathway = pathway_color_data['pathway'];
             let color = pathway_color_data['color'];
@@ -73,6 +76,7 @@ const store = new Vuex.Store({
             store.commit('ADD_GENE_INPUT', geneInput);
         },
         getPathwaySubnetwork(store, queryGenesPathwayData) {
+            // queryGenesPathwayData['networkDatabase'] = 'hprd';
             api
                 .post(
                     'api/subnetwork/submit_genes/',
@@ -88,6 +92,9 @@ const store = new Vuex.Store({
                         store.commit('API_FAIL', error)
                     }
                 )
+        },
+        updateDatabase(store, database) {
+          store.commit('UPDATE_NETWORK_DATABASE', database)
         },
         updateDegree(store, degree) {
             store.commit('UPDATE_NETWORK_DEGREE', degree)

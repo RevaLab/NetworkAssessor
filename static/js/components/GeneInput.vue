@@ -57,7 +57,8 @@
                     'getPathwaySubnetwork',
                     {
                         queryGenes: geneInput,
-                        pathways: ['query-list']
+                        pathways: ['query-list'],
+                        networkDatabase: 'hprd'
                     }
                 );
                 this.$store.dispatch(
