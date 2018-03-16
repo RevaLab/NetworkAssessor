@@ -109,6 +109,15 @@
 </script>
 
 <style>
+    .pathway-color-selector {
+        border: solid 1px green;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-left: 0;
+        /*float: left;*/
+        /*margin-left: 0;*/
+    }
 /*.pathway-color-selector {*/
     /*display: flex;*/
     /*!*flex-direction: row;*!*/

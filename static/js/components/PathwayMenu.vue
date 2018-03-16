@@ -36,7 +36,38 @@
 </script>
 
 <style>
-    /*li { list-style-type: none; }*/
+    .pathway-menu {
+        border: solid red 1px;
+        /*width: 22%;*/
+        /*min-width: 150px;*/
+        display: flex;
+        flex-direction: column;
+        /*justify-content: left;*/
+        /*align-items: left;*/
+        /*margin: 0;*/
+        /*margin-left: 0;*/
+        padding: 0;
+    }
+
+    ul {
+        overflow: auto;
+        margin-left: 0;
+        padding: 0;
+        border: solid 1px purple;
+    }
+
+    #pathways-ul {
+        padding: 0;
+        margin: 0;
+    }
+
+    li {
+        list-style-type: none;
+        width: 100%;
+        border: solid 1px green;
+                margin: 0;
+        padding: 0;
+    }
 
     /*.pathway-menu {*/
         /*display: flex;*/

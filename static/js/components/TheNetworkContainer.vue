@@ -24,6 +24,12 @@
 </script>
 
 <style>
+    .controls {
+        display: flex;
+        flex-direction: column;
+        width: 22%;
+        border: solid 1px black;
+    }
 /*.network-container {*/
     /*!*display: table;*!*/
     /*display: flex;*/
