@@ -57,7 +57,6 @@
         if (!graph) {
             return;
         }
-        console.log('in rund3: ', graph)
 
         let d3_node = document.querySelector('#d3-el');
         if (d3_node !== null) {
@@ -66,8 +65,8 @@
             }
         }
 
-        let w = window.innerWidth;
-        let h = window.innerHeight;
+        let w = window.innerWidth * .78;
+        let h = window.innerHeight * .78;
 
         let keyc = true, keys = true, keyt = true, keyr = true, keyx = true, keyd = true, keyl = true, keym = true,
             keyh = true, key1 = true, key2 = true, key3 = true, key0 = true;
@@ -539,6 +538,10 @@
     /*#d3-el {*/
        /*display: flex;*/
     /*}*/
+    .network {
+        width: 80%
+    }
+
     .node {
         fill: #ccc;
         stroke: #fff;

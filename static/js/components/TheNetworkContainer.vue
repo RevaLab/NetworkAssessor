@@ -24,6 +24,15 @@
 </script>
 
 <style>
+    .network-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    /*network {*/
+        /*width: 80%;*/
+    /*}*/
+
     .controls {
         display: flex;
         flex-direction: column;
