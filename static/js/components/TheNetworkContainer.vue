@@ -28,7 +28,11 @@
         display: flex;
         flex-direction: column;
         width: 22%;
+        height: 95vh;
+        overflow-y: scroll;
+        margin: 5px;
         border: solid 1px black;
+        font-size: small;
     }
 /*.network-container {*/
     /*!*display: table;*!*/

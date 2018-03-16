@@ -1,6 +1,6 @@
 <template>
     <div class="pathway-color-selector">
-        <div class="pathway query-list" v-if="queryList">
+        <div class="pathway" id="query-list" v-if="queryList">
             <p>Query List</p>
             <swatches
                     v-model="color"
@@ -11,9 +11,9 @@
             />
         </div>
         <div class="pathway" v-else>
-            <input type="checkbox" id="checkbox" v-model="checked">
-            <div class="form__checkbox">
-                <label for="checkbox">{{ pathwayName }}</label>
+            <input type="checkbox" id="pw-checkbox" v-model="checked">
+            <div class="label-and-swatch">
+                <label for="pw-checkbox">{{ pathwayName }}</label>
                 <swatches
                         v-model="color"
                         colors="text-advanced"
@@ -112,11 +112,35 @@
     .pathway-color-selector {
         border: solid 1px green;
         display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-left: 0;
+        flex-direction: row;
+        /*width: 100%;*/
         /*float: left;*/
         /*margin-left: 0;*/
+    }
+
+    .pathway {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: left;
+    }
+
+    #query-list {
+        /*display: flex;*/
+        /*flex-direction: row;*/
+        margin: auto;
+        /*align-items: center;*/
+    }
+
+    .label-and-swatch {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: left;
+    }
+
+    #pw-checkbox {
+        margin: auto 5px;
     }
 /*.pathway-color-selector {*/
     /*display: flex;*/

@@ -58,14 +58,13 @@
 
     #pathways-ul {
         padding: 0;
-        margin: 0;
+        margin: auto 5px;
     }
 
     li {
         list-style-type: none;
         width: 100%;
         border: solid 1px green;
-                margin: 0;
         padding: 0;
     }
 
