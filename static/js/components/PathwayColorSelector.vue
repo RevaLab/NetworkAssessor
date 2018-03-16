@@ -1,25 +1,25 @@
 <template>
-    <div class="network-controls">
-            <div v-if="queryList">
-                <span>Query List</span>
-                <swatches
-                        v-model="color"
-                        colors="text-advanced"
-                        popover-to="right"
-                        shapes="squares"
-                />
-            </div>
-        <div v-else>
+    <div class="pathway-color-selector">
+        <div class="pathway query-list" v-if="queryList">
+            <p>Query List</p>
+            <swatches
+                    v-model="color"
+                    colors="text-advanced"
+                    popover-to="right"
+                    shapes="squares"
+                    :trigger-style="triggerStyle"
+            />
+        </div>
+        <div class="pathway" v-else>
+            <input type="checkbox" id="checkbox" v-model="checked">
             <div class="form__checkbox">
-                <input type="checkbox" id="checkbox" v-model="checked">
                 <label for="checkbox">{{ pathwayName }}</label>
-            </div>
-            <div class="color-selector">
                 <swatches
                         v-model="color"
                         colors="text-advanced"
                         popover-to="right"
                         shapes="circles"
+                        :trigger-style="triggerStyle"
                 />
             </div>
         </div>
@@ -52,16 +52,20 @@
                   this.$store.dispatch('updatePathwayColors', pathway_color_data)
               }
             },
+            triggerStyle() {
+                let styleOptions = {
+                    width: '20px',
+                    height: '20px',
+                    margin: '5px',
+                };
+
+                if (this.queryList) {
+                  styleOptions['border-radius'] = '0px'
+                }
+
+                return styleOptions;
+            },
             queryList () {
-                // let isQueryList = ;
-
-                // if (isQueryList) {
-                //     const nodes = document.querySelectorAll(`.${this.pathwayName}`);
-                //         nodes.forEach(node => {
-                //             node.style.fill = this.color;
-                //         });
-                // }
-
                 return this.pathwayName === 'query-list';
             }
         },
@@ -71,13 +75,6 @@
         },
         components: {
             Swatches,
-        },
-        mounted () {
-            // let queryListColor = this.$store.state.pathwayColors['query-list'];
-            // const nodes = document.querySelectorAll('.query-list');
-            // nodes.forEach(node => {
-            //     node.style.fill = queryListColor;
-            // });
         },
         methods: {
             visualizePathway() {
@@ -112,12 +109,47 @@
 </script>
 
 <style>
-.network-controls {
-    display: flex;
-}
+/*.pathway-color-selector {*/
+    /*display: flex;*/
+    /*!*flex-direction: row;*!*/
+    /*!*word-wrap: break-word;*!*/
+    /*background-color: #5b80b2;*/
+/*}*/
 
-.color-selector {
-    margin-left: 5px;
-}
+/*.pathway {*/
+    /*background-color: #6DDCBD;*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*align-items: center;*/
+    /*justify-content: left;*/
+    /*width: 100%;*/
+/*}*/
 
+/*.query-list {*/
+    /*!*border-bottom: solid 1px black;*!*/
+    /*justify-content: center;*/
+    /*!*width: 100%;*!*/
+/*}*/
+
+/*input {*/
+    /*margin: auto 5px;*/
+    /*!*margin-bottom: auto;*!*/
+    /*!*margin-right: 5px;*!*/
+    /*!*margin-left: 5px;*!*/
+/*}*/
+
+/*.form__checkbox {*/
+    /*word-wrap: break-word;*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*align-items: center;*/
+    /*!*justify-content: left;*!*/
+    /*!*width: 100%;*!*/
+    /*background-color: pink;*/
+    /*!*padding-top: auto;*!*/
+    /*!*vertical-align: middle;*!*/
+    /*!*line-height: 200px;*!*/
+    /*!*margin-top: auto;*!*/
+    /*!*margin-bottom: auto;*!*/
+/*}*/
 </style>

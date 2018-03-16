@@ -23,8 +23,16 @@
     }
 </script>
 
-<style scoped>
-.network-container {
-    display: flex
-}
+<style>
+/*.network-container {*/
+    /*!*display: table;*!*/
+    /*display: flex;*/
+    /*flex-direction: row;*/
+    /*width: 22%;*/
+    /*min-width: 150px;*/
+    /*border: solid black 1px;*/
+    /*margin: 5px;*/
+    /*background-color: #5E5694;*/
+/*}*/
+
 </style>

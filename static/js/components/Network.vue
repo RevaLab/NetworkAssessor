@@ -536,6 +536,9 @@
 </script>
 
 <style>
+    /*#d3-el {*/
+       /*display: flex;*/
+    /*}*/
     .node {
         fill: #ccc;
         stroke: #fff;

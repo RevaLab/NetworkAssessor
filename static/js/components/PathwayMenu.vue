@@ -36,9 +36,21 @@
 </script>
 
 <style>
-.li {
-    display: flex;
-}
+    /*li { list-style-type: none; }*/
 
+    /*.pathway-menu {*/
+        /*display: flex;*/
+        /*font-size: small;*/
+        /*border-top: solid black 1px;*/
+        /*overflow-y: scroll;*/
+    /*}*/
 
+    /*#pathways-ul {*/
+        /*display: flex;*/
+        /*margin: 0px;*/
+        /*flex-direction: column;*/
+        /*width: 100%;*/
+        /*justify-content: left;*/
+        /*align-items: left;*/
+    /*}*/
 </style>
