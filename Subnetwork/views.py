@@ -25,7 +25,7 @@ def index(request):
     pathway_list = data['pathways']
 
     # load databases
-    biogrid = pickle.load(open('static/biogrid.pkl', 'rb'))
+    biogrid = pickle.load(open('static/hprd.pkl', 'rb'))
     pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
     node_list = list(query_genes)
 

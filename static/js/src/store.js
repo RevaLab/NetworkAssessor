@@ -10,6 +10,7 @@ const store = new Vuex.Store({
         geneInput: [],
         listName: '',
         networkDegree: 'first_degree',
+        networkDatabase: 'biogrid',
         selectedPathways: ['query-list'],
         subnetwork: {},
         pathwayColors: {

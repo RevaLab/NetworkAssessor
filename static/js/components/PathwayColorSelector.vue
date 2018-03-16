@@ -7,6 +7,7 @@
                     colors="text-advanced"
                     popover-to="right"
                     shapes="squares"
+                    row-length="5"
                     :trigger-style="triggerStyle"
             />
         </div>
@@ -19,6 +20,7 @@
                         colors="text-advanced"
                         popover-to="right"
                         shapes="circles"
+                        row-length="5"
                         :trigger-style="triggerStyle"
                 />
             </div>
