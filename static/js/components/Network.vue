@@ -1,6 +1,7 @@
 <template>
     <div class="network">
         <div v-if="subnetwork">
+            <h3>FJSJDF</h3>
             <div id="d3-el"></div>
         </div>
         <div v-else>Loading...</div>
@@ -20,11 +21,17 @@
                     const networkDegree = this.$store.state.networkDegree;
                     const subnetwork = this.$store.state.subnetwork;
                     const selectedPathways = this.$store.state.selectedPathways;
-                    run_d3(subnetwork[networkDegree],
-                        selectedPathways);
-                    return this.$store.state.subnetwork
+                    const subnetworkReady = Object.keys(subnetwork).length !== 0;
+                    if (subnetworkReady) {
+                        console.log('subnetwork ready')
+                        run_d3(subnetwork[networkDegree],
+                            selectedPathways);
+                    }
+                    // return this.$store.state.subnetwork
+                    return this.$store.state.subnetwork;
                 },
                 set() {
+                    console.log('setting subnetwork')
                 }
             },
         },
