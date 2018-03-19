@@ -15,30 +15,18 @@
             }
         },
         computed: {
-            subnetwork() {
-                return this.$store.state.subnetwork
+            subnetwork: {
+                get() {
+                    const networkDegree = this.$store.state.networkDegree;
+                    const subnetwork = this.$store.state.subnetwork;
+                    const selectedPathways = this.$store.state.selectedPathways;
+                    run_d3(subnetwork[networkDegree],
+                        selectedPathways);
+                    return this.$store.state.subnetwork
+                },
+                set() {
+                }
             },
-            networkDegree() {
-                return this.$store.state.networkDegree
-            }
-        },
-        watch: {
-            subnetwork() {
-                let selectedPathways = this.$store.state.selectedPathways;
-                run_d3(this.subnetwork[this.networkDegree],
-                    selectedPathways)
-            },
-            networkDegree() {
-                let selectedPathways = this.$store.state.selectedPathways;
-                run_d3(this.subnetwork[this.networkDegree], selectedPathways)
-                const pathwayColors = this.$store.state.pathwayColors;
-                for (let i = 0; i < selectedPathways.length; i++) {
-                    const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
-                    nodes.forEach(node => {
-                    node.style.fill = pathwayColors[selectedPathways[i]];
-                });
-            }
-            }
         },
         updated() {
             const selectedPathways = this.$store.state.selectedPathways;

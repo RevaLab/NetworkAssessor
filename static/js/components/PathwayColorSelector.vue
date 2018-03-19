@@ -36,11 +36,44 @@
         name: "network-controls",
         data() {
             return {
-                checked: false,
+                // checked: false,
             }
         },
         props: ['pathwayName'],
         computed: {
+            checked: {
+                get() {
+                    // alert('changing checked???')
+                    let selectedPathways = this.$store.state.selectedPathways;
+                    return selectedPathways.includes(this.pathwayName)
+                },
+                set() {
+                    console.log('in set checked')
+                    let selectedPathways = this.$store.state.selectedPathways;
+                    const queryGenes = this.$store.state.geneInput;
+                    const networkDatabase = this.$store.state.networkDatabase;
+
+                    const isNotSelected = !selectedPathways.includes(this.pathwayName)
+
+                    if (isNotSelected) {
+                        console.log("DESELECTED")
+                        selectedPathways = selectedPathways.concat([this.pathwayName]);
+                    } else {
+                        console.log("SELECTED")
+                        let pw_index = selectedPathways.indexOf(this.pathwayName);
+                        selectedPathways.splice(pw_index, 1);
+                    }
+
+                    const queryGenesPathwayData = {
+                        pathways: selectedPathways,
+                        queryGenes: queryGenes,
+                        networkDatabase
+                    };
+
+                    this.$store.dispatch('updateSelectedPathways', selectedPathways);
+                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+                }
+            },
             color: {
               get() {
                   return this.$store.state.pathwayColors[this.pathwayName]
@@ -72,7 +105,7 @@
             }
         },
         watch: {
-            checked: 'visualizePathway',
+            // checked: 'visualizePathway',
         },
         components: {
             Swatches,
