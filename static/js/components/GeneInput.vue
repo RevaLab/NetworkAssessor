@@ -32,20 +32,16 @@
             }
         },
         computed: {
-            // geneListString() {
-            //     return this.geneList.join('\n')
-            // },
             geneList: {
               get() {
                 return this.$store.state.geneInput.join('\n');
               },
               set(geneInput) {
-                  console.log(`setting local gene input ${geneInput}`);
-                    this.$store.dispatch(
-                        'addGeneInput',
-                        geneInput.split('\n')
-                    );
-                  return geneInput
+                this.$store.dispatch(
+                    'addGeneInput',
+                    geneInput.split('\n')
+                );
+                return geneInput
               }
             }
         },
@@ -53,11 +49,10 @@
             addExampleList() {
               this.geneList = ["FLT3", "SMO", "GLA",
                   "SGCB", "OAT", "CAPN3", "ASS1", "AGXT",
-                  "AKT1", "PTPN1", "PIAS1", "CDKN1B", "THEM4", "CCNE1", "MAP2K4"];
+                  "AKT1", "PTPN1", "PIAS1", "CDKN1B", "THEM4", "CCNE1", "MAP2K4"].join('\n');
             },
             submitGeneList() {
                 let geneInput = this.$store.state.geneInput;
-                // console.log(typeof geneInput)
                 this.$store.dispatch(
                     'getPathwaySubnetwork',
                     {
@@ -66,16 +61,9 @@
                         networkDatabase: 'hprd'
                     }
                 );
-                // this.$store.dispatch(
-                //     'addGeneInput',
-                //     geneInput
-                // );
                 this.$router.push('/network');
             }
         },
-        // beforeRouteLeave(to, from, next) {
-        //     next()
-        // }
     }
 </script>
 
@@ -94,13 +82,6 @@
     border: 1px solid;
     height: 400px;
 }
-
-/*.gene-input input {*/
-    /*max-width: 40%;*/
-    /*min-width: 300px;*/
-    /*margin: 30px auto;*/
-    /*border: 1px solid;*/
-/*}*/
 
 .gene-input .button {
     width: 100%;

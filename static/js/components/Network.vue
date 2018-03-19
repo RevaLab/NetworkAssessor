@@ -1,7 +1,6 @@
 <template>
     <div class="network">
         <div v-if="subnetwork">
-            <h3>FJSJDF</h3>
             <div id="d3-el"></div>
         </div>
         <div v-else>Loading...</div>
@@ -23,11 +22,9 @@
                     const selectedPathways = this.$store.state.selectedPathways;
                     const subnetworkReady = Object.keys(subnetwork).length !== 0;
                     if (subnetworkReady) {
-                        console.log('subnetwork ready')
                         run_d3(subnetwork[networkDegree],
                             selectedPathways);
                     }
-                    // return this.$store.state.subnetwork
                     return this.$store.state.subnetwork;
                 },
                 set() {
@@ -35,7 +32,14 @@
                 }
             },
         },
+        // beforeUpdate() {
+        //     document.getElementById('d3-el').style.backgroundColor = 'black'
+        //   alert('about to update')
+        // },
         updated() {
+            // alert('updated')
+            // document.getElementById('d3-el').style.backgroundColor = 'pink'
+            // document.getElementById('d3-el').className += " load";
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
             for (let i = 0; i < selectedPathways.length; i++) {
@@ -73,7 +77,6 @@
                 d3_node.removeChild(d3_node.firstChild);
             }
         }
-
         let w = window.innerWidth * .78;
         let h = window.innerHeight * .78;
 
@@ -146,6 +149,7 @@
             if (i === 290) {
                 for (let i = 0; i < graph.nodes.length; i ++ ) {
                     graph.nodes[i]['fixed'] = true;
+                    // document.getElementById('d3-el').style.visibility = "visible";
                 }
             }
             force.tick();
@@ -562,7 +566,14 @@
         stroke-width: 2px;
     }
 
-    .hidden {
-        visibility: hidden
+   .hidden
+   {
+           visibility: hidden;
+           opacity: 0;
+           transition: visibility 0s 2s, opacity 2s linear;
+   }
+
+    .visible {
+        visibility: visible;
     }
 </style>

@@ -43,23 +43,19 @@
         computed: {
             checked: {
                 get() {
-                    // alert('changing checked???')
                     let selectedPathways = this.$store.state.selectedPathways;
                     return selectedPathways.includes(this.pathwayName)
                 },
                 set() {
-                    console.log('in set checked')
                     let selectedPathways = this.$store.state.selectedPathways;
                     const queryGenes = this.$store.state.geneInput;
                     const networkDatabase = this.$store.state.networkDatabase;
 
-                    const isNotSelected = !selectedPathways.includes(this.pathwayName)
+                    const isNotSelected = !selectedPathways.includes(this.pathwayName);
 
                     if (isNotSelected) {
-                        console.log("DESELECTED")
                         selectedPathways = selectedPathways.concat([this.pathwayName]);
                     } else {
-                        console.log("SELECTED")
                         let pw_index = selectedPathways.indexOf(this.pathwayName);
                         selectedPathways.splice(pw_index, 1);
                     }
@@ -113,8 +109,7 @@
         updated() {
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
-            // alert(`updated ${this.pathwayName}`)
-            // if (this.checked || this.queryList) {
+
             if (selectedPathways.includes(this.pathwayName)) {
                 for (let i = 0; i < selectedPathways.length; i ++) {
                     let pathwayToColor = selectedPathways[i];
@@ -179,4 +174,11 @@
     #pw-checkbox {
         margin: auto 5px;
     }
+
+     .hidden
+   {
+           visibility: hidden;
+           opacity: 0;
+           transition: visibility 0s 2s, opacity 2s linear;
+   }
 </style>
