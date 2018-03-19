@@ -7,7 +7,7 @@
             Try Example
         </button>
         <textarea
-            v-model="geneList"
+            v-model="geneListString"
             placeholder="Enter Query Gene List"
         >
         </textarea>
@@ -29,27 +29,23 @@
         name: "gene-input",
         data () {
             return {
-                // geneList: '',
-                // title: '',
             }
         },
         computed: {
-          geneList: {
+            geneListString() {
+                return this.geneList.join('\n')
+            },
+            geneList: {
               get() {
-                let geneInput = this.$store.state.geneInput;
-
-                return geneInput.join('\n');
+                return this.$store.state.geneInput;
               },
               set(geneInput) {
-                  if (typeof geneInput === 'string') {
-                      geneInput = geneInput.split('\n')
-                  }
                 this.$store.dispatch(
                     'addGeneInput',
                     geneInput
                 );
               }
-          }
+            }
         },
         methods: {
             addExampleList() {
@@ -58,7 +54,7 @@
                   "AKT1", "PTPN1", "PIAS1", "CDKN1B", "THEM4", "CCNE1", "MAP2K4"];
             },
             submitGeneList() {
-                let geneInput = this.geneList.split('\n');
+                let geneInput = this.geneList;
                 this.$store.dispatch(
                     'getPathwaySubnetwork',
                     {
@@ -74,9 +70,9 @@
                 this.$router.push('/network');
             }
         },
-        beforeRouteLeave(to, from, next) {
-            next()
-        }
+        // beforeRouteLeave(to, from, next) {
+        //     next()
+        // }
     }
 </script>
 
