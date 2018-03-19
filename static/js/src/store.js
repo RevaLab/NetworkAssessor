@@ -7,7 +7,7 @@ Vue.use(Vuex) // only required if you're using modules.
 
 const store = new Vuex.Store({
     state: {
-        geneInput: [],
+        geneInput: ['test','gello'],
         listName: '',
         networkDegree: 'first_degree',
         networkDatabase: 'biogrid',

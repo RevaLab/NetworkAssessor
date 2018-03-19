@@ -29,27 +29,33 @@
         name: "gene-input",
         data () {
             return {
-                geneList: '',
+                // geneList: '',
                 // title: '',
             }
         },
+        computed: {
+          geneList: {
+              get() {
+                let geneInput = this.$store.state.geneInput;
+
+                return geneInput.join('\n');
+              },
+              set(geneInput) {
+                  if (typeof geneInput === 'string') {
+                      geneInput = geneInput.split('\n')
+                  }
+                this.$store.dispatch(
+                    'addGeneInput',
+                    geneInput
+                );
+              }
+          }
+        },
         methods: {
             addExampleList() {
-              this.geneList = "FLT3\n" +
-                  "SMO\n" +
-                  "GLA\n" +
-                  "SGCB\n" +
-                  "OAT\n" +
-                  "CAPN3\n" +
-                  "ASS1\n" +
-                  "AGXT\n" +
-                  "AKT1\n" +
-                  "PTPN1\n" +
-                  "PIAS1\n" +
-                  "CDKN1B\n" +
-                  "THEM4\n" +
-                  "CCNE1\n" +
-                  "MAP2K4"
+              this.geneList = ["FLT3", "SMO", "GLA",
+                  "SGCB", "OAT", "CAPN3", "ASS1", "AGXT",
+                  "AKT1", "PTPN1", "PIAS1", "CDKN1B", "THEM4", "CCNE1", "MAP2K4"];
             },
             submitGeneList() {
                 let geneInput = this.geneList.split('\n');
@@ -67,6 +73,9 @@
                 );
                 this.$router.push('/network');
             }
+        },
+        beforeRouteLeave(to, from, next) {
+            next()
         }
     }
 </script>
