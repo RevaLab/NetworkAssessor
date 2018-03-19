@@ -73,10 +73,24 @@
         },
         watch: {
             checked: 'visualizePathway',
-            color: 'updateColor'
         },
         components: {
             Swatches,
+        },
+        updated() {
+            const selectedPathways = this.$store.state.selectedPathways;
+            const pathwayColors = this.$store.state.pathwayColors;
+            // alert(`updated ${this.pathwayName}`)
+            // if (this.checked || this.queryList) {
+            if (selectedPathways.includes(this.pathwayName)) {
+                for (let i = 0; i < selectedPathways.length; i ++) {
+                    let pathwayToColor = selectedPathways[i];
+                    const nodes = document.querySelectorAll(`.${pathwayToColor}`);
+                    nodes.forEach(node => {
+                        node.style.fill = pathwayColors[pathwayToColor];
+                    });
+                }
+            }
         },
         methods: {
             visualizePathway() {
@@ -88,7 +102,7 @@
                     selectedPathways = selectedPathways.concat([this.pathwayName]);
                 } else {
                     let pw_index = selectedPathways.indexOf(this.pathwayName);
-                    selectedPathways = selectedPathways.splice(1, pw_index);
+                    selectedPathways.splice(pw_index, 1);
                 }
 
                 const queryGenesPathwayData = {
@@ -100,14 +114,6 @@
                 this.$store.dispatch('updateSelectedPathways', selectedPathways);
                 this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
             },
-            updateColor() {
-                if (this.checked || this.queryList) {
-                    const nodes = document.querySelectorAll(`.${this.pathwayName}`);
-                    nodes.forEach(node => {
-                        node.style.fill = this.color;
-                    });
-                }
-            }
         }
     }
 </script>
@@ -117,9 +123,6 @@
         border: solid 1px green;
         display: flex;
         flex-direction: row;
-        /*width: 100%;*/
-        /*float: left;*/
-        /*margin-left: 0;*/
     }
 
     .pathway {
@@ -130,10 +133,7 @@
     }
 
     #query-list {
-        /*display: flex;*/
-        /*flex-direction: row;*/
         margin: auto;
-        /*align-items: center;*/
     }
 
     .label-and-swatch {
@@ -146,47 +146,4 @@
     #pw-checkbox {
         margin: auto 5px;
     }
-/*.pathway-color-selector {*/
-    /*display: flex;*/
-    /*!*flex-direction: row;*!*/
-    /*!*word-wrap: break-word;*!*/
-    /*background-color: #5b80b2;*/
-/*}*/
-
-/*.pathway {*/
-    /*background-color: #6DDCBD;*/
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*align-items: center;*/
-    /*justify-content: left;*/
-    /*width: 100%;*/
-/*}*/
-
-/*.query-list {*/
-    /*!*border-bottom: solid 1px black;*!*/
-    /*justify-content: center;*/
-    /*!*width: 100%;*!*/
-/*}*/
-
-/*input {*/
-    /*margin: auto 5px;*/
-    /*!*margin-bottom: auto;*!*/
-    /*!*margin-right: 5px;*!*/
-    /*!*margin-left: 5px;*!*/
-/*}*/
-
-/*.form__checkbox {*/
-    /*word-wrap: break-word;*/
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*align-items: center;*/
-    /*!*justify-content: left;*!*/
-    /*!*width: 100%;*!*/
-    /*background-color: pink;*/
-    /*!*padding-top: auto;*!*/
-    /*!*vertical-align: middle;*!*/
-    /*!*line-height: 200px;*!*/
-    /*!*margin-top: auto;*!*/
-    /*!*margin-bottom: auto;*!*/
-/*}*/
 </style>
