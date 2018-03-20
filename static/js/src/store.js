@@ -10,7 +10,7 @@ const store = new Vuex.Store({
         geneInput: ['test','gello'],
         listName: '',
         networkDegree: 'first_degree',
-        networkDatabase: 'biogrid',
+        networkDatabase: 'hprd',
         selectedPathways: ['query-list'],
         subnetwork: {},
         pathwayColors: {
@@ -76,6 +76,8 @@ const store = new Vuex.Store({
             store.commit('ADD_GENE_INPUT', geneInput);
         },
         getPathwaySubnetwork(store, queryGenesPathwayData) {
+            const selectedPathways = queryGenesPathwayData['pathways'];
+            store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways);
             // queryGenesPathwayData['networkDatabase'] = 'hprd';
             api
                 .post(

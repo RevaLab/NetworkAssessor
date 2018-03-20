@@ -65,7 +65,9 @@
                         networkDatabase
                     };
 
-                    this.$store.dispatch('updateSelectedPathways', selectedPathways);
+                    // console.log(selectedPathways)
+                    // console.log(this.$store.state.selectedPathways)
+                    // this.$store.dispatch('updateSelectedPathways', selectedPathways);
                     this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
                 }
             },

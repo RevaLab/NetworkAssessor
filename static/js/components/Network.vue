@@ -15,26 +15,29 @@
             }
         },
         computed: {
-            subnetwork: {
-                get() {
-                    const networkDegree = this.$store.state.networkDegree;
-                    const subnetwork = this.$store.state.subnetwork;
-                    const selectedPathways = this.$store.state.selectedPathways;
-                    const subnetworkReady = Object.keys(subnetwork).length !== 0;
-                    if (subnetworkReady) {
-                        run_d3(subnetwork[networkDegree],
-                            selectedPathways);
-                    }
-                    return this.$store.state.subnetwork;
-                },
-                set() {
-                    console.log('setting subnetwork')
-                }
+            subnetwork() {
+                return this.$store.state.subnetwork;
             },
+            networkDegree() {
+                return this.$store.state.networkDegree;
+            },
+        },
+        watch: {
+            subnetwork() {
+                const selectedPathways = this.$store.state.selectedPathways;
+                run_d3(this.subnetwork[this.networkDegree],
+                    selectedPathways);
+            },
+            networkDegree() {
+                const selectedPathways = this.$store.state.selectedPathways;
+                run_d3(this.subnetwork[this.networkDegree],
+                    selectedPathways);
+            }
         },
         updated() {
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
+
             for (let i = 0; i < selectedPathways.length; i++) {
                 const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
                 nodes.forEach(node => {
@@ -43,18 +46,6 @@
             }
         },
         mounted() {
-            const networkDegree = this.$store.state.networkDegree;
-            const subnetwork = this.$store.state.subnetwork;
-            const selectedPathways = this.$store.state.selectedPathways;
-            run_d3(subnetwork[networkDegree],
-                selectedPathways);
-            const pathwayColors = this.$store.state.pathwayColors;
-            for (let i = 0; i < selectedPathways.length; i++) {
-                const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
-                nodes.forEach(node => {
-                    node.style.fill = pathwayColors[selectedPathways[i]];
-                });
-            }
         }
     }
 
