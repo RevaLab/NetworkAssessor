@@ -77,8 +77,8 @@
                 d3_node.removeChild(d3_node.firstChild);
             }
         }
-        let w = window.innerWidth * .78;
-        let h = window.innerHeight * .78;
+        let w = window.innerWidth * .70;
+        let h = window.innerHeight * .70;
 
         let keyc = true, keys = true, keyt = true, keyr = true, keyx = true, keyd = true, keyl = true, keym = true,
             keyh = true, key1 = true, key2 = true, key3 = true, key0 = true;
