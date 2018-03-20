@@ -6,18 +6,18 @@
 </template>
 
 <script>
-    import DatabaseSelector from './DatabaseSelector.vue'
-    import DegreeSelector from './DegreeSelector.vue'
+    import DatabaseSelector from './NetworkSelectorDatabase.vue'
+    import DegreeSelector from './NetworkSelectorDegree.vue'
 
     export default {
         name: "network-controls",
         data() {
             return {
-                selectedValue: "first_degree"
+                // selectedValue: "first_degree"
             }
         },
         components: {
-          DegreeSelector,
+            DegreeSelector,
             DatabaseSelector
         },
         methods: {

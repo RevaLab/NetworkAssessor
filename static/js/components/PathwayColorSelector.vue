@@ -36,7 +36,6 @@
         name: "network-controls",
         data() {
             return {
-                // checked: false,
             }
         },
         props: ['pathwayName'],
@@ -91,6 +90,7 @@
                 };
 
                 if (this.queryList) {
+                    // renders query list selector as a square
                   styleOptions['border-radius'] = '0px'
                 }
 
@@ -99,9 +99,6 @@
             queryList () {
                 return this.pathwayName === 'query-list';
             }
-        },
-        watch: {
-            // checked: 'visualizePathway',
         },
         components: {
             Swatches,
@@ -120,29 +117,6 @@
                 }
             }
         },
-        methods: {
-            visualizePathway() {
-                let selectedPathways = this.$store.state.selectedPathways;
-                const queryGenes = this.$store.state.geneInput;
-                const networkDatabase = this.$store.state.networkDatabase;
-
-                if (this.checked) {
-                    selectedPathways = selectedPathways.concat([this.pathwayName]);
-                } else {
-                    let pw_index = selectedPathways.indexOf(this.pathwayName);
-                    selectedPathways.splice(pw_index, 1);
-                }
-
-                const queryGenesPathwayData = {
-                    pathways: selectedPathways,
-                    queryGenes: queryGenes,
-                    networkDatabase
-                };
-
-                this.$store.dispatch('updateSelectedPathways', selectedPathways);
-                this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
-            },
-        }
     }
 </script>
 
@@ -175,10 +149,4 @@
         margin: auto 5px;
     }
 
-     .hidden
-   {
-           visibility: hidden;
-           opacity: 0;
-           transition: visibility 0s 2s, opacity 2s linear;
-   }
 </style>

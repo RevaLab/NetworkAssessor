@@ -32,14 +32,7 @@
                 }
             },
         },
-        // beforeUpdate() {
-        //     document.getElementById('d3-el').style.backgroundColor = 'black'
-        //   alert('about to update')
-        // },
         updated() {
-            // alert('updated')
-            // document.getElementById('d3-el').style.backgroundColor = 'pink'
-            // document.getElementById('d3-el').className += " load";
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
             for (let i = 0; i < selectedPathways.length; i++) {
@@ -149,7 +142,6 @@
             if (i === 290) {
                 for (let i = 0; i < graph.nodes.length; i ++ ) {
                     graph.nodes[i]['fixed'] = true;
-                    // document.getElementById('d3-el').style.visibility = "visible";
                 }
             }
             force.tick();

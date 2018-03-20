@@ -26,7 +26,6 @@
                     'PI3K-AKT1-MTOR_Signaling_path', 'Protein_Degradation_Ubiquitination_path',
                     'RNA_Splicing_path', 'TGF-B_Signaling_path', 'TGFB_ext_path', 'WNT_ext_path',
                     'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path']
-                // pathways will eventually be an obj of pathway: genes, default_color
             }
         },
         components: {
@@ -38,14 +37,8 @@
 <style>
     .pathway-menu {
         border: solid red 1px;
-        /*width: 22%;*/
-        /*min-width: 150px;*/
         display: flex;
         flex-direction: column;
-        /*justify-content: left;*/
-        /*align-items: left;*/
-        /*margin: 0;*/
-        /*margin-left: 0;*/
         padding: 0;
     }
 
@@ -68,19 +61,4 @@
         padding: 0;
     }
 
-    /*.pathway-menu {*/
-        /*display: flex;*/
-        /*font-size: small;*/
-        /*border-top: solid black 1px;*/
-        /*overflow-y: scroll;*/
-    /*}*/
-
-    /*#pathways-ul {*/
-        /*display: flex;*/
-        /*margin: 0px;*/
-        /*flex-direction: column;*/
-        /*width: 100%;*/
-        /*justify-content: left;*/
-        /*align-items: left;*/
-    /*}*/
 </style>
