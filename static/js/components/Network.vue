@@ -30,8 +30,16 @@
             },
             networkDegree() {
                 const selectedPathways = this.$store.state.selectedPathways;
+                const pathwayColors = this.$store.state.pathwayColors;
                 run_d3(this.subnetwork[this.networkDegree],
                     selectedPathways);
+
+                for (let i = 0; i < selectedPathways.length; i++) {
+                    const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
+                    nodes.forEach(node => {
+                        node.style.fill = pathwayColors[selectedPathways[i]];
+                    });
+                }
             }
         },
         updated() {
