@@ -60,7 +60,6 @@
             }
         },
         mounted() {
-            // const subnetwork = this.$store.state.subnetwork;
             window.onhashchange = () => {
                 if (window.location.hash === '#/network') {
                     const selectedPathways = this.$store.state.selectedPathways;

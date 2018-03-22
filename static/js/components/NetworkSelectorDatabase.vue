@@ -16,24 +16,33 @@
     export default {
         data() {
             return {
-                picked: 'hprd'
+                // picked: 'hprd'
             }
         },
-        watch: {
-            picked() {
-                const pathways = this.$store.state.selectedPathways;
-                const queryGenes = this.$store.state.geneInput;
+        computed: {
+            picked: {
+                get() {
+                    return this.$store.state.networkDatabase
+                },
+                set(database) {
+                    const pathways = this.$store.state.selectedPathways;
+                    const queryGenes = this.$store.state.geneInput;
 
-                const queryGenesPathwayData = {
-                    pathways,
-                    queryGenes,
-                    networkDatabase: this.picked
-                };
+                    const queryGenesPathwayData = {
+                        pathways,
+                        queryGenes,
+                        networkDatabase: database
+                    };
 
-                this.$store.dispatch('updateDatabase', this.picked);
-                this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+                    this.$store.dispatch('updateDatabase', database);
+                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+                }
             }
-        }
+        },
+        // watch: {
+        //     picked() {
+        //     }
+        // }
     }
 </script>
 
