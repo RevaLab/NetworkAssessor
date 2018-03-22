@@ -97,8 +97,8 @@
                 d3_node.removeChild(d3_node.firstChild);
             }
         }
-        let w = window.innerWidth * .70;
-        let h = window.innerHeight * .70;
+        let w = window.innerWidth;
+        let h = window.innerHeight;
 
         let keyc = true, keys = true, keyt = true, keyr = true, keyx = true, keyd = true, keyl = true, keym = true,
             keyh = true, key1 = true, key2 = true, key3 = true, key0 = true;
@@ -116,12 +116,13 @@
 
         let force = d3.layout.force()
             .linkDistance(60)
-            .charge(-2000)
+            .charge(-2500)
+            // .center(d3.forc
+            .gravity(1)
             .size([w, h]);
 
         let drag = force.drag()
             .on("dragstart", dragstart);
-
 
         let default_node_color = "#ccc";
         let default_link_color = "#b0b0b0";
@@ -164,6 +165,7 @@
             .nodes(graph.nodes)
             .links(graph.links)
             .start();
+
 
         for (var i = 0; i < 300; ++i) {
             if (i === 290) {
@@ -404,9 +406,16 @@
         d3.select(window).on("resize", resize)
             .on("keydown", keydown);
 
-        force.on("tick", function () {
-            graph.nodes[0].x = w / 2;
-            graph.nodes[0].y = h / 2;
+        force.on("tick", function (e) {
+            // nodes[0].x = w / 2;
+            // nodes[0].y = h / 2;
+
+            // var k = 0.05 * e.alpha;
+            //   graph.nodes.forEach(function(o, i) {
+            //     o.y += (graph.nodes[0].y - o.y) * k;
+            //     o.x += (graph.nodes[0].x - o.x) * k;
+            //   });
+
             node.attr("transform", function (d) {
                 return "translate(" + d.x + "," + d.y + ")";
             });
@@ -589,6 +598,11 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0,0,0,0);
+    }
+
+    svg {
+        background: pink;
+        border: solid 1px black;
     }
 
     .hidden {
