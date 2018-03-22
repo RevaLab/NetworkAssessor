@@ -21,15 +21,21 @@
         name: "radio-button",
         data() {
             return {
-                picked: 'first_degree'
             }
         },
-        watch: {
-            picked() {
-                this.$store.dispatch('updateDegree', this.picked)
+        computed: {
+            picked: {
+                get() {
+                    return this.$store.state.networkDegree
+                },
+                set(degree) {
+                    // console.log('selected ', degree)
+                    this.$store.dispatch('updateDegree', degree)
+                }
             }
         },
         updated() {
+            alert('updated')
         }
     }
 </script>
