@@ -25,6 +25,8 @@
                     return this.$store.state.networkDatabase
                 },
                 set(database) {
+                    let loader = document.getElementById('loader-bg');
+                    loader.style.visibility = 'visible';
                     const pathways = this.$store.state.selectedPathways;
                     const queryGenes = this.$store.state.geneInput;
 
@@ -39,10 +41,10 @@
                 }
             }
         },
-        // watch: {
-        //     picked() {
-        //     }
-        // }
+        updated() {
+            let loader = document.getElementById('loader-bg');
+            loader.style.visibility = 'hidden';
+        }
     }
 </script>
 

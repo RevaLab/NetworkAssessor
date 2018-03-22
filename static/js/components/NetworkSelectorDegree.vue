@@ -30,12 +30,16 @@
                 },
                 set(degree) {
                     // console.log('selected ', degree)
+
+                    let loader = document.getElementById('loader-bg');
+                    loader.style.visibility = 'visible';
                     this.$store.dispatch('updateDegree', degree)
                 }
             }
         },
         updated() {
-            // alert('updated')
+            let loader = document.getElementById('loader-bg');
+            loader.style.visibility = 'hidden';
         }
     }
 </script>

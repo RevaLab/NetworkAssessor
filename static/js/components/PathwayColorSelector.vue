@@ -107,7 +107,7 @@
         },
         updated() {
             let loader = document.getElementById('loader-bg');
-            loader.style.display = 'block';
+            loader.style.visibility = 'visible';
 
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;

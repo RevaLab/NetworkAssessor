@@ -15,6 +15,7 @@
         name: "network",
         data() {
             return {
+                // loading: true
             }
         },
         computed: {
@@ -30,8 +31,6 @@
                 const selectedPathways = this.$store.state.selectedPathways;
                 run_d3(this.subnetwork[this.networkDegree],
                     selectedPathways);
-                let loader = document.getElementById('loader-bg');
-                loader.style.display = 'none';
             },
             networkDegree() {
                 const selectedPathways = this.$store.state.selectedPathways;
@@ -49,6 +48,10 @@
             }
         },
         updated() {
+            // this.loading = false;
+
+            let loader = document.getElementById('loader-bg');
+            loader.style.visibility = 'hidden';
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
 
@@ -82,6 +85,7 @@
     }
 
     function run_d3(graph, selectedPathways) {
+
         // clear previous svg
         if (!graph) {
             return;
@@ -401,6 +405,8 @@
             .on("keydown", keydown);
 
         force.on("tick", function () {
+            graph.nodes[0].x = w / 2;
+            graph.nodes[0].y = h / 2;
             node.attr("transform", function (d) {
                 return "translate(" + d.x + "," + d.y + ")";
             });
@@ -579,9 +585,17 @@
     }
 
     #loader-bg {
-        display: none;
+        visibility: none;
         width: 100%;
         height: 100%;
         background-color: rgba(0,0,0,0);
+    }
+
+    .hidden {
+        visibility: hidden;
+    }
+
+    .visible {
+        visibility: visible;
     }
 </style>
