@@ -35,7 +35,7 @@
             }
         },
         updated() {
-            alert('updated')
+            // alert('updated')
         }
     }
 </script>

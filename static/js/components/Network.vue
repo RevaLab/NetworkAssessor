@@ -1,9 +1,9 @@
 <template>
     <div class="network" id="network-test">
-        <div id="loader-bg">
-            <div id="loader" class="loader"></div>
-        </div>
         <div v-if="subnetwork">
+            <div id="loader-bg">
+                <div id="loader" class="loader"></div>
+            </div>
             <div id="d3-el"></div>
         </div>
         <div v-else>Loading...</div>
@@ -27,21 +27,19 @@
         },
         watch: {
             subnetwork() {
-                let loader = document.getElementById('loader-bg');
-                loader.style.display = 'block';
                 const selectedPathways = this.$store.state.selectedPathways;
-                // let loader = document.getElementById('loader-bg');
                 run_d3(this.subnetwork[this.networkDegree],
                     selectedPathways);
-                // loader.style.display = 'none';
+                let loader = document.getElementById('loader-bg');
+                loader.style.display = 'none';
             },
             networkDegree() {
                 const selectedPathways = this.$store.state.selectedPathways;
                 const pathwayColors = this.$store.state.pathwayColors;
-                let loader = document.getElementById('loader-bg');
+
                 run_d3(this.subnetwork[this.networkDegree],
                     selectedPathways);
-                loader.style.display = 'none';
+
                 for (let i = 0; i < selectedPathways.length; i++) {
                     const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
                     nodes.forEach(node => {
@@ -51,8 +49,6 @@
             }
         },
         updated() {
-                            let loader = document.getElementById('loader-bg');
-                loader.style.display = 'none';
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
 
@@ -64,6 +60,25 @@
             }
         },
         mounted() {
+            // const subnetwork = this.$store.state.subnetwork;
+            window.onhashchange = () => {
+                if (window.location.hash === '#/network') {
+                    const selectedPathways = this.$store.state.selectedPathways;
+                    const subnetwork = this.$store.state.subnetwork;
+                    const networkDegree = this.$store.state.networkDegree;
+                    const pathwayColors = this.$store.state.pathwayColors;
+
+                    run_d3(subnetwork[networkDegree],
+                        selectedPathways);
+
+                    for (let i = 0; i < selectedPathways.length; i++) {
+                        const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
+                        nodes.forEach(node => {
+                            node.style.fill = pathwayColors[selectedPathways[i]];
+                        });
+                    }
+                }
+            }
         }
     }
 
@@ -565,6 +580,7 @@
     }
 
     #loader-bg {
+        display: none;
         width: 100%;
         height: 100%;
         background-color: rgba(0,0,0,0);
