@@ -1,5 +1,8 @@
 <template>
-    <div class="network">
+    <div class="network" id="network-test">
+        <div id="loader-bg">
+            <div id="loader" class="loader"></div>
+        </div>
         <div v-if="subnetwork">
             <div id="d3-el"></div>
         </div>
@@ -24,16 +27,21 @@
         },
         watch: {
             subnetwork() {
+                let loader = document.getElementById('loader-bg');
+                loader.style.display = 'block';
                 const selectedPathways = this.$store.state.selectedPathways;
+                // let loader = document.getElementById('loader-bg');
                 run_d3(this.subnetwork[this.networkDegree],
                     selectedPathways);
+                // loader.style.display = 'none';
             },
             networkDegree() {
                 const selectedPathways = this.$store.state.selectedPathways;
                 const pathwayColors = this.$store.state.pathwayColors;
+                let loader = document.getElementById('loader-bg');
                 run_d3(this.subnetwork[this.networkDegree],
                     selectedPathways);
-
+                loader.style.display = 'none';
                 for (let i = 0; i < selectedPathways.length; i++) {
                     const nodes = document.querySelectorAll(`.${selectedPathways[i]}`);
                     nodes.forEach(node => {
@@ -43,6 +51,8 @@
             }
         },
         updated() {
+                            let loader = document.getElementById('loader-bg');
+                loader.style.display = 'none';
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
 
@@ -539,32 +549,24 @@
 </script>
 
 <style>
-    /*#d3-el {*/
-       /*display: flex;*/
-    /*}*/
     .network {
-        width: 80%
+        width: 78%;
     }
 
-    .node {
-        fill: #ccc;
-        stroke: #fff;
-        stroke-width: 2px;
+    .loader {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: 8em;
+        height: 8em;
     }
 
-    .link {
-        stroke: #777;
-        stroke-width: 2px;
-    }
-
-   .hidden
-   {
-           visibility: hidden;
-           opacity: 0;
-           transition: visibility 0s 2s, opacity 2s linear;
-   }
-
-    .visible {
-        visibility: visible;
+    #loader-bg {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0);
     }
 </style>

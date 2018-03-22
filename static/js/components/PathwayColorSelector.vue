@@ -106,6 +106,10 @@
             Swatches,
         },
         updated() {
+            let loader = document.getElementById('loader-bg');
+            loader.style.display = 'block';
+            // console.log('before running', loader);
+
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
 

@@ -13,8 +13,6 @@ from .network_helpers import get_next_degree
 def index(request):
     if request.method == "POST":
         data = json.loads(request.body.decode('utf-8'))
-        print('INSIDE POST')
-        print(data)
     else:
         data = {}
     # load important pathways

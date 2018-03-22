@@ -28,6 +28,8 @@
             picked() {
                 this.$store.dispatch('updateDegree', this.picked)
             }
+        },
+        updated() {
         }
     }
 </script>
