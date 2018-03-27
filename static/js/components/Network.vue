@@ -1,6 +1,12 @@
 <template>
     <div class="network" id="network-test">
         <div v-if="subnetwork">
+            <div class="statistics">
+                <div class="statistics-content">
+                    <p>Nodes: {{ networkStatistics.nodeLength }}</p>
+                    <p>Edges: {{ networkStatistics.edgesLength }}</p>
+                </div>
+            </div>
             <div id="loader-bg">
                 <div id="loader" class="loader"></div>
             </div>
@@ -25,6 +31,22 @@
             networkDegree() {
                 return this.$store.state.networkDegree;
             },
+            networkStatistics() {
+                const subnetwork = this.$store.state.subnetwork;
+                const networkDegree = this.$store.state.networkDegree;
+                let statistics = {
+                    nodeLength: 0,
+                    edgesLength: 0
+                };
+
+                const currentSub = subnetwork[networkDegree];
+                if (currentSub) {
+                    statistics.nodeLength = currentSub["nodes"].length;
+                    statistics.edgesLength = currentSub["links"].length;
+                }
+                return statistics;
+            },
+
         },
         watch: {
             subnetwork() {
@@ -115,10 +137,10 @@
             .range([8, 24]);
 
         let force = d3.layout.force()
-            .linkDistance(60)
-            .charge(-2500)
+            .linkDistance(80)
+            .charge(-7000)
             // .center(d3.forc
-            .gravity(1)
+            .gravity(.2)
             .size([w, h]);
 
         let drag = force.drag()
@@ -600,11 +622,31 @@
         background-color: rgba(0,0,0,0);
     }
 
-    svg {
-        background: pink;
+    .statistics {
+        width: 10%;
+        height: 10%;
         border: solid 1px black;
+        position:absolute;
+        bottom:0;
+        right:0;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        /*padding: 0 auto;*/
+        /*background-color: pink;*/
     }
 
+    .statistics-content {
+        position: relative;
+        float: left;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /*margin-bottom: 0;*/
+    }
+
+    .statistics-content p {
+        margin-bottom: 0 !important;
+    }
     .hidden {
         visibility: hidden;
     }
