@@ -23,7 +23,16 @@
                         row-length="5"
                         :trigger-style="triggerStyle"
                 />
-                <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
+            </div>
+            <div class="pw-statistics">
+                <div class="tooltip">
+                    <p>{{ pathwayMemberCount }}</p>
+                    <span class="tooltiptext">Pathway Members</span>
+                </div>
+                <div class="tooltip">
+                    <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
+                    <span class="tooltiptext">Total graph edges if you add this pw</span>
+                </div>
             </div>
         </div>
     </div>
@@ -47,6 +56,9 @@
             pathwayEdgeCount() {
                 const networkDegree = this.$store.state.networkDegree;
                 return this.$store.state.pathwaysEdgeCounts[this.pathwayName][networkDegree]
+            },
+            pathwayMemberCount() {
+                return this.$store.state.pathwayMemberCounts[this.pathwayName]
             },
             checked: {
                 get() {
@@ -143,8 +155,8 @@
     .pathway {
         display: flex;
         flex-direction: row;
-        align-items: center;
-        justify-content: left;
+        /*align-items: center;*/
+        justify-content: space-between;
     }
 
     #query-list {
@@ -162,4 +174,31 @@
         margin: auto 5px;
     }
 
+    .tooltip {
+    /*position: relative;*/
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+    .pw-statistics {
+        justify-content: right;
+    }
 </style>

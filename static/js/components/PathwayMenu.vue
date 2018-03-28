@@ -24,6 +24,7 @@
                     'Janus_Kinase_JAK-or-Signal_Transducers_and_Activators_of_Transcription_STAT_path',
                     'Kinase_Fusions_path', 'Metabolic_Signaling_path', 'NFKB_ext_path', 'Notch_ext_path',
                     'PI3K-AKT1-MTOR_Signaling_path', 'Protein_Degradation_Ubiquitination_path',
+                    'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path',
                     'RNA_Splicing_path', 'TGF-B_Signaling_path', 'TGFB_ext_path', 'WNT_ext_path',
                     'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path']
             }

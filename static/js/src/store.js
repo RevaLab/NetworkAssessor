@@ -7,7 +7,7 @@ Vue.use(Vuex) // only required if you're using modules.
 
 const store = new Vuex.Store({
     state: {
-        geneInput: ['test','gello'],
+        geneInput: ['test', 'gello'],
         listName: '',
         networkDegree: 'first_degree',
         networkDatabase: 'hprd',
@@ -40,12 +40,45 @@ const store = new Vuex.Store({
             'PI3K-AKT1-MTOR_Signaling_path': '#741b47',
             'Protein_Degradation_Ubiquitination_path': '#d9d2e9',
             'RNA_Splicing_path': '#783f04',
+            'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path': '#000000',
             'TGF-B_Signaling_path': '#bf9000',
             'TGFB_ext_path': '#0c343d',
             'WNT_ext_path': '#1155cc',
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': '#4c1130'
         },
-        pathwaysEdgeCounts: {}
+        pathwaysEdgeCounts: {},
+        pathwayMemberCounts: {
+            'AKT_ext_path': 20,
+            'Apoptosis_path': 10,
+            'Apoptosis_ext_path': 31,
+            'CALC_PKC_ext_path': 18,
+            'Cellular_Architecture_and_Microenvironment_path': 2,
+            'Cell_Cycle_Control_path': 30,
+            'Cell_Cycle_ext_path': 87,
+            'Chromatin_Remodeling-DNA_Methylation_path': 19,
+            'DNA_Damage_path': 24,
+            'ERK_ext_path': 40,
+            'G-Protein_Signaling_path': 6,
+            'Hedgehog_Signaling_path': 3,
+            'HIPPO_ext_path': 31,
+            'Hormone_Signaling_path': 5,
+            'Immune_Checkpoints_path': 12,
+            'B-Catenin-WNT_Signaling_path': 14,
+            'Jack_Stat_ext_path': 21,
+            'Janus_Kinase_JAK-or-Signal_Transducers_and_Activators_of_Transcription_STAT_path': 12,
+            'Kinase_Fusions_path': 12,
+            'Metabolic_Signaling_path': 17,
+            'NFKB_ext_path': 12,
+            'Notch_ext_path': 19,
+            'PI3K-AKT1-MTOR_Signaling_path': 16,
+            'Protein_Degradation_Ubiquitination_path': 8,
+            'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path': 38,
+            'RNA_Splicing_path': 4,
+            'TGF-B_Signaling_path': 7,
+            'TGFB_ext_path': 19,
+            'WNT_ext_path': 92,
+            'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 14
+        },
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
