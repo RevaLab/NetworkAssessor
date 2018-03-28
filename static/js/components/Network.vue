@@ -631,8 +631,6 @@
         right:0;
         margin-bottom: 10px;
         margin-right: 10px;
-        /*padding: 0 auto;*/
-        /*background-color: pink;*/
     }
 
     .statistics-content {
@@ -641,17 +639,9 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        /*margin-bottom: 0;*/
     }
 
     .statistics-content p {
         margin-bottom: 0 !important;
-    }
-    .hidden {
-        visibility: hidden;
-    }
-
-    .visible {
-        visibility: visible;
     }
 </style>
