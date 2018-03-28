@@ -3,6 +3,7 @@
         <div class="controls">
             <network-controls />
             <pathway-menu />
+            <user-pathways />
         </div>
         <network />
     </div>
@@ -12,13 +13,15 @@
     import Network from './Network.vue'
     import NetworkControls from './NetworkControls.vue'
     import PathwayMenu from './PathwayMenu.vue'
+    import UserPathways from './PathwayMenu_UserPathways.vue'
 
     export default {
         name: "network-container",
         components: {
             Network,
             NetworkControls,
-            PathwayMenu
+            PathwayMenu,
+            UserPathways,
         }
     }
 </script>

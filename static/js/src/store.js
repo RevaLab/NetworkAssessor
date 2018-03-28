@@ -7,7 +7,7 @@ Vue.use(Vuex) // only required if you're using modules.
 
 const store = new Vuex.Store({
     state: {
-        geneInput: ['test', 'gello'],
+        geneInput: [],
         listName: '',
         networkDegree: 'first_degree',
         networkDatabase: 'hprd',
@@ -79,6 +79,7 @@ const store = new Vuex.Store({
             'WNT_ext_path': 92,
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 14
         },
+        userPathways: {}
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
@@ -89,6 +90,9 @@ const store = new Vuex.Store({
         },
         'ADD_SUBNETWORK' (state, subnetwork) {
             state.subnetwork = subnetwork;
+        },
+        'ADD_USER_PATHWAY_COLORS' (state, userPathwayColors) {
+            state.pathwayColors = {...state.pathwayColors, ...userPathwayColors}
         },
         'API_FAIL' (state, error) {
             console.error(error)
@@ -107,6 +111,9 @@ const store = new Vuex.Store({
         'UPDATE_SELECTED_PATHWAYS' (state, selectedPathways) {
             state.selectedPathways = selectedPathways
         },
+        'UPDATE_USER_PATHWAYS' (state, userPathways) {
+            state.userPathways = userPathways
+        }
     },
     actions: {
         addGeneInput(store, geneInput) {
@@ -115,7 +122,6 @@ const store = new Vuex.Store({
         getPathwaySubnetwork(store, queryGenesPathwayData) {
             const selectedPathways = queryGenesPathwayData['pathways'];
             store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways);
-            // queryGenesPathwayData['networkDatabase'] = 'hprd';
             api
                 .post(
                     'api/subnetwork/submit_genes/',
@@ -146,6 +152,14 @@ const store = new Vuex.Store({
         updatePathwayColors(store, pathway_color_data) {
             store.commit('UPDATE_PATHWAY_COLOR', pathway_color_data)
         },
+        updateUserPathways(store, userPathways) {
+            store.commit('UPDATE_USER_PATHWAYS', userPathways);
+            let pathwayColors = {};
+            for (let pathway in userPathways) {
+                pathwayColors[pathway] = userPathways[pathway]['color'];
+            }
+            store.commit('ADD_USER_PATHWAY_COLORS', pathwayColors)
+        }
     },
 });
 
