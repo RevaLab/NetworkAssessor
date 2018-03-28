@@ -37,20 +37,30 @@ def index(request):
 
     node_list = list(set(node_list))
 
+    pathways_edge_counts = {}
+
+    # get counts for all pathways
     for pathway in pathways:
+        pathway_edge_counts = {
+            'first_degree': 0,
+            'second_degree': 0,
+            'third_degree': 0
+        }
         per_pathway_node_list = node_list + pathways[pathway]
         per_pathway_subgraph = nx.Graph(interaction_db.subgraph(per_pathway_node_list))
 
         per_pathway_first_degree_sub = get_next_degree(query_genes, per_pathway_subgraph)
+        per_pathway_second_degree_sub = get_next_degree(per_pathway_first_degree_sub.nodes(), per_pathway_subgraph)
+        per_pathway_third_degree_sub = get_next_degree(per_pathway_second_degree_sub.nodes(), per_pathway_subgraph)
 
-        print(pathway)
-        print(len(per_pathway_first_degree_sub.edges()))
+        # print(pathway)
+        pathway_edge_counts['first_degree'] = len(per_pathway_first_degree_sub.edges())
+        pathway_edge_counts['second_degree'] = len(per_pathway_second_degree_sub.edges())
+        pathway_edge_counts['third_degree'] = len(per_pathway_third_degree_sub.edges())
+        pathways_edge_counts[pathway] = pathway_edge_counts
+
     # create subgraph from node list, including all pathway genes
     whole_subgraph = nx.Graph(interaction_db.subgraph(node_list))
-    # get_pathway_counts(node_list, db)
-
-    # get counts for all pathways for first degree
-    # get_pathway_counts(node_list, db)
 
     # find next degree
     first_degree_sub = get_next_degree(query_genes, whole_subgraph)
@@ -98,5 +108,10 @@ def index(request):
 
         all_json_graphs[sub] = json_sub
 
-    return JsonResponse(all_json_graphs)
+    final_graphs = {
+        'interaction_networks': all_json_graphs,
+        'pathways_edge_counts': json.dumps(pathways_edge_counts)
+    }
+
+    return JsonResponse(final_graphs)
 

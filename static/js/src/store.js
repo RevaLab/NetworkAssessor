@@ -45,10 +45,14 @@ const store = new Vuex.Store({
             'WNT_ext_path': '#1155cc',
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': '#4c1130'
         },
+        pathwaysEdgeCounts: {}
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
             state.geneInput = geneInput
+        },
+        'ADD_PATHWAYS_EDGE_COUNTS' (state, pathwaysEdgeCounts) {
+            state.pathwaysEdgeCounts = pathwaysEdgeCounts
         },
         'ADD_SUBNETWORK' (state, subnetwork) {
             state.subnetwork = subnetwork;
@@ -86,7 +90,9 @@ const store = new Vuex.Store({
                 )
                 .then(
                     response => {
-                        store.commit('ADD_SUBNETWORK', response.body)
+                        // console.log(response.body)
+                        store.commit('ADD_SUBNETWORK', response.body['interaction_networks']);
+                        store.commit('ADD_PATHWAYS_EDGE_COUNTS', response.body['pathways_edge_counts']);
                     }
                 )
                 .catch(
