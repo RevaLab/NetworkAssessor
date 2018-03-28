@@ -23,6 +23,7 @@
                         row-length="5"
                         :trigger-style="triggerStyle"
                 />
+                <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
             </div>
         </div>
     </div>
@@ -40,6 +41,13 @@
         },
         props: ['pathwayName'],
         computed: {
+            pathwayEdgesReady() {
+              return this.$store.state.pathwaysEdgeCounts[this.pathwayName]
+            },
+            pathwayEdgeCount() {
+                const networkDegree = this.$store.state.networkDegree;
+                return this.$store.state.pathwaysEdgeCounts[this.pathwayName][networkDegree]
+            },
             checked: {
                 get() {
                     let selectedPathways = this.$store.state.selectedPathways;
@@ -106,8 +114,8 @@
             Swatches,
         },
         updated() {
-            let loader = document.getElementById('loader-bg');
-            loader.style.visibility = 'visible';
+            // let loader = document.getElementById('loader-bg');
+            // loader.style.visibility = 'visible';
 
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;

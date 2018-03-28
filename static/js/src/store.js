@@ -92,7 +92,7 @@ const store = new Vuex.Store({
                     response => {
                         // console.log(response.body)
                         store.commit('ADD_SUBNETWORK', response.body['interaction_networks']);
-                        store.commit('ADD_PATHWAYS_EDGE_COUNTS', response.body['pathways_edge_counts']);
+                        store.commit('ADD_PATHWAYS_EDGE_COUNTS', JSON.parse(response.body['pathways_edge_counts']));
                     }
                 )
                 .catch(
