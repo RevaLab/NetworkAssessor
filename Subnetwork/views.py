@@ -6,7 +6,7 @@ from networkx.readwrite import json_graph
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .network_helpers import get_next_degree, get_pathway_counts
+from .network_helpers import get_next_degree, normalize_user_pathways_by_gene
 
 
 @csrf_exempt
@@ -39,7 +39,6 @@ def index(request):
             node_list += pathways[pathway]
         except KeyError:
             node_list += user_pathways[pathway]['genes']
-            print("UPDATED NODE LIST!!!")
 
     node_list = list(set(node_list))
 
@@ -67,6 +66,21 @@ def index(request):
 
     # create subgraph from node list, including all pathway genes
     whole_subgraph = nx.Graph(interaction_db.subgraph(node_list))
+
+    # add user pathways to subgraph nodes
+    user_pathways_by_gene = normalize_user_pathways_by_gene(user_pathways)
+    subgraph_pathways = nx.get_node_attributes(whole_subgraph, 'pathways')
+    # print(pathways)
+    for gene in user_pathways_by_gene:
+        if gene in subgraph_pathways:
+            current_gene_pathways = subgraph_pathways[gene]
+        else:
+            current_gene_pathways = []
+
+        if gene in node_list:
+            current_gene_pathways += user_pathways_by_gene[gene]
+
+        print(current_gene_pathways)
 
     # find next degree
     first_degree_sub = get_next_degree(query_genes, whole_subgraph)
