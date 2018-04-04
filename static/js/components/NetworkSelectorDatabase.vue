@@ -29,10 +29,12 @@
                     loader.style.visibility = 'visible';
                     const pathways = this.$store.state.selectedPathways;
                     const queryGenes = this.$store.state.geneInput;
+                    const userPathways = this.$store.state.userPathways;
 
                     const queryGenesPathwayData = {
                         pathways,
                         queryGenes,
+                        userPathways,
                         networkDatabase: database
                     };
 

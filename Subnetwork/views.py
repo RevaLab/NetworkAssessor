@@ -20,6 +20,8 @@ def index(request):
     # create subnetwork with those genes + query genes
     # separate query genes and selected pathways
     query_genes = data['queryGenes']
+    user_pathways = data['userPathways']
+    user_pathway_list = list(user_pathways.keys())
     pathway_list = data['pathways']
     db = data['networkDatabase']
 
@@ -33,7 +35,11 @@ def index(request):
         if pathway == 'query-list':
             continue
 
-        node_list += pathways[pathway]
+        try:
+            node_list += pathways[pathway]
+        except KeyError:
+            node_list += user_pathways[pathway]['genes']
+            print("UPDATED NODE LIST!!!")
 
     node_list = list(set(node_list))
 

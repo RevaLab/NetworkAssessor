@@ -40,10 +40,12 @@
                 };
 
                 const currentSub = subnetwork[networkDegree];
+
                 if (currentSub) {
                     statistics.nodeLength = currentSub["nodes"].length;
                     statistics.edgesLength = currentSub["links"].length;
                 }
+
                 return statistics;
             },
 

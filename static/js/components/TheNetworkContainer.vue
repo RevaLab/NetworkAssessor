@@ -2,8 +2,8 @@
     <div class="network-container">
         <div class="controls">
             <network-controls />
-            <pathway-menu />
             <user-pathways />
+            <pathway-menu />
         </div>
         <network />
     </div>

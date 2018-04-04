@@ -54,8 +54,14 @@
               return this.$store.state.pathwaysEdgeCounts[this.pathwayName]
             },
             pathwayEdgeCount() {
+                const subnetwork = this.$store.state.subnetwork;
                 const networkDegree = this.$store.state.networkDegree;
-                return this.$store.state.pathwaysEdgeCounts[this.pathwayName][networkDegree]
+
+                const currentSub = subnetwork[networkDegree];
+
+                const edgesLength = currentSub["links"].length;
+
+                return this.$store.state.pathwaysEdgeCounts[this.pathwayName][networkDegree] - edgesLength;
             },
             pathwayMemberCount() {
                 return this.$store.state.pathwayMemberCounts[this.pathwayName]
@@ -69,7 +75,7 @@
                     let selectedPathways = this.$store.state.selectedPathways;
                     const queryGenes = this.$store.state.geneInput;
                     const networkDatabase = this.$store.state.networkDatabase;
-
+                    const userPathways = this.$store.state.userPathways;
                     const isNotSelected = !selectedPathways.includes(this.pathwayName);
 
                     if (isNotSelected) {
@@ -81,8 +87,9 @@
 
                     const queryGenesPathwayData = {
                         pathways: selectedPathways,
-                        queryGenes: queryGenes,
-                        networkDatabase
+                        queryGenes,
+                        networkDatabase,
+                        userPathways
                     };
 
                     // console.log(selectedPathways)

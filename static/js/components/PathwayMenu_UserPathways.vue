@@ -25,13 +25,7 @@
             Swatches
         },
         mounted() {
-            let userPathways = this.$ls.get('userPathways', {
-                'original_pathway': {
-                    color: '#000000',
-                    genes: ['PIAS1', 'CAPN3', 'FLT3', 'AKT1', 'PTPN1', 'OAT', 'GLA', 'AGXT', 'CDKN1B', 'SMO', 'ASS1', 'CCNE1', 'MAP2K4', 'THEM4', 'SGCB']
-                }
-            });
-            this.$store.dispatch('updateUserPathways', userPathways)
+
         }
     }
 </script>
