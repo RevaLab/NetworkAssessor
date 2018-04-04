@@ -31,7 +31,7 @@
                 </div>
                 <div class="tooltip">
                     <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
-                    <span class="tooltiptext">Total graph edges if you add this pw</span>
+                    <span class="tooltiptext">Additional edges if you add this pw</span>
                 </div>
             </div>
         </div>
