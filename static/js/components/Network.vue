@@ -233,8 +233,8 @@
         let tocolor = "fill";
         let towhite = "stroke";
         if (outline) {
-            tocolor = "stroke"
-            towhite = "fill"
+            tocolor = "stroke";
+            towhite = "fill";
         }
 
         let circle = node.append("path")
