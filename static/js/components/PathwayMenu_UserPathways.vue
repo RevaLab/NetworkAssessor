@@ -43,7 +43,17 @@
                 // remove user pathway from list in store
                 delete userPathways[pathway];
                 this.$store.dispatch('updateUserPathways', userPathways);
-                // this.$store.dispatch('updatePathwayDisplayNames', {pathway, update: 'remove'});
+
+                const displayData = {
+                  pathways: {},
+                  add: false
+                };
+                displayData['pathways'][pathway] = pathway;
+
+                this.$store.dispatch(
+                    'updatePathwayDisplayNames',
+                    displayData
+                );
 
                 // remove user pathway from DOM
                 const pathwayId = pathway + '-li';
