@@ -31,9 +31,6 @@ export default {
     methods: {
         addPathway() {
             let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
-            // console.log("BEFORE ADDING");
-            // console.log(this.$ls.get('userPathways'));
-            console.log(this.title.toLowerCase().split(' ').join("_"))
             let snakeCaseTitle = this.title.toLowerCase().split(' ').join("_");
 
             userPathways[snakeCaseTitle] = {
@@ -43,8 +40,6 @@ export default {
             };
 
             this.$ls.set('userPathways', JSON.stringify(userPathways));
-            console.log("AFTER ADDING");
-            console.log(this.$ls.get('userPathways'));
 
             this.$store.dispatch('updateUserPathways', userPathways);
             const displayData = {

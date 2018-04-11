@@ -1,13 +1,5 @@
 <template>
     <div class="gene-input">
-        <!--<a v-on:click="showFirstModal">FIRST MODAL</a>-->
-        <!--<a v-on:click="showSecondModal">SECOND MODAL</a>-->
-        <!--<modal name="first-modal">-->
-          <!--first-modal!-->
-        <!--</modal>-->
-        <!--<modal name="second-modal">-->
-          <!--second-modal!-->
-        <!--</modal>-->
         <button id="try-example"
                 class="button is-info"
                 v-on:click="addExampleList"
