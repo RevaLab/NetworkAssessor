@@ -1,6 +1,7 @@
 <template>
     <div class="pathway-statistics">
-        <modal name="pathway-members" class="pathway-members-modal">OKAY
+        <modal v-bind:name="modalName">
+            <pathway-members v-bind:pathway="pathway"/>
         </modal>
         <div class="tooltip">
             <a v-on:click="showPathwayMembers">{{ pathwayMemberCount }}</a>
@@ -14,13 +15,22 @@
 </template>
 
 <script>
+    import pathwayMembers from './PathwayMembers.vue'
+
     export default {
         name: "pathway-statistics",
         data() {
-            return {}
+            return {
+            }
         },
         props: ['pathway'],
+        components: {
+            pathwayMembers
+        },
         computed: {
+            modalName() {
+              return this.pathway + "_members"
+            },
             pathwayEdgesReady() {
               return this.$store.state.pathwaysEdgeCounts[this.pathway]
             },
@@ -36,11 +46,11 @@
             },
             pathwayMemberCount() {
                 return this.$store.state.pathwayMemberCounts[this.pathway]
-            },
+            }
         },
         methods: {
             showPathwayMembers() {
-                this.$modal.show('pathway-members')
+                this.$modal.show(this.modalName)
             }
         }
     }
@@ -74,4 +84,5 @@
     .pathway-statistics {
         justify-content: right;
     }
+
 </style>
