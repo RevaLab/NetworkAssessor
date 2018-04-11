@@ -44,6 +44,7 @@
                 delete userPathways[pathway];
                 this.$store.dispatch('updateUserPathways', userPathways);
 
+                // remove user pathway display name
                 const displayData = {
                   pathways: {},
                   add: false

@@ -152,19 +152,12 @@ const store = new Vuex.Store({
         },
         'UPDATE_PATHWAY_DISPLAY_NAMES' (state, displayData) {
             const { pathways, add } = displayData;
-            console.log(pathways);
-            console.log(add);
             if(add) {
                 state.pathwayDisplayNames = {...state.pathwayDisplayNames, ...pathways}
             } else {
-                // let newDisplayNames = {};
                 for (let pathway in pathways) {
-                    "BOOOOP"
-                    console.log(pathway)
-                    console.log(state.pathwayDisplayNames[pathway])
                     delete state.pathwayDisplayNames[pathway]
                 }
-                // console.log(newDisplayNames)
             }
         },
         'UPDATE_SELECTED_PATHWAYS' (state, selectedPathways) {

@@ -429,7 +429,7 @@
         resize();
 
         d3.select(window).on("resize", resize)
-            .on("keydown", keydown);
+            // .on("keydown", keydown);
 
         force.on("tick", function (e) {
             // nodes[0].x = w / 2;
