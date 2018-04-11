@@ -62,34 +62,20 @@
             },
             submitGeneList() {
                 let geneInput = this.$store.state.geneInput;
-                let userPathwaysObj = {
-                    'original_pathway_1': {
-                        color: '#000000',
-                        displayName: 'Original Pathway 1',
-                        genes: ['AKT1', 'AKT2', 'AKT3', 'GSK3B', 'MTOR', 'PDPK1', 'PIK3CA', 'PIK3CB', 'PIK3CD', 'PIK3CG', 'PIK3R1', 'PIK3R2', 'PIK3R3', 'PIK3R4', 'PIK3R5', 'PIK3R6', 'PRAS40', 'PTEN', 'TSC1', 'TSC2']
-                    }
-                };
+                let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
 
                 let displayData = {
                     pathways: {},
                     add: true
                 };
 
-                for (let pathway in userPathwaysObj) {
+                for (let pathway in userPathways) {
                     displayData['pathways'][pathway] =
-                        userPathwaysObj[pathway]['displayName'];
+                        userPathways[pathway]['displayName'];
                 }
-
-                this.$ls.set(
-                    'userPathways',
-                    JSON.stringify(userPathwaysObj)
-                );
-
-                let userPathways = JSON.parse(this.$ls.get('userPathways', 'boop fallback'));
 
                 this.$store.dispatch('updateUserPathways', userPathways);
                 this.$store.dispatch('updatePathwayDisplayNames', displayData);
-
 
                 this.$store.dispatch(
                     'getPathwaySubnetwork',
