@@ -15,7 +15,6 @@
         name: "pathway-menu",
         computed: {
           pathways() {
-              // let pathways = ['query-list'];
               const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
               const networkDegree = this.$store.state.networkDegree;
               const pathwayMemberCounts = this.$store.state.pathwayMemberCounts;
@@ -26,7 +25,12 @@
               // for now it seems the edges are not being calculated correctly for user pws
 
               for (let pathway in pathwayMemberCounts) {
-                    sortable.push([pathway, pathwaysEdgeCounts[pathway][networkDegree]]);
+                    sortable.push(
+                        [
+                            pathway,
+                            pathwaysEdgeCounts[pathway][networkDegree]
+                        ]
+                    );
               }
 
               sortable.sort(function(a, b) {
@@ -37,7 +41,6 @@
               sortable.forEach(pathway => {
                   ordered_pathways.push(pathway[0])
               });
-              // Sort pathway member counts from highest to lowest
               return ordered_pathways;
           }
         },

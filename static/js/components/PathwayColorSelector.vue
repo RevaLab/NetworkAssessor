@@ -24,16 +24,7 @@
                         :trigger-style="triggerStyle"
                 />
             </div>
-            <div class="pw-statistics">
-                <div class="tooltip">
-                    <p>{{ pathwayMemberCount }}</p>
-                    <span class="tooltiptext">Pathway Members</span>
-                </div>
-                <div class="tooltip">
-                    <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
-                    <span class="tooltiptext">Additional edges if you add this pw</span>
-                </div>
-            </div>
+            <pathway-statistics v-bind:pathway="pathway"/>
         </div>
     </div>
 </template>
@@ -41,6 +32,7 @@
 <script>
     import Swatches from 'vue-swatches'
     import "vue-swatches/dist/vue-swatches.min.css"
+    import pathwayStatistics from './PathwayStatistics.vue'
 
     export default {
         name: "network-controls",
@@ -50,24 +42,8 @@
         },
         props: ['pathway'],
         computed: {
-            pathwayEdgesReady() {
-              return this.$store.state.pathwaysEdgeCounts[this.pathway]
-            },
-            pathwayEdgeCount() {
-                const subnetwork = this.$store.state.subnetwork;
-                const networkDegree = this.$store.state.networkDegree;
-
-                const currentSub = subnetwork[networkDegree];
-
-                const edgesLength = currentSub["links"].length;
-
-                return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree] - edgesLength;
-            },
-            pathwayMemberCount() {
-                return this.$store.state.pathwayMemberCounts[this.pathway]
-            },
             pathwayName() {
-                const displayNames = this.$store.state.pathwayDisplayNames
+                const displayNames = this.$store.state.pathwayDisplayNames;
                 return displayNames[this.pathway]
             },
             checked: {
@@ -135,6 +111,7 @@
         },
         components: {
             Swatches,
+            pathwayStatistics
         },
         updated() {
             // let loader = document.getElementById('loader-bg');
@@ -183,33 +160,5 @@
 
     #pw-checkbox {
         margin: auto 5px;
-    }
-
-    .tooltip {
-    /*position: relative;*/
-        display: inline-block;
-        border-bottom: 1px dotted black;
-    }
-
-    .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 120px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
-
-        /* Position the tooltip */
-        position: absolute;
-        z-index: 1;
-    }
-
-    .tooltip:hover .tooltiptext {
-        visibility: visible;
-    }
-
-    .pw-statistics {
-        justify-content: right;
     }
 </style>

@@ -84,7 +84,7 @@
     }
 </script>
 
-<style scoped>
+<style>
 .gene-input {
     display: flex;
     flex-direction: column;
