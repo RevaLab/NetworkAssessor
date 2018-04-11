@@ -8,7 +8,7 @@
             </modal>
         </div>
         <ul id="pathways-ul">
-            <li v-for="(pathwayData, pathway) in userPathways" v-bind:key="pathway" v-bind:id="pathway + '-li'">
+            <li v-for="(pathwayData, pathway) in userPathways" v-bind:key="pathway" >
                 <pathway-color-selector v-bind:pathway="pathway" />
                 <a class="delete" v-on:click="removeUserPathway(pathway)"></a>
             </li>
@@ -38,7 +38,7 @@
                 this.$modal.show('add-user-pathway')
             },
             removeUserPathway(pathway) {
-                let userPathways = this.$store.state.userPathways;
+                let userPathways = Object.assign({}, this.$store.state.userPathways);
 
                 // remove user pathway from list in store
                 delete userPathways[pathway];
@@ -55,12 +55,6 @@
                     'updatePathwayDisplayNames',
                     displayData
                 );
-
-                // remove user pathway from DOM
-                const pathwayId = pathway + '-li';
-                let allPathways = document.getElementById('pathways-ul');
-                const pathwayToRemove = document.getElementById(pathwayId);
-                allPathways.removeChild(pathwayToRemove);
 
                 // remove user pathway from selected pathways
                 let selectedPathways = this.$store.state.selectedPathways;
