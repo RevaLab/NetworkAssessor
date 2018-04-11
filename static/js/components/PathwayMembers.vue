@@ -1,6 +1,6 @@
 <template>
     <div class="pathway-members">
-        <h3 v-bind:style="styleObject">{{ pathway }}</h3>
+        <h3 v-bind:style="styleObject">{{ pathwayName }}</h3>
         <div class="gene-list-pathway-members">{{ pathwayMembers }}</div>
     </div>
 </template>
@@ -13,12 +13,19 @@
         },
         props: ['pathway'],
         computed: {
+            pathwayName() {
+                return this.$store.state.pathwayDisplayNames[this.pathway]
+            },
             pathwayMembers() {
                 return this.$store.state.pathwayMembers[this.pathway].join("\n")
             },
             styleObject() {
                 let pathwayColor = this.$store.state.pathwayColors[this.pathway]
-                return {backgroundColor: pathwayColor}
+                return {
+                    margin: "10px",
+                    padding: "10px",
+                    backgroundColor: pathwayColor
+                }
             }
         }
     }
@@ -31,6 +38,8 @@
     }
 
     .gene-list-pathway-members {
+        margin: 10px;
+        padding: 10px;
         white-space: pre;
     }
 
