@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueLocalStorage from 'vue-localstorage'
 import VueRouter from 'vue-router';
+import VModal from 'vue-js-modal';
 
 import store from './src/store.js';
 
@@ -13,7 +14,8 @@ Vue.use(VueRouter);
 Vue.use(VueLocalStorage, {
   name: 'ls',
   bind: true
-})
+});
+Vue.use(VModal);
 
 const routes = [
     { path: '/', component: GeneInput },

@@ -8,7 +8,8 @@
                 </div>
             </div>
             <div id="loader-bg">
-                <div id="loader" class="loader"></div>
+                <!--<div id="loader" class="loader"></div>-->
+                <div id="loader"></div>
             </div>
             <div id="d3-el"></div>
         </div>
@@ -501,9 +502,6 @@
                 force.stop();
             }
             else if (d3.event.keyCode >= 48 && d3.event.keyCode <= 90 && !d3.event.ctrlKey && !d3.event.altKey && !d3.event.metaKey) {
-                console.log('you pressed: ', d3.event.keyCode);
-                console.log('you pressed: ', String.fromCharCode(d3.event.keyCode));
-
                 switch (String.fromCharCode(d3.event.keyCode)) {
                     case "C": keyc = !keyc; break;
                     case "S": keys = !keys; break;

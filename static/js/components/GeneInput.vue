@@ -1,5 +1,13 @@
 <template>
     <div class="gene-input">
+        <!--<a v-on:click="showFirstModal">FIRST MODAL</a>-->
+        <!--<a v-on:click="showSecondModal">SECOND MODAL</a>-->
+        <!--<modal name="first-modal">-->
+          <!--first-modal!-->
+        <!--</modal>-->
+        <!--<modal name="second-modal">-->
+          <!--second-modal!-->
+        <!--</modal>-->
         <button id="try-example"
                 class="button is-info"
                 v-on:click="addExampleList"
@@ -29,6 +37,7 @@
         name: "gene-input",
         data () {
             return {
+                showModal: false
             }
         },
         computed: {
@@ -56,19 +65,20 @@
                 let userPathwaysObj = JSON.stringify({
                     'original_pathway_1': {
                         color: '#000000',
+                        displayTitle: 'Original Pathway 1',
                         genes: ['AKT1', 'AKT2', 'AKT3', 'GSK3B', 'MTOR', 'PDPK1', 'PIK3CA', 'PIK3CB', 'PIK3CD', 'PIK3CG', 'PIK3R1', 'PIK3R2', 'PIK3R3', 'PIK3R4', 'PIK3R5', 'PIK3R6', 'PRAS40', 'PTEN', 'TSC1', 'TSC2']
                     },
                     'original_pathway_2': {
                         color: '#cc66cc',
+                        displayTitle: 'Original Pathway 2',
                         genes: ['AKT1', 'AKT2', 'AKT3', 'GSK3B', 'MTOR', 'PDPK1', 'PIK3CA', 'PIK3CB', 'PIK3CD', 'PIK3CG', 'PIK3R1', 'PIK3R2', 'PIK3R3', 'PIK3R4', 'PIK3R5', 'PIK3R6', 'PRAS40', 'PTEN', 'TSC1', 'TSC2']
                     }
                 });
                 // this.$ls.set('userPathways')
-                this.$ls.set('userPathways', userPathwaysObj)
+                this.$ls.set('userPathways', userPathwaysObj);
                 let userPathways = JSON.parse(this.$ls.get('userPathways', 'boop fallback'));
 
                 // this.$ls.set('userPathways', userPathways);
-                console.log(userPathways);
                 this.$store.dispatch('updateUserPathways', userPathways);
                 this.$store.dispatch(
                     'getPathwaySubnetwork',
