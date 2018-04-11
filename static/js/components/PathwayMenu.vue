@@ -2,7 +2,7 @@
     <div class="pathway-menu">
         <ul id="pathways-ul">
             <li v-for="pathway in pathways">
-                <pathway-color-selector v-bind:pathwayName="pathway"/>
+                <pathway-color-selector v-bind:pathway="pathway"/>
             </li>
         </ul>
     </div>

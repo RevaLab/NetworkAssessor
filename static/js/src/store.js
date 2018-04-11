@@ -80,7 +80,39 @@ const store = new Vuex.Store({
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 14
         },
         predefinedPathways: ['query-list', 'AKT_ext_path', 'Apoptosis_path', 'Apoptosis_ext_path', 'CALC_PKC_ext_path', 'Cellular_Architecture_and_Microenvironment_path', 'Cell_Cycle_Control_path', 'Cell_Cycle_ext_path', 'Chromatin_Remodeling-DNA_Methylation_path', 'DNA_Damage_path', 'ERK_ext_path', 'G-Protein_Signaling_path', 'Hedgehog_Signaling_path', 'HIPPO_ext_path', 'Hormone_Signaling_path', 'Immune_Checkpoints_path', 'B-Catenin-WNT_Signaling_path', 'Jack_Stat_ext_path', 'Janus_Kinase_JAK-or-Signal_Transducers_and_Activators_of_Transcription_STAT_path', 'Kinase_Fusions_path', 'Metabolic_Signaling_path', 'NFKB_ext_path', 'Notch_ext_path', 'PI3K-AKT1-MTOR_Signaling_path', 'Protein_Degradation_Ubiquitination_path', 'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path', 'RNA_Splicing_path', 'TGF-B_Signaling_path', 'TGFB_ext_path', 'WNT_ext_path', 'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path'],
-        userPathways: {}
+        userPathways: {},
+        pathwayDisplayNames: {
+            'AKT_ext_path': 'AKT Extension',
+            'Apoptosis_path': 'Apoptosis',
+            'Apoptosis_ext_path': 'Apoptosis Extension',
+            'CALC_PKC_ext_path': 'CALC-PKC Extension',
+            'Cellular_Architecture_and_Microenvironment_path': 'Cellular Architecture and Microenvironment',
+            'Cell_Cycle_Control_path': 'Cell Cycle Control',
+            'Cell_Cycle_ext_path': 'Cell Cycle Extension',
+            'Chromatin_Remodeling-DNA_Methylation_path': 'Chromatin Remodeling-DNA Methylation',
+            'DNA_Damage_path': 'DNA Damage',
+            'ERK_ext_path': 'ERK Extension',
+            'G-Protein_Signaling_path': 'G-Protein Signaling',
+            'Hedgehog_Signaling_path': 'Hedgehog Signaling',
+            'HIPPO_ext_path': 'HIPPO Extension',
+            'Hormone_Signaling_path': 'Hormone Signaling',
+            'Immune_Checkpoints_path': 'Immune Checkpoints',
+            'B-Catenin-WNT_Signaling_path': 'B-Catenin-WNT Signaling',
+            'Jack_Stat_ext_path': 'JAK-STAT Extension',
+            'Janus_Kinase_JAK-or-Signal_Transducers_and_Activators_of_Transcription_STAT_path': 'JAK-STAT',
+            'Kinase_Fusions_path': 'Kinase Fusions',
+            'Metabolic_Signaling_path': 'Metabolic Signaling',
+            'NFKB_ext_path': 'NFKB Extension',
+            'Notch_ext_path': 'Notch Extension',
+            'PI3K-AKT1-MTOR_Signaling_path': 'PI3K-AKT1-MTOR Signaling',
+            'Protein_Degradation_Ubiquitination_path': 'Protein Degradation-Ubiquitination',
+            'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path': 'RTK/Growth Factor Signaling',
+            'RNA_Splicing_path': 'RNA Splicing',
+            'TGF-B_Signaling_path': 'TGF-B Signaling',
+            'TGFB_ext_path': 'TGFB Extension',
+            'WNT_ext_path': 'WNT Extension',
+            'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 'MAP Kinase Signaling'
+        },
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
@@ -115,9 +147,18 @@ const store = new Vuex.Store({
             state.networkDatabase = database;
         },
         'UPDATE_PATHWAY_COLOR' (state, pathway_color_data) {
-            let pathway = pathway_color_data['pathway'];
-            let color = pathway_color_data['color'];
+            const { pathway, color } = pathway_color_data;
             state.pathwayColors[pathway] = color;
+        },
+        'UPDATE_PATHWAY_DISPLAY_NAMES' (state, displayData) {
+            const { pathways, add } = displayData;
+            console.log(pathways);
+            console.log(add);
+            if (add) {
+                state.pathwayDisplayNames = {...state.pathwayDisplayNames, ...pathways}
+            } else {
+
+            }
         },
         'UPDATE_SELECTED_PATHWAYS' (state, selectedPathways) {
             state.selectedPathways = selectedPathways
@@ -170,6 +211,9 @@ const store = new Vuex.Store({
                 pathwayColors[pathway] = userPathways[pathway]['color'];
             }
             store.commit('UPDATE_USER_PATHWAY_COLORS', pathwayColors)
+        },
+        updatePathwayDisplayNames(store, displayData) {
+            store.commit('UPDATE_PATHWAY_DISPLAY_NAMES', displayData)
         }
     },
 });

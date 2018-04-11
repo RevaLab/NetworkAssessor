@@ -9,7 +9,7 @@
         </div>
         <ul id="pathways-ul">
             <li v-for="(pathwayData, pathway) in userPathways" v-bind:key="pathway" v-bind:id="pathway + '-li'">
-                <pathway-color-selector v-bind:pathwayName="pathway" />
+                <pathway-color-selector v-bind:pathway="pathway" />
                 <a class="delete" v-on:click="removeUserPathway(pathway)"></a>
             </li>
         </ul>
@@ -43,6 +43,7 @@
                 // remove user pathway from list in store
                 delete userPathways[pathway];
                 this.$store.dispatch('updateUserPathways', userPathways);
+                // this.$store.dispatch('updatePathwayDisplayNames', {pathway, update: 'remove'});
 
                 // remove user pathway from DOM
                 const pathwayId = pathway + '-li';
@@ -72,15 +73,6 @@
                 // update pathways in local storage
                 this.$ls.set('userPathways', JSON.stringify(userPathways));
             }
-        },
-        mounted() {
-
-        },
-        updated() {
-            // let loader = document.getElementById('loader-bg');
-            // loader.style.visibility = 'visible';
-
-
         },
     }
 </script>

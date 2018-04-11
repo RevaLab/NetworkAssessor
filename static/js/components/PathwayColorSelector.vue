@@ -48,10 +48,10 @@
             return {
             }
         },
-        props: ['pathwayName'],
+        props: ['pathway'],
         computed: {
             pathwayEdgesReady() {
-              return this.$store.state.pathwaysEdgeCounts[this.pathwayName]
+              return this.$store.state.pathwaysEdgeCounts[this.pathway]
             },
             pathwayEdgeCount() {
                 const subnetwork = this.$store.state.subnetwork;
@@ -61,27 +61,31 @@
 
                 const edgesLength = currentSub["links"].length;
 
-                return this.$store.state.pathwaysEdgeCounts[this.pathwayName][networkDegree] - edgesLength;
+                return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree] - edgesLength;
             },
             pathwayMemberCount() {
-                return this.$store.state.pathwayMemberCounts[this.pathwayName]
+                return this.$store.state.pathwayMemberCounts[this.pathway]
+            },
+            pathwayName() {
+                const displayNames = this.$store.state.pathwayDisplayNames
+                return displayNames[this.pathway]
             },
             checked: {
                 get() {
                     let selectedPathways = this.$store.state.selectedPathways;
-                    return selectedPathways.includes(this.pathwayName)
+                    return selectedPathways.includes(this.pathway)
                 },
                 set() {
                     let selectedPathways = this.$store.state.selectedPathways;
                     const queryGenes = this.$store.state.geneInput;
                     const networkDatabase = this.$store.state.networkDatabase;
                     const userPathways = this.$store.state.userPathways;
-                    const isNotSelected = !selectedPathways.includes(this.pathwayName);
+                    const isNotSelected = !selectedPathways.includes(this.pathway);
 
                     if (isNotSelected) {
-                        selectedPathways = selectedPathways.concat([this.pathwayName]);
+                        selectedPathways = selectedPathways.concat([this.pathway]);
                     } else {
-                        let pw_index = selectedPathways.indexOf(this.pathwayName);
+                        let pw_index = selectedPathways.indexOf(this.pathway);
                         selectedPathways.splice(pw_index, 1);
                     }
 
@@ -100,11 +104,11 @@
             },
             color: {
               get() {
-                  return this.$store.state.pathwayColors[this.pathwayName]
+                  return this.$store.state.pathwayColors[this.pathway]
               },
               set(hexValue) {
                   let pathway_color_data = {
-                      pathway: this.pathwayName,
+                      pathway: this.pathway,
                       color: hexValue
                   };
 
@@ -126,7 +130,7 @@
                 return styleOptions;
             },
             queryList () {
-                return this.pathwayName === 'query-list';
+                return this.pathway === 'query-list';
             }
         },
         components: {
@@ -139,7 +143,7 @@
             const selectedPathways = this.$store.state.selectedPathways;
             const pathwayColors = this.$store.state.pathwayColors;
 
-            if (selectedPathways.includes(this.pathwayName)) {
+            if (selectedPathways.includes(this.pathway)) {
                 for (let i = 0; i < selectedPathways.length; i ++) {
                     let pathwayToColor = selectedPathways[i];
                     const nodes = document.querySelectorAll(`.${pathwayToColor}`);
