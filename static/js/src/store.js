@@ -213,21 +213,26 @@ const store = new Vuex.Store({
             const { pathway, color } = pathway_color_data;
             state.pathwayColors[pathway] = color;
         },
-        'UPDATE_PATHWAY_DISPLAY_NAMES' (state, displayData) {
+        'UPDATE_USER_PATHWAY_DISPLAY' (state, displayData) {
             const { pathways, add } = displayData;
             if(add) {
-                state.pathwayDisplayNames = {...state.pathwayDisplayNames, ...pathways}
+                state.pathwayDisplayNames = {...state.pathwayDisplayNames, ...pathways};
             } else {
                 for (let pathway in pathways) {
-                    delete state.pathwayDisplayNames[pathway]
+                    delete state.pathwayDisplayNames[pathway];
+                    delete state.pathwaysEdgeCounts[pathway];
                 }
             }
+
         },
         'UPDATE_SELECTED_PATHWAYS' (state, selectedPathways) {
             state.selectedPathways = selectedPathways
         },
         'UPDATE_USER_PATHWAYS' (state, userPathways) {
-            state.userPathways = userPathways
+            state.userPathways = userPathways;
+            for (let pathway in userPathways) {
+                state.pathwayMemberCounts[pathway] = userPathways[pathway]['genes'].length;
+            }
         }
     },
     actions: {
@@ -275,8 +280,8 @@ const store = new Vuex.Store({
             }
             store.commit('UPDATE_USER_PATHWAY_COLORS', pathwayColors)
         },
-        updatePathwayDisplayNames(store, displayData) {
-            store.commit('UPDATE_PATHWAY_DISPLAY_NAMES', displayData)
+        updateUserPathwayDisplay(store, displayData) {
+            store.commit('UPDATE_USER_PATHWAY_DISPLAY', displayData)
         }
     },
 });

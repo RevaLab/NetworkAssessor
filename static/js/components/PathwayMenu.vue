@@ -15,23 +15,26 @@
         name: "pathway-menu",
         computed: {
           pathways() {
+              const predefinedPathways = this.$store.state.predefinedPathways;
               const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
               const networkDegree = this.$store.state.networkDegree;
-              const pathwayMemberCounts = this.$store.state.pathwayMemberCounts;
 
               let sortable = [];
 
               // pathwayMemberCounts selects only the curated cancer pathways, since
               // for now it seems the edges are not being calculated correctly for user pws
 
-              for (let pathway in pathwayMemberCounts) {
+              predefinedPathways.forEach(pathway => {
+                  if (pathway === 'query-list') {
+                        return;
+                  }
                     sortable.push(
                         [
                             pathway,
                             pathwaysEdgeCounts[pathway][networkDegree]
                         ]
                     );
-              }
+              });
 
               sortable.sort(function(a, b) {
                     return b[1] - a[1];

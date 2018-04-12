@@ -49,7 +49,7 @@ export default {
             displayData['pathways'][snakeCaseTitle] = this.title;
 
             this.$store.dispatch(
-                'updatePathwayDisplayNames',
+                'updateUserPathwayDisplay',
                 displayData
             );
 

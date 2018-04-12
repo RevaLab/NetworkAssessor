@@ -7,12 +7,14 @@
                 <user-pathway-add-form />
             </modal>
         </div>
-        <ul id="pathways-ul">
-            <li v-for="(pathwayData, pathway) in userPathways" v-bind:key="pathway" >
-                <pathway-color-selector v-bind:pathway="pathway" />
-                <a class="delete" v-on:click="removeUserPathway(pathway)"></a>
-            </li>
-        </ul>
+        <div class="user-pathway-menu" v-if="userPathwayEdges">
+            <ul id="pathways-ul">
+                    <li v-for="pathway in sortedUserPathways" v-bind:key="pathway" >
+                            <pathway-color-selector v-bind:pathway="pathway" />
+                            <a class="delete" v-on:click="removeUserPathway(pathway)"></a>
+                    </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -25,8 +27,56 @@
     export default {
         name: "user-pathways",
         computed: {
-            userPathways() {
-                return this.$store.state.userPathways;
+            userPathwayEdges() {
+                const userPathways = this.$store.state.userPathways;
+                const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
+
+                for (let pathway in userPathways) {
+                    // alert(pathway)
+                    if (!pathwaysEdgeCounts[pathway]) {
+                // alert('returning false')
+                        return false;
+                    }
+                }
+                // alert('returning true')
+                return true;
+            },
+            sortedUserPathways() {
+                const userPathways = Object.keys(this.$store.state.userPathways);
+                const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
+                const networkDegree = this.$store.state.networkDegree;
+
+                let sortable = [];
+
+                // pathwayMemberCounts selects only the curated cancer pathways, since
+                // for now it seems the edges are not being calculated correctly for user pws
+
+                // SHRINK THIS FOR DOWN TO THE GROUP
+                userPathways.forEach(pathway => {
+                    alert(pathway)
+                    // console.log(userPathways)
+                    // console.log(pathwaysEdgeCounts)
+                    // console.log(pathwaysEdgeCounts[pathway])
+                    // if (pathwaysEdgeCounts[pathway]) {
+                        sortable.push(
+                            [
+                                pathway,
+                                pathwaysEdgeCounts[pathway][networkDegree]
+                            ]
+                        );
+                    // }
+                  });
+
+
+                sortable.sort(function (a, b) {
+                    return b[1] - a[1];
+                });
+
+                let ordered_pathways = [];
+                sortable.forEach(pathway => {
+                    ordered_pathways.push(pathway[0])
+                });
+                return ordered_pathways;
             },
         },
         components: {
@@ -45,7 +95,7 @@
                 delete userPathways[pathway];
                 this.$store.dispatch('updateUserPathways', userPathways);
 
-                // remove user pathway display name
+                // remove user pathway display data
                 const displayData = {
                   pathways: {},
                   add: false
@@ -53,7 +103,7 @@
                 displayData['pathways'][pathway] = pathway;
 
                 this.$store.dispatch(
-                    'updatePathwayDisplayNames',
+                    'updateUserPathwayDisplay',
                     displayData
                 );
 

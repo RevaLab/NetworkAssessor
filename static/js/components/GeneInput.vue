@@ -67,7 +67,7 @@
                 }
 
                 this.$store.dispatch('updateUserPathways', userPathways);
-                this.$store.dispatch('updatePathwayDisplayNames', displayData);
+                this.$store.dispatch('updateUserPathwayDisplay', displayData);
 
                 this.$store.dispatch(
                     'getPathwaySubnetwork',
