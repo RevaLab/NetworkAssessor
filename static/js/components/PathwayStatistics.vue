@@ -45,6 +45,12 @@
                 return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree] - edgesLength;
             },
             pathwayMemberCount() {
+                const userPathway = this.$store.state.userPathways[this.pathway];
+
+                if (userPathway) {
+                    return userPathway['genes'].length
+                }
+
                 return this.$store.state.pathwayMemberCounts[this.pathway]
             }
         },

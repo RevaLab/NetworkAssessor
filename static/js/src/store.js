@@ -230,9 +230,6 @@ const store = new Vuex.Store({
         },
         'UPDATE_USER_PATHWAYS' (state, userPathways) {
             state.userPathways = userPathways;
-            for (let pathway in userPathways) {
-                state.pathwayMemberCounts[pathway] = userPathways[pathway]['genes'].length;
-            }
         }
     },
     actions: {

@@ -9,10 +9,10 @@
         </div>
         <div class="user-pathway-menu" v-if="userPathwayEdges">
             <ul id="pathways-ul">
-                    <li v-for="pathway in sortedUserPathways" v-bind:key="pathway" >
-                            <pathway-color-selector v-bind:pathway="pathway" />
-                            <a class="delete" v-on:click="removeUserPathway(pathway)"></a>
-                    </li>
+                <li v-for="pathway in sortedUserPathways" v-bind:key="pathway" >
+                        <pathway-color-selector v-bind:pathway="pathway" />
+                        <a class="delete" v-on:click="removeUserPathway(pathway)"></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -32,13 +32,10 @@
                 const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
 
                 for (let pathway in userPathways) {
-                    // alert(pathway)
                     if (!pathwaysEdgeCounts[pathway]) {
-                // alert('returning false')
                         return false;
                     }
                 }
-                // alert('returning true')
                 return true;
             },
             sortedUserPathways() {
@@ -48,24 +45,14 @@
 
                 let sortable = [];
 
-                // pathwayMemberCounts selects only the curated cancer pathways, since
-                // for now it seems the edges are not being calculated correctly for user pws
-
-                // SHRINK THIS FOR DOWN TO THE GROUP
                 userPathways.forEach(pathway => {
-                    alert(pathway)
-                    // console.log(userPathways)
-                    // console.log(pathwaysEdgeCounts)
-                    // console.log(pathwaysEdgeCounts[pathway])
-                    // if (pathwaysEdgeCounts[pathway]) {
-                        sortable.push(
-                            [
-                                pathway,
-                                pathwaysEdgeCounts[pathway][networkDegree]
-                            ]
-                        );
-                    // }
-                  });
+                    sortable.push(
+                    [
+                        pathway,
+                        pathwaysEdgeCounts[pathway][networkDegree]
+                    ]
+                    );
+                });
 
 
                 sortable.sort(function (a, b) {

@@ -17,6 +17,12 @@
                 return this.$store.state.pathwayDisplayNames[this.pathway]
             },
             pathwayMembers() {
+                const userPathway = this.$store.state.userPathways[this.pathway];
+
+                if (userPathway) {
+                    return userPathway['genes'].join("\n")
+                }
+
                 return this.$store.state.pathwayMembers[this.pathway].join("\n")
             },
             styleObject() {
