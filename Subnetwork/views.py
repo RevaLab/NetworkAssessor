@@ -49,6 +49,11 @@ def index(request):
         pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
         pathways_edge_counts[pathway] = pathway_edge_counts
 
+    for pathway in user_pathways:
+        per_pathway_node_list = node_list + user_pathways[pathway]['genes']
+        pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
+        pathways_edge_counts[pathway] = pathway_edge_counts
+
     # create subgraph from node list, including all pathway genes
     whole_subgraph = nx.Graph(interaction_db.subgraph(node_list))
 
