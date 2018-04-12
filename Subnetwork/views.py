@@ -6,7 +6,7 @@ from networkx.readwrite import json_graph
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .network_helpers import get_next_degree, normalize_user_pathways_by_gene
+from .network_helpers import get_next_degree, normalize_user_pathways_by_gene, find_pathway_edge_count
 
 
 @csrf_exempt
@@ -45,21 +45,8 @@ def index(request):
 
     # get counts for all pathways
     for pathway in pathways:
-        pathway_edge_counts = {
-            'first_degree': 0,
-            'second_degree': 0,
-            'third_degree': 0
-        }
         per_pathway_node_list = node_list + pathways[pathway]
-        per_pathway_subgraph = nx.Graph(interaction_db.subgraph(per_pathway_node_list))
-
-        per_pathway_first_degree_sub = get_next_degree(query_genes, per_pathway_subgraph)
-        per_pathway_second_degree_sub = get_next_degree(per_pathway_first_degree_sub.nodes(), per_pathway_subgraph)
-        per_pathway_third_degree_sub = get_next_degree(per_pathway_second_degree_sub.nodes(), per_pathway_subgraph)
-
-        pathway_edge_counts['first_degree'] = len(per_pathway_first_degree_sub.edges())
-        pathway_edge_counts['second_degree'] = len(per_pathway_second_degree_sub.edges())
-        pathway_edge_counts['third_degree'] = len(per_pathway_third_degree_sub.edges())
+        pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
         pathways_edge_counts[pathway] = pathway_edge_counts
 
     # create subgraph from node list, including all pathway genes

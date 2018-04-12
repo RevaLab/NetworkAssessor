@@ -20,7 +20,7 @@
                 return this.$store.state.pathwayMembers[this.pathway].join("\n")
             },
             styleObject() {
-                let pathwayColor = this.$store.state.pathwayColors[this.pathway]
+                let pathwayColor = this.$store.state.pathwayColors[this.pathway];
                 return {
                     margin: "10px",
                     padding: "10px",

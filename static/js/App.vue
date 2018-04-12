@@ -8,3 +8,11 @@
         </div>
     </div>
 </template>
+
+<style>
+    body, html{
+        padding:0!important;
+        margin:0 !important;
+        overflow: hidden;
+    }
+</style>
