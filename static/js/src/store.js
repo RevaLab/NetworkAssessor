@@ -7,14 +7,15 @@ Vue.use(Vuex) // only required if you're using modules.
 
 const store = new Vuex.Store({
     state: {
+        subnetwork: {'elements': {'nodes': []}},
         geneInput: [],
         listName: '',
         networkDegree: 'first_degree',
         networkDatabase: 'hprd',
         selectedPathways: ['query-list'],
-        subnetwork: {},
+        // subnetwork: {},
         pathwayColors: {
-            'query-list': '#dd7e6b',
+            // 'query-list': '#dd7e6b',
             'AKT_ext_path': '#ff9900',
             'Apoptosis_path': '#ffff00',
             'Apoptosis_ext_path': '#00ff00',
@@ -209,9 +210,15 @@ const store = new Vuex.Store({
         'UPDATE_NETWORK_DATABASE' (state, database) {
             state.networkDatabase = database;
         },
-        'UPDATE_PATHWAY_COLOR' (state, pathway_color_data) {
-            const { pathway, color } = pathway_color_data;
-            state.pathwayColors[pathway] = color;
+        'UPDATE_PATHWAY_COLOR' (state, pathwayColorData) {
+            const objectWithoutKey = (object, key) => {
+              const {[key]: deletedKey, ...otherKeys} = object;
+              return otherKeys;
+            };
+            const pathwayToChange = Object.keys(pathwayColorData)[0];
+
+            const maintainedPathwayColors = objectWithoutKey(state.pathwayColors, pathwayToChange);
+            state.pathwayColors = {...maintainedPathwayColors, ...pathwayColorData};
         },
         'UPDATE_USER_PATHWAY_DISPLAY' (state, displayData) {
             const { pathways, add } = displayData;
@@ -236,26 +243,40 @@ const store = new Vuex.Store({
         addGeneInput(store, geneInput) {
             store.commit('ADD_GENE_INPUT', geneInput);
         },
-        getPathwaySubnetwork(store, queryGenesPathwayData) {
-            const selectedPathways = queryGenesPathwayData['pathways'];
-            store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways);
-            api
-                .post(
-                    'api/subnetwork/submit_genes/',
-                    queryGenesPathwayData
-                )
+        getPathwaySubnetwork(store) {
+            api.post('api/subnetwork/submit_genes/')
                 .then(
                     response => {
-                        // console.log(response.body)
-                        store.commit('ADD_SUBNETWORK', response.body['interaction_networks']);
-                        store.commit('ADD_PATHWAYS_EDGE_COUNTS', JSON.parse(response.body['pathways_edge_counts']));
+                        const subnetwork = response.body;
+                        console.log(subnetwork);
+                        store.commit('ADD_SUBNETWORK', subnetwork);
                     }
                 )
                 .catch(
                     error => {
-                        store.commit('API_FAIL', error)
+                        store.commit('API_FAIL', error);
                     }
                 )
+            // store.commit('ADD_SUBNETWORK', test_network)
+            // const selectedPathways = queryGenesPathwayData['pathways'];
+            // store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways);
+            // api
+            //     .post(
+            //         'api/subnetwork/submit_genes/',
+            //         queryGenesPathwayData
+            //     )
+            //     .then(
+            //         response => {
+            //             // console.log(response.body)
+            //             store.commit('ADD_SUBNETWORK', response.body['interaction_networks']);
+            //             store.commit('ADD_PATHWAYS_EDGE_COUNTS', JSON.parse(response.body['pathways_edge_counts']));
+            //         }
+            //     )
+            //     .catch(
+            //         error => {
+            //             store.commit('API_FAIL', error)
+            //         }
+            //     )
         },
         updateDatabase(store, database) {
           store.commit('UPDATE_NETWORK_DATABASE', database)

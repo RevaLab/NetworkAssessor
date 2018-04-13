@@ -83,12 +83,10 @@
                   return this.$store.state.pathwayColors[this.pathway]
               },
               set(hexValue) {
-                  let pathway_color_data = {
-                      pathway: this.pathway,
-                      color: hexValue
-                  };
+                  let pathwayColorData = {};
+                  pathwayColorData[this.pathway] = hexValue;
 
-                  this.$store.dispatch('updatePathwayColors', pathway_color_data)
+                  this.$store.dispatch('updatePathwayColors', pathwayColorData)
               }
             },
             triggerStyle() {
