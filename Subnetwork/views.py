@@ -19,7 +19,7 @@ def index(request):
     query_genes = data['userPathways']['query_list']['genes']
     user_pathways = data['userPathways']
     pathway_list = data['pathways'] # all selected pathways
-    db = 'biogrid'
+    db = data['networkDatabase']
     # db = data['networkDatabase']
 
     # load databases
