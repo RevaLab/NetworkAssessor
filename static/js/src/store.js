@@ -7,15 +7,17 @@ Vue.use(Vuex) // only required if you're using modules.
 
 const store = new Vuex.Store({
     state: {
-        subnetwork: {'elements': {'nodes': []}},
+        subnetwork: {
+            'first_degree': {'elements': {'nodes': []}},
+            'second_degree': {'elements': {'nodes': []}},
+            'third_degree': {'elements': {'nodes': []}}
+        },
         geneInput: [],
         listName: '',
         networkDegree: 'first_degree',
         networkDatabase: 'hprd',
-        selectedPathways: ['query-list'],
-        // subnetwork: {},
+        selectedPathways: [],
         pathwayColors: {
-            // 'query-list': '#dd7e6b',
             'AKT_ext_path': '#ff9900',
             'Apoptosis_path': '#ffff00',
             'Apoptosis_ext_path': '#00ff00',
@@ -143,8 +145,8 @@ const store = new Vuex.Store({
             'WNT_ext_path': ['APC', 'APC2', 'AXIN1', 'AXIN2', 'CTNNB1', 'CTNNBIP1', 'CTNND1', 'DAAM1', 'DAAM2', 'DKK1', 'DKK2', 'DKK3', 'DKK4', 'DKKL1', 'DVL1', 'DVL1P1', 'DVL2', 'DVL3', 'FBXW11', 'FBXW2', 'FBXW4', 'FRZB', 'FST', 'FZD1', 'FZD10', 'FZD2', 'FZD3', 'FZD4', 'FZD5', 'FZD6', 'FZD7', 'FZD8', 'FZD9', 'GSK3A', 'GSK3B', 'GSKIP', 'LRP1', 'LRP4', 'LRP5', 'LRP5L', 'LRP6', 'NKD1', 'NKD2', 'PORCN', 'PRICKLE1', 'RAC1', 'RAC2', 'RAC3', 'RHOA', 'RHOU', 'RHOV', 'RUVBL1', 'RYK', 'SENP2', 'SFRP1', 'SFRP2', 'SFRP4', 'SFRP5', 'SKP1', 'TCF15', 'TCF23', 'TCF3', 'TCF4', 'TCF7', 'TCF7L1', 'TCF7L2', 'TDGF1', 'TGFB1I1', 'VANGL2', 'WIF1', 'WISP1', 'WISP2', 'WISP3', 'WNT1', 'WNT10A', 'WNT10B', 'WNT11', 'WNT16', 'WNT2', 'WNT2B', 'WNT3', 'WNT3A', 'WNT4', 'WNT5A', 'WNT5B', 'WNT6', 'WNT7A', 'WNT7B', 'WNT8A', 'WNT8B', 'WNT9A', 'WNT9B'],
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': ['ARAF', 'BRAF', 'CRAF', 'CRKL', 'HRAS', 'KRAS', 'MAP2K1', 'MAP2K2', 'MAP2K4', 'MAP3K1', 'MAPK1', 'NRAS', 'RAF1', 'SRC']
         },
-        predefinedPathways: ['query-list', 'AKT_ext_path', 'Apoptosis_path', 'Apoptosis_ext_path', 'CALC_PKC_ext_path', 'Cellular_Architecture_and_Microenvironment_path', 'Cell_Cycle_Control_path', 'Cell_Cycle_ext_path', 'Chromatin_Remodeling-DNA_Methylation_path', 'DNA_Damage_path', 'ERK_ext_path', 'G-Protein_Signaling_path', 'Hedgehog_Signaling_path', 'HIPPO_ext_path', 'Hormone_Signaling_path', 'Immune_Checkpoints_path', 'B-Catenin-WNT_Signaling_path', 'Jack_Stat_ext_path', 'Janus_Kinase_JAK-or-Signal_Transducers_and_Activators_of_Transcription_STAT_path', 'Kinase_Fusions_path', 'Metabolic_Signaling_path', 'NFKB_ext_path', 'Notch_ext_path', 'PI3K-AKT1-MTOR_Signaling_path', 'Protein_Degradation_Ubiquitination_path', 'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path', 'RNA_Splicing_path', 'TGF-B_Signaling_path', 'TGFB_ext_path', 'WNT_ext_path', 'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path'],
-        userPathways: {},
+        predefinedPathways: ['AKT_ext_path', 'Apoptosis_path', 'Apoptosis_ext_path', 'CALC_PKC_ext_path', 'Cellular_Architecture_and_Microenvironment_path', 'Cell_Cycle_Control_path', 'Cell_Cycle_ext_path', 'Chromatin_Remodeling-DNA_Methylation_path', 'DNA_Damage_path', 'ERK_ext_path', 'G-Protein_Signaling_path', 'Hedgehog_Signaling_path', 'HIPPO_ext_path', 'Hormone_Signaling_path', 'Immune_Checkpoints_path', 'B-Catenin-WNT_Signaling_path', 'Jack_Stat_ext_path', 'Janus_Kinase_JAK-or-Signal_Transducers_and_Activators_of_Transcription_STAT_path', 'Kinase_Fusions_path', 'Metabolic_Signaling_path', 'NFKB_ext_path', 'Notch_ext_path', 'PI3K-AKT1-MTOR_Signaling_path', 'Protein_Degradation_Ubiquitination_path', 'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path', 'RNA_Splicing_path', 'TGF-B_Signaling_path', 'TGFB_ext_path', 'WNT_ext_path', 'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path'],
+        userPathways: {'query_list': []},
         pathwayDisplayNames: {
             'AKT_ext_path': 'AKT Extension',
             'Apoptosis_path': 'Apoptosis',
@@ -243,8 +245,8 @@ const store = new Vuex.Store({
         addGeneInput(store, geneInput) {
             store.commit('ADD_GENE_INPUT', geneInput);
         },
-        getPathwaySubnetwork(store) {
-            api.post('api/subnetwork/submit_genes/')
+        getPathwaySubnetwork(store, queryGenesSelectedPathways) {
+            api.post('api/subnetwork/submit_genes/', queryGenesSelectedPathways)
                 .then(
                     response => {
                         const subnetwork = response.body;

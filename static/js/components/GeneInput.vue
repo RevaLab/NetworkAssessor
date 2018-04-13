@@ -29,22 +29,10 @@
         name: "gene-input",
         data () {
             return {
-                showModal: false
+                geneList: ''
             }
         },
         computed: {
-            geneList: {
-              get() {
-                return this.$store.state.geneInput.join('\n');
-              },
-              set(geneInput) {
-                this.$store.dispatch(
-                    'addGeneInput',
-                    geneInput.split('\n')
-                );
-                return geneInput
-              }
-            }
         },
         methods: {
             addExampleList() {
@@ -53,8 +41,19 @@
                   "AKT1", "PTPN1", "PIAS1", "CDKN1B", "THEM4", "CCNE1", "MAP2K4"].join('\n');
             },
             submitGeneList() {
-                let geneInput = this.$store.state.geneInput;
                 let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
+                delete userPathways['query_list'];
+                // update gene input as a user pathway
+                let queryListAsUserPathway = {
+                    query_list: {
+                        color: '#dd7e6b',
+                        genes: this.geneList.split("\n"),
+                        displayName: 'Query List'
+                    }
+                };
+
+                // add information for user pathways to store
+                userPathways = {...userPathways, ...queryListAsUserPathway};
 
                 let displayData = {
                     pathways: {},
@@ -69,15 +68,16 @@
                 this.$store.dispatch('updateUserPathways', userPathways);
                 this.$store.dispatch('updateUserPathwayDisplay', displayData);
 
+                // make API call to retrieve graph
                 this.$store.dispatch(
                     'getPathwaySubnetwork',
                     {
-                        queryGenes: geneInput,
-                        pathways: ['query-list'],
+                        pathways: [],
                         networkDatabase: 'hprd',
                         userPathways
                     }
                 );
+
                 this.$router.push('/network');
             }
         },

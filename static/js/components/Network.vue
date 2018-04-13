@@ -1,7 +1,6 @@
 <template>
     <div class="network" id="network-test">
         <div v-if="subnetwork">
-            <button v-on:click="getPathwaySubnetwork">SUBNETWORK</button>
             <div id="cy"></div>
             <div class="statistics">
                 <div class="statistics-content">
@@ -29,14 +28,15 @@
             }
         },
         computed: {
+            // selectedSubnetwork() {
+            //     return
+            // },
             subnetwork() {
-                return this.$store.state.subnetwork;
+                let networkDegree = this.$store.state.networkDegree;
+                return this.$store.state.subnetwork[networkDegree];
             },
             pathwayColors() {
                 return this.$store.state.pathwayColors;
-            },
-            networkDegree() {
-                return this.$store.state.networkDegree;
             },
             networkStatistics() {
                 const subnetwork = this.$store.state.subnetwork;
@@ -49,8 +49,8 @@
                 const currentSub = subnetwork[networkDegree];
 
                 if (currentSub) {
-                    statistics.nodeLength = currentSub["nodes"].length;
-                    statistics.edgesLength = currentSub["links"].length;
+                    statistics.nodeLength = 'CALCULATE ME';
+                    statistics.edgesLength = 'CALCULATE ME';
                 }
 
                 return statistics;
@@ -59,21 +59,12 @@
         },
         watch: {
             pathwayColors() {
-              colorPathways(this.$store.state.subnetwork, this.$store.state.pathwayColors)
+              colorPathways(this.subnetwork, this.pathwayColors);
             },
             subnetwork() {
-                runCytoscape(this.$store.state.subnetwork, this.$store.state.pathwayColors)
-                colorPathways(this.$store.state.subnetwork, this.$store.state.pathwayColors)
+                runCytoscape(this.subnetwork, this.pathwayColors);
+                colorPathways(this.subnetwork, this.pathwayColors);
             }
-        },
-        methods: {
-          getPathwaySubnetwork() {
-              this.$store.dispatch('getPathwaySubnetwork')
-          }
-        },
-        updated() {
-            let loader = document.getElementById('loader-bg');
-            loader.style.visibility = 'hidden';
         },
         mounted() {
             runCytoscape(this.$store.state.subnetwork)
@@ -99,11 +90,13 @@
         cy = cytoscape(cytoscape_options);
     }
 
-    function colorPathways(subnetwork, pathwayColors) {
+    function colorPathways(subnetwork, pathwayColors, selectedPathways) {
         cy.nodes().forEach(node => {
             if (node.data('pathways')) {
                 let firstPathway = node.data('pathways')[0];
                 node.style('background-color', pathwayColors[firstPathway]);
+            } else {
+                console.log("HMMMMM...")
             }
         });
     }
@@ -119,24 +112,6 @@
     }
     .network {
         width: 78%;
-    }
-
-    .loader {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        margin: auto;
-        width: 8em;
-        height: 8em;
-    }
-
-    #loader-bg {
-        visibility: none;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0);
     }
 
     .statistics {
