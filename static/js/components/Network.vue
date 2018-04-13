@@ -28,9 +28,9 @@
             }
         },
         computed: {
-            // selectedSubnetwork() {
-            //     return
-            // },
+            selectedPathways() {
+                return this.$store.state.selectedPathways;
+            },
             subnetwork() {
                 let networkDegree = this.$store.state.networkDegree;
                 return this.$store.state.subnetwork[networkDegree];
@@ -55,17 +55,25 @@
 
                 return statistics;
             },
-
         },
         watch: {
+            selectedPathways() {
+                const queryGenesPathwayData = {
+                    pathways: this.selectedPathways,
+                    networkDatabase: this.$store.state.networkDatabase,
+                    userPathways: this.$store.state.userPathways
+                };
+                this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+            },
             pathwayColors() {
-              colorPathways(this.subnetwork, this.pathwayColors);
+              colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways);
             },
             subnetwork() {
                 runCytoscape(this.subnetwork, this.pathwayColors);
-                colorPathways(this.subnetwork, this.pathwayColors);
+                colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways);
             }
         },
+        updated() { alert('updated??') },
         mounted() {
             runCytoscape(this.$store.state.subnetwork)
         }
@@ -92,14 +100,15 @@
 
     function colorPathways(subnetwork, pathwayColors, selectedPathways) {
         cy.nodes().forEach(node => {
-            if (node.data('pathways')) {
-                let firstPathway = node.data('pathways')[0];
-                node.style('background-color', pathwayColors[firstPathway]);
-            } else {
-                console.log("HMMMMM...")
-            }
+            node.data('pathways').forEach( pathway => {
+                if (selectedPathways.includes(pathway)) {
+                    node.style('background-color', pathwayColors[pathway]);
+                }
+            })
         });
     }
+
+    // function changeQueryGenes
 
 </script>
 

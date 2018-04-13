@@ -53,9 +53,7 @@
                 },
                 set() {
                     let selectedPathways = this.$store.state.selectedPathways;
-                    const queryGenes = this.$store.state.geneInput;
-                    const networkDatabase = this.$store.state.networkDatabase;
-                    const userPathways = this.$store.state.userPathways;
+
                     const isNotSelected = !selectedPathways.includes(this.pathway);
 
                     if (isNotSelected) {
@@ -65,17 +63,7 @@
                         selectedPathways.splice(pw_index, 1);
                     }
 
-                    const queryGenesPathwayData = {
-                        pathways: selectedPathways,
-                        queryGenes,
-                        networkDatabase,
-                        userPathways
-                    };
-
-                    // console.log(selectedPathways)
-                    // console.log(this.$store.state.selectedPathways)
-                    // this.$store.dispatch('updateSelectedPathways', selectedPathways);
-                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+                    this.$store.dispatch('updateSelectedPathways', selectedPathways);
                 }
             },
             color: {
@@ -104,7 +92,7 @@
                 return styleOptions;
             },
             queryList () {
-                return this.pathway === 'query-list';
+                return this.pathway === 'query_list';
             }
         },
         components: {

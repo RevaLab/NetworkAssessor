@@ -20,10 +20,8 @@ def index(request):
     user_pathways = data['userPathways']
     pathway_list = data['pathways'] # all selected pathways
     db = data['networkDatabase']
-    # db = data['networkDatabase']
 
     # load databases
-    # db = 'biogrid'
     interaction_db = pickle.load(open('static/{}.pkl'.format(db), 'rb'))
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
     node_list = list(query_genes)
@@ -73,11 +71,14 @@ def index(request):
     second_degree_sub = get_next_degree(first_degree_sub.nodes(), whole_graph)
     third_degree_sub = get_next_degree(second_degree_sub.nodes(), whole_graph)
 
-    all_subgraphs = {
-        'first_degree': json_graph.cytoscape_data(first_degree_sub),
-        'second_degree': json_graph.cytoscape_data(second_degree_sub),
-        'third_degree': json_graph.cytoscape_data(third_degree_sub)
+    subnetwork_and_edge_counts = {
+        'subnetwork': {
+            'first_degree': json_graph.cytoscape_data(first_degree_sub),
+            'second_degree': json_graph.cytoscape_data(second_degree_sub),
+            'third_degree': json_graph.cytoscape_data(third_degree_sub)
+        },
+        'pathways_edge_counts': pathways_edge_counts
     }
 
-    return JsonResponse(all_subgraphs)
+    return JsonResponse(subnetwork_and_edge_counts)
 

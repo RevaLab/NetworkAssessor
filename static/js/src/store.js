@@ -16,8 +16,9 @@ const store = new Vuex.Store({
         listName: '',
         networkDegree: 'first_degree',
         networkDatabase: 'hprd',
-        selectedPathways: [],
+        selectedPathways: ['query_list'],
         pathwayColors: {
+            'query_list': '#e06666',
             'AKT_ext_path': '#ff9900',
             'Apoptosis_path': '#ffff00',
             'Apoptosis_ext_path': '#00ff00',
@@ -249,9 +250,10 @@ const store = new Vuex.Store({
             api.post('api/subnetwork/submit_genes/', queryGenesSelectedPathways)
                 .then(
                     response => {
-                        const subnetwork = response.body;
-                        console.log(subnetwork);
-                        store.commit('ADD_SUBNETWORK', subnetwork);
+                        const subnetworkAndEdgeCounts = response.body;
+                        console.log(subnetworkAndEdgeCounts);
+                        store.commit('ADD_SUBNETWORK', subnetworkAndEdgeCounts['subnetwork']);
+                        store.commit('ADD_PATHWAYS_EDGE_COUNTS', subnetworkAndEdgeCounts['pathways_edge_counts']);
                     }
                 )
                 .catch(

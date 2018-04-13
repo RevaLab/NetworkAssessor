@@ -40,9 +40,9 @@
 
                 const currentSub = subnetwork[networkDegree];
 
-                const edgesLength = currentSub["links"].length;
+                // const edgesLength = currentSub["links"].length;
 
-                return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree] - edgesLength;
+                return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree];
             },
             pathwayMemberCount() {
                 const userPathway = this.$store.state.userPathways[this.pathway];
