@@ -11,7 +11,6 @@
             <ul id="pathways-ul">
                 <li v-for="pathway in sortedUserPathways" v-bind:key="pathway" >
                         <pathway-color-selector v-bind:pathway="pathway" />
-                        <!--<a class="delete" v-on:click="removeUserPathway(pathway)"></a>-->
                 </li>
             </ul>
         </div>
@@ -28,6 +27,7 @@
         name: "user-pathways",
         computed: {
             userPathwayEdges() {
+                // alert('checking??')
                 const userPathways = this.$store.state.userPathways;
                 const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
 

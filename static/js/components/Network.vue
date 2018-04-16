@@ -8,9 +8,6 @@
                     <p>Edges: {{ networkStatistics.edgesLength }}</p>
                 </div>
             </div>
-            <div id="loader-bg">
-                <div id="loader"></div>
-            </div>
         </div>
         <div v-else>Loading...</div>
     </div>
@@ -28,6 +25,9 @@
             }
         },
         computed: {
+            userPathways() {
+                return this.$store.state.userPathways;
+            },
             selectedPathways() {
                 return this.$store.state.selectedPathways;
             },
@@ -39,31 +39,32 @@
                 return this.$store.state.pathwayColors;
             },
             networkStatistics() {
-                const subnetwork = this.$store.state.subnetwork;
-                const networkDegree = this.$store.state.networkDegree;
                 let statistics = {
-                    nodeLength: 0,
-                    edgesLength: 0
+                    nodeLength: 'calculating...',
+                    edgesLength: 'calculating...'
                 };
 
-                const currentSub = subnetwork[networkDegree];
-
-                if (currentSub) {
-                    statistics.nodeLength = 'CALCULATE ME';
-                    statistics.edgesLength = 'CALCULATE ME';
+                if (this.subnetwork['elements']['nodes'].length) {
+                    statistics = {
+                        nodeLength: this.subnetwork['elements']['nodes'].length,
+                        edgesLength: this.subnetwork['elements']['edges'].length
+                    };
                 }
+
+                // if (currentSub) {
+                //     statistics.nodeLength = 'CALCULATE ME';
+                //     statistics.edgesLength = 'CALCULATE ME';
+                // }
 
                 return statistics;
             },
         },
         watch: {
+            userPathways() {
+                this.updateNetwork()
+            },
             selectedPathways() {
-                const queryGenesPathwayData = {
-                    pathways: this.selectedPathways,
-                    networkDatabase: this.$store.state.networkDatabase,
-                    userPathways: this.$store.state.userPathways
-                };
-                this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+                this.updateNetwork()
             },
             pathwayColors() {
               colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways);
@@ -75,6 +76,16 @@
         },
         mounted() {
             runCytoscape(this.$store.state.subnetwork)
+        },
+        methods: {
+            updateNetwork() {
+                const queryGenesPathwayData = {
+                    pathways: this.selectedPathways,
+                    networkDatabase: this.$store.state.networkDatabase,
+                    userPathways: this.$store.state.userPathways
+                };
+                this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+            }
         }
     }
 

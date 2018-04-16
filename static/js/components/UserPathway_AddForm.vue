@@ -42,7 +42,7 @@ export default {
             this.$ls.set('userPathways', JSON.stringify(userPathways));
 
             this.$store.dispatch('updateUserPathways', userPathways);
-            const displayData = {
+            let displayData = {
               pathways: {},
               add: true
             };

@@ -35,12 +35,7 @@
               return this.$store.state.pathwaysEdgeCounts[this.pathway]
             },
             pathwayEdgeCount() {
-                const subnetwork = this.$store.state.subnetwork;
                 const networkDegree = this.$store.state.networkDegree;
-
-                const currentSub = subnetwork[networkDegree];
-
-                // const edgesLength = currentSub["links"].length;
 
                 return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree];
             },

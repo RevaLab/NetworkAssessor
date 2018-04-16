@@ -26,7 +26,7 @@
                 />
             </div>
             <pathway-statistics v-bind:pathway="pathway"/>
-            <a class="delete" v-on:click="removeUserPathway"></a>
+            <a class="delete" v-on:click="removeUserPathway" v-if="userPathway"></a>
         </div>
     </div>
 </template>
@@ -47,6 +47,9 @@
             pathwayName() {
                 const displayNames = this.$store.state.pathwayDisplayNames;
                 return displayNames[this.pathway]
+            },
+            userPathway() {
+              return this.$store.state.userPathways[this.pathway]
             },
             checked: {
                 get() {
