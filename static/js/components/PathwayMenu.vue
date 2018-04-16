@@ -3,6 +3,7 @@
         <ul id="pathways-ul">
             <li v-for="pathway in pathways">
                 <pathway-color-selector v-bind:pathway="pathway"/>
+                <!--<slot></slot>-->
             </li>
         </ul>
     </div>
@@ -21,13 +22,7 @@
 
               let sortable = [];
 
-              // pathwayMemberCounts selects only the curated cancer pathways, since
-              // for now it seems the edges are not being calculated correctly for user pws
-
               predefinedPathways.forEach(pathway => {
-                  if (pathway === 'query-list') {
-                        return;
-                  }
                     sortable.push(
                         [
                             pathway,
@@ -40,7 +35,7 @@
                     return b[1] - a[1];
               });
 
-              let ordered_pathways = ['query-list'];
+              let ordered_pathways = [];
               sortable.forEach(pathway => {
                   ordered_pathways.push(pathway[0])
               });

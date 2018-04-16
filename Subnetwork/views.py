@@ -15,7 +15,7 @@ def index(request):
         data = json.loads(request.body.decode('utf-8'))
     else:
         data = {}
-    print(data)
+
     query_genes = data['userPathways']['query_list']['genes']
     user_pathways = data['userPathways']
     pathway_list = data['pathways'] # all selected pathways

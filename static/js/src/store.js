@@ -251,7 +251,6 @@ const store = new Vuex.Store({
                 .then(
                     response => {
                         const subnetworkAndEdgeCounts = response.body;
-                        console.log(subnetworkAndEdgeCounts);
                         store.commit('ADD_SUBNETWORK', subnetworkAndEdgeCounts['subnetwork']);
                         store.commit('ADD_PATHWAYS_EDGE_COUNTS', subnetworkAndEdgeCounts['pathways_edge_counts']);
                     }
@@ -261,26 +260,6 @@ const store = new Vuex.Store({
                         store.commit('API_FAIL', error);
                     }
                 )
-            // store.commit('ADD_SUBNETWORK', test_network)
-            // const selectedPathways = queryGenesPathwayData['pathways'];
-            // store.commit('UPDATE_SELECTED_PATHWAYS', selectedPathways);
-            // api
-            //     .post(
-            //         'api/subnetwork/submit_genes/',
-            //         queryGenesPathwayData
-            //     )
-            //     .then(
-            //         response => {
-            //             // console.log(response.body)
-            //             store.commit('ADD_SUBNETWORK', response.body['interaction_networks']);
-            //             store.commit('ADD_PATHWAYS_EDGE_COUNTS', JSON.parse(response.body['pathways_edge_counts']));
-            //         }
-            //     )
-            //     .catch(
-            //         error => {
-            //             store.commit('API_FAIL', error)
-            //         }
-            //     )
         },
         updateDatabase(store, database) {
           store.commit('UPDATE_NETWORK_DATABASE', database)

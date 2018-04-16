@@ -1,5 +1,5 @@
 <template>
-    <div class="network-container">
+    <div class="network-container" id="network-container">
         <div class="controls">
             <network-controls />
             <user-pathways />

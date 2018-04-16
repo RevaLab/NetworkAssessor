@@ -10,6 +10,7 @@
                     row-length="5"
                     :trigger-style="triggerStyle"
             />
+            <pathway-statistics v-bind:pathway="pathway"/>
         </div>
         <div class="pathway" v-else>
             <input type="checkbox" id="pw-checkbox" v-model="checked">
@@ -25,6 +26,7 @@
                 />
             </div>
             <pathway-statistics v-bind:pathway="pathway"/>
+            <a class="delete" v-on:click="removeUserPathway"></a>
         </div>
     </div>
 </template>
@@ -99,23 +101,50 @@
             Swatches,
             pathwayStatistics
         },
-        updated() {
-            // let loader = document.getElementById('loader-bg');
-            // loader.style.visibility = 'visible';
+        methods: {
+             removeUserPathway() {
+                const pathway = this.pathway;
+                let userPathways = Object.assign({}, this.$store.state.userPathways);
 
-            const selectedPathways = this.$store.state.selectedPathways;
-            const pathwayColors = this.$store.state.pathwayColors;
+                // remove user pathway from list in store
+                delete userPathways[pathway];
+                this.$store.dispatch('updateUserPathways', userPathways);
 
-            if (selectedPathways.includes(this.pathway)) {
-                for (let i = 0; i < selectedPathways.length; i ++) {
-                    let pathwayToColor = selectedPathways[i];
-                    const nodes = document.querySelectorAll(`.${pathwayToColor}`);
-                    nodes.forEach(node => {
-                        node.style.fill = pathwayColors[pathwayToColor];
-                    });
+                // remove user pathway display data
+                const displayData = {
+                  pathways: {},
+                  add: false
+                };
+                displayData['pathways'][pathway] = pathway;
+
+                this.$store.dispatch(
+                    'updateUserPathwayDisplay',
+                    displayData
+                );
+
+                // remove user pathway from selected pathways
+                let selectedPathways = this.$store.state.selectedPathways;
+                let pw_index = selectedPathways.indexOf(pathway);
+                if (pw_index !== -1) {
+                    selectedPathways.splice(pw_index, 1);
+
+                    const queryGenes = this.$store.state.geneInput;
+                    const networkDatabase = this.$store.state.networkDatabase;
+
+                    const queryGenesPathwayData = {
+                        pathways: selectedPathways,
+                        queryGenes,
+                        networkDatabase,
+                        userPathways
+                    };
+
+                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
                 }
+
+                // update pathways in local storage
+                this.$ls.set('userPathways', JSON.stringify(userPathways));
             }
-        },
+        }
     }
 </script>
 

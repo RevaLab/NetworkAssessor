@@ -11,7 +11,7 @@
             <ul id="pathways-ul">
                 <li v-for="pathway in sortedUserPathways" v-bind:key="pathway" >
                         <pathway-color-selector v-bind:pathway="pathway" />
-                        <a class="delete" v-on:click="removeUserPathway(pathway)"></a>
+                        <!--<a class="delete" v-on:click="removeUserPathway(pathway)"></a>-->
                 </li>
             </ul>
         </div>
@@ -46,6 +46,9 @@
                 let sortable = [];
 
                 userPathways.forEach(pathway => {
+                    if (pathway === 'query_list') {
+                        return;
+                    }
                     sortable.push(
                     [
                         pathway,
@@ -59,10 +62,13 @@
                     return b[1] - a[1];
                 });
 
-                let ordered_pathways = [];
+                // show query_list as first user pathway
+                let ordered_pathways = ['query_list'];
                 sortable.forEach(pathway => {
                     ordered_pathways.push(pathway[0])
                 });
+
+
                 return ordered_pathways;
             },
         },
@@ -75,47 +81,6 @@
             showAddUserPathwayModal() {
                 this.$modal.show('add-user-pathway')
             },
-            removeUserPathway(pathway) {
-                let userPathways = Object.assign({}, this.$store.state.userPathways);
-
-                // remove user pathway from list in store
-                delete userPathways[pathway];
-                this.$store.dispatch('updateUserPathways', userPathways);
-
-                // remove user pathway display data
-                const displayData = {
-                  pathways: {},
-                  add: false
-                };
-                displayData['pathways'][pathway] = pathway;
-
-                this.$store.dispatch(
-                    'updateUserPathwayDisplay',
-                    displayData
-                );
-
-                // remove user pathway from selected pathways
-                let selectedPathways = this.$store.state.selectedPathways;
-                let pw_index = selectedPathways.indexOf(pathway);
-                if (pw_index !== -1) {
-                    selectedPathways.splice(pw_index, 1);
-
-                    const queryGenes = this.$store.state.geneInput;
-                    const networkDatabase = this.$store.state.networkDatabase;
-
-                    const queryGenesPathwayData = {
-                        pathways: selectedPathways,
-                        queryGenes,
-                        networkDatabase,
-                        userPathways
-                    };
-
-                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
-                }
-
-                // update pathways in local storage
-                this.$ls.set('userPathways', JSON.stringify(userPathways));
-            }
         },
     }
 </script>
