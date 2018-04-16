@@ -1,5 +1,5 @@
 <template>
-    <div class="network" id="network-test">
+    <div class="network">
         <div v-if="subnetwork">
             <div id="cy"></div>
             <div class="statistics">
@@ -73,7 +73,6 @@
                 colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways);
             }
         },
-        updated() { alert('updated??') },
         mounted() {
             runCytoscape(this.$store.state.subnetwork)
         }
@@ -102,6 +101,11 @@
         cy.nodes().forEach(node => {
             node.data('pathways').forEach( pathway => {
                 if (selectedPathways.includes(pathway)) {
+                    if ( pathway === 'query_list' ) {
+                        node.style('shape', 'rectangle')
+                    } else {
+                        node.style('shape', 'ellipse')
+                    }
                     node.style('background-color', pathwayColors[pathway]);
                 }
             })
@@ -114,10 +118,12 @@
 
 <style>
     #cy {
-      width: 1000px;
-      height: 1000px;
+        width: 100%;
+        height: 95vh;
+      /*width: 1000px;*/
+      /*height: 1000px;*/
       display: block;
-        background-color: pink;
+        /*background-color: pink;*/
     }
     .network {
         width: 78%;
