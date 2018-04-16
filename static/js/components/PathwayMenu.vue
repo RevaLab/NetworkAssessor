@@ -16,8 +16,10 @@
         props: ['predefinedPathways'],
         computed: {
           pathways() {
-              const pathways = this.predefinedPathways ?
-                    this.$store.state.predefinedPathways : Object.keys(this.$store.state.userPathways);
+              const pathways =
+                  this.predefinedPathways ?
+                    this.$store.state.predefinedPathways :
+                    Object.keys(this.$store.state.userPathways);
               const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
               const networkDegree = this.$store.state.networkDegree;
 

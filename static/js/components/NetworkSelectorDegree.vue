@@ -29,17 +29,11 @@
                     return this.$store.state.networkDegree
                 },
                 set(degree) {
-                    // console.log('selected ', degree)
-
-                    let loader = document.getElementById('loader-bg');
-                    loader.style.visibility = 'visible';
                     this.$store.dispatch('updateDegree', degree)
                 }
             }
         },
         updated() {
-            let loader = document.getElementById('loader-bg');
-            loader.style.visibility = 'hidden';
         }
     }
 </script>
