@@ -3,7 +3,6 @@
         <ul id="pathways-ul">
             <li v-for="pathway in pathways">
                 <pathway-color-selector v-bind:pathway="pathway"/>
-                <!--<slot></slot>-->
             </li>
         </ul>
     </div>
@@ -14,15 +13,22 @@
 
     export default {
         name: "pathway-menu",
+        props: ['predefinedPathways'],
         computed: {
           pathways() {
-              const predefinedPathways = this.$store.state.predefinedPathways;
+              const pathways = this.predefinedPathways ?
+                    this.$store.state.predefinedPathways : Object.keys(this.$store.state.userPathways);
               const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
               const networkDegree = this.$store.state.networkDegree;
 
               let sortable = [];
+              let ordered_pathways = [];
 
-              predefinedPathways.forEach(pathway => {
+              pathways.forEach(pathway => {
+                    if (pathway === 'query_list') {
+                        ordered_pathways.push('query_list');
+                        return;
+                    }
                     sortable.push(
                         [
                             pathway,
@@ -35,7 +41,6 @@
                     return b[1] - a[1];
               });
 
-              let ordered_pathways = [];
               sortable.forEach(pathway => {
                   ordered_pathways.push(pathway[0])
               });

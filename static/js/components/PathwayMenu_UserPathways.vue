@@ -1,5 +1,5 @@
 <template>
-    <div class="user-pathways">
+    <div class="user-pathways" v-if="userPathwayEdges">
         <div id="user-pathways-header-and-add">
             <h2>User Pathways</h2>
             <a class="button is-primary" v-on:click="showAddUserPathwayModal">+</a>
@@ -7,13 +7,14 @@
                 <user-pathway-add-form />
             </modal>
         </div>
-        <div class="user-pathway-menu" v-if="userPathwayEdges">
-            <ul id="pathways-ul">
-                <li v-for="pathway in sortedUserPathways" v-bind:key="pathway" >
-                        <pathway-color-selector v-bind:pathway="pathway" />
-                </li>
-            </ul>
-        </div>
+        <pathway-menu v-bind:predefinedPathways="false"/>
+        <!--<div class="user-pathway-menu">-->
+            <!--<ul id="pathways-ul">-->
+                <!--<li v-for="pathway in sortedUserPathways" v-bind:key="pathway" >-->
+                        <!--<pathway-color-selector v-bind:pathway="pathway" />-->
+                <!--</li>-->
+            <!--</ul>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -21,13 +22,12 @@
     import Swatches from 'vue-swatches'
     import PathwayColorSelector from './PathwayColorSelector.vue'
     import userPathwayAddForm from './UserPathway_AddForm.vue'
-
+    import PathwayMenu from './PathwayMenu.vue'
 
     export default {
         name: "user-pathways",
         computed: {
             userPathwayEdges() {
-                // alert('checking??')
                 const userPathways = this.$store.state.userPathways;
                 const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
 
@@ -39,6 +39,7 @@
                 return true;
             },
             sortedUserPathways() {
+                // alert('checking')
                 const userPathways = Object.keys(this.$store.state.userPathways);
                 const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
                 const networkDegree = this.$store.state.networkDegree;
@@ -46,6 +47,7 @@
                 let sortable = [];
 
                 userPathways.forEach(pathway => {
+                    // alert('in this foreach')
                     if (pathway === 'query_list') {
                         return;
                     }
@@ -73,6 +75,7 @@
             },
         },
         components: {
+            PathwayMenu,
             PathwayColorSelector,
             Swatches,
             userPathwayAddForm

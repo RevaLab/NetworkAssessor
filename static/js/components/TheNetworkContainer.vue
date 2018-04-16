@@ -3,7 +3,7 @@
         <div class="controls">
             <network-controls />
             <user-pathways />
-            <pathway-menu />
+            <pathway-menu v-bind:predefinedPathways="true"/>
         </div>
         <network />
     </div>

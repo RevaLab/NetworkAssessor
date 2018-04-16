@@ -21,7 +21,6 @@
         name: "network",
         data() {
             return {
-                // loading: true
             }
         },
         computed: {
@@ -50,11 +49,6 @@
                         edgesLength: this.subnetwork['elements']['edges'].length
                     };
                 }
-
-                // if (currentSub) {
-                //     statistics.nodeLength = 'CALCULATE ME';
-                //     statistics.edgesLength = 'CALCULATE ME';
-                // }
 
                 return statistics;
             },
@@ -122,8 +116,6 @@
             })
         });
     }
-
-    // function changeQueryGenes
 
 </script>
 

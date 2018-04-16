@@ -9,7 +9,7 @@
         </div>
         <div class="tooltip">
             <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
-            <span class="tooltiptext">Additional edges if you add this pw</span>
+            <span class="tooltiptext">Total edges if this pathway is added</span>
         </div>
     </div>
 </template>
