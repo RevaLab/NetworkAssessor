@@ -5,22 +5,36 @@ export default {
     colorPathways(subnetwork, pathwayColors, selectedPathways, cy) {
         cy.nodes().forEach(node => {
             // pull out only the selected pathways this node's a part of
-            let pathwaySelectedNodes = node.data('pathways').filter(function(n) {
+            let selectedPathwaysWithNode = node.data('pathways').filter(function(n) {
                 return selectedPathways.indexOf(n) !== -1;
             });
-            pathwaySelectedNodes.forEach(pathway => {
-                if ( pathwaySelectedNodes.includes('query_list') &&
-                    pathwaySelectedNodes.length === 1) {
-                        node.style('shape', 'rectangle')
-                } else if (
-                    pathwaySelectedNodes.includes('query_list') &&
-                    pathwaySelectedNodes.length > 1 ) {
-                    node.style('shape', 'star')
-                } else {
-                    node.style('shape', 'ellipse');
-                }
-                    node.style('background-color', pathwayColors[pathway]);
-            })
+
+            if (selectedPathwaysWithNode.includes('query_list') &&
+                selectedPathwaysWithNode.length === 1) {
+                    node.style('shape', 'rectangle');
+                    node.style('background-color', pathwayColors['query_list']);
+            } else if
+                (selectedPathwaysWithNode.includes('query_list') &&
+                selectedPathwaysWithNode.length > 1)
+            {
+                node.style('shape', 'star');
+                // console.log(node.style('size'));
+                // node.style('size', node.style('size') * 1.5);
+                cy.center(node);
+                node.style('background-color', '#00ff00');
+            } else if (selectedPathwaysWithNode.length > 1) {
+                node.style('shape', 'ellipse');
+                node.style('pie-size', '100%');
+                let percentPathway = (100/(selectedPathwaysWithNode.length)).toString();
+                selectedPathwaysWithNode.forEach((pathway, i) => {
+                    let pie_index = i + 1;
+                    node.style(`pie-${pie_index}-background-color`, pathwayColors[pathway]);
+                    node.style(`pie-${pie_index}-background-size`, `${percentPathway}%`);
+                })
+            } else {
+                node.style('shape','ellipse');
+                node.style('background-color', pathwayColors[selectedPathwaysWithNode[0]]);
+            }
         })
     },
     applyMouseEvents(cy) {
@@ -87,7 +101,7 @@ export default {
       // Whether to enable incremental mode
       randomize: true,
       // Node repulsion (non overlapping) multiplier
-      nodeRepulsion: 3000,
+      nodeRepulsion: 4500,
       // Ideal (intra-graph) edge length
       idealEdgeLength: 50,
       // Divisor to compute edge forces

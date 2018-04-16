@@ -21,7 +21,7 @@ const store = new Vuex.Store({
             'query_list': '#e06666',
             'AKT_ext_path': '#ff9900',
             'Apoptosis_path': '#ffff00',
-            'Apoptosis_ext_path': '#00ff00',
+            'Apoptosis_ext_path': '#ffa730',
             'CALC_PKC_ext_path': '#00ffff',
             'Cellular_Architecture_and_Microenvironment_path': '#4a86e8',
             'Cell_Cycle_Control_path': '#0000ff',

@@ -9,13 +9,14 @@
                     shapes="squares"
                     row-length="5"
                     :trigger-style="triggerStyle"
+                    :exceptions="exceptions"
             />
             <pathway-statistics v-bind:pathway="pathway"/>
         </div>
         <div class="pathway" v-else>
-            <input type="checkbox" id="pw-checkbox" v-model="checked">
             <div class="label-and-swatch">
-                <label for="pw-checkbox">{{ pathwayName }}</label>
+                <input type="checkbox" id="pw-checkbox" v-model="checked" />
+                {{ pathwayName }}
                 <swatches
                         v-model="color"
                         colors="text-advanced"
@@ -23,6 +24,7 @@
                         shapes="circles"
                         row-length="5"
                         :trigger-style="triggerStyle"
+                        :exceptions="exceptions"
                 />
             </div>
             <pathway-statistics v-bind:pathway="pathway"/>
@@ -40,6 +42,7 @@
         name: "network-controls",
         data() {
             return {
+                exceptions: ['#00ff00']
             }
         },
         props: ['pathway'],
@@ -53,10 +56,13 @@
             },
             checked: {
                 get() {
+                    // console.log('GETTING')
                     let selectedPathways = this.$store.state.selectedPathways;
                     return selectedPathways.includes(this.pathway)
                 },
-                set() {
+                set(pathway) {
+                    console.log('setting')
+                    console.log(pathway)
                     let selectedPathways = this.$store.state.selectedPathways;
 
                     const isNotSelected = !selectedPathways.includes(this.pathway);
