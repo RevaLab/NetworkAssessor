@@ -21,8 +21,9 @@ Output: Normalized num of edges
 # Calculate corresponding p-value: ql_pw_edges
 # Rank / 100,000
 # Edge cases: if rank > 100,000, pVal < calculated p-value (and vice versa)
-
+import numpy as np
 import pickle
+
 
 
 def calculate_network_pathway_pval(ql_nodes, pathway_name, db_name):
@@ -54,6 +55,7 @@ def calculate_network_pathway_pval(ql_nodes, pathway_name, db_name):
                                        'Pathway_distribution_sorted/{}.pkl'.format(pathway_name), 'rb'))
     pw_distribution.append(normalized_inter_ql_pw_edges)
     pw_distribution.sort(reverse=True)
+    # rank = np.searchsorted(pw_distribution, normalized_inter_ql_pw_edges)
     rank = pw_distribution.index(normalized_inter_ql_pw_edges)
 
     p_val = rank/100000

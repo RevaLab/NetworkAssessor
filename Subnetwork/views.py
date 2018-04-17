@@ -43,12 +43,14 @@ def index(request):
     whole_graph = nx.Graph(interaction_db.subgraph(node_list))
 
     pathways_edge_counts = {}
-
+    pathways_network_p_vals = {}
     # get counts for all pathways
     for pathway in db_pathways:
         per_pathway_node_list = node_list + db_pathways[pathway]
         pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
         pathways_edge_counts[pathway] = pathway_edge_counts
+        pathway_network_p_val = calculate_network_pathway_pval(query_genes, pathway, db)
+        pathways_network_p_vals[pathway] = pathway_network_p_val
 
     for pathway in user_pathways:
         per_pathway_node_list = node_list + user_pathways[pathway]['genes']
@@ -78,7 +80,8 @@ def index(request):
             'second_degree': json_graph.cytoscape_data(second_degree_sub),
             'third_degree': json_graph.cytoscape_data(third_degree_sub)
         },
-        'pathways_edge_counts': pathways_edge_counts
+        'pathways_edge_counts': pathways_edge_counts,
+        'pathways_network_p_vals': pathways_network_p_vals
     }
 
     return JsonResponse(subnetwork_and_edge_counts)
