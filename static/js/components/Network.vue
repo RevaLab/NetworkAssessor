@@ -13,22 +13,18 @@
                 <div class="network-legend-content">
                     <h6>Legend</h6>
                     <ul>
-                        <!--<li>1</li>-->
-                        <!--<li>1</li>-->
-                        <!--<li>1</li>-->
                         <li v-for="(pathway, index) in selectedPathways" :key="index">
                                 <span>
-
-                                <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }"></div>
-                                <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }"></div>
-
-
-                            <!--<div class="color-box" style="background-color: #FF850A;"></div>-->
-                            <!--<span>-->
-                                <!--QUERY LIST-->
-                                {{ pathwayDisplayNames[pathway] }}
+                                    <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }"></div>
+                                    <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }"></div>
+                                    {{ pathwayDisplayNames[pathway] }}
                                 </span>
-                            <!--</span>-->
+                        </li>
+                        <li>
+                            <span>
+                                <i class="fas fa-star star-icon"></i>
+                                Query List & Pathway
+                            </span>
                         </li>
                     </ul>
                     <!--<p>THIS IS THE NETWORK LEGEND</p>-->
@@ -206,6 +202,11 @@
 
     .circle {
         border-radius: 50%;
+    }
+
+    .star-icon {
+        color: #00ff00;
+        font-size: large;
     }
 
 </style>
