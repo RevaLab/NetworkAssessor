@@ -6,3 +6,7 @@ venv/
 **/__pycache__/
 webpack-stats.json
 scratch/
+Pathway_distribution/
+Pathway_network/
+Pathway_distribution_sorted/
+.DS_Store

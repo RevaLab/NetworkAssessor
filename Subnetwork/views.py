@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .network_helpers import get_next_degree, normalize_user_pathways_by_gene, find_pathway_edge_count
+from .calculate_network_pathway_pval import calculate_network_pathway_pval
 from networkx.readwrite import json_graph
 
 
