@@ -56,13 +56,10 @@
             },
             checked: {
                 get() {
-                    // console.log('GETTING')
                     let selectedPathways = this.$store.state.selectedPathways;
                     return selectedPathways.includes(this.pathway)
                 },
-                set(pathway) {
-                    console.log('setting')
-                    console.log(pathway)
+                set() {
                     let selectedPathways = this.$store.state.selectedPathways;
 
                     const isNotSelected = !selectedPathways.includes(this.pathway);

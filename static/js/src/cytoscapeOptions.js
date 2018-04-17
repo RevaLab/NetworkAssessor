@@ -18,9 +18,6 @@ export default {
                 selectedPathwaysWithNode.length > 1)
             {
                 node.style('shape', 'star');
-                // console.log(node.style('size'));
-                // node.style('size', node.style('size') * 1.5);
-                cy.center(node);
                 node.style('background-color', '#00ff00');
             } else if (selectedPathwaysWithNode.length > 1) {
                 node.style('shape', 'ellipse');
@@ -56,31 +53,6 @@ export default {
                 });
             }
         });
-
-        // cy.on('mouseover', function(event) {
-        //     let evtTarget = event.target;
-        //     if (evtTarget !== cy && evtTarget.data('pathways')) {
-        //         const virtualReference = {
-        //             attributes: {
-        //                 title: evtTarget.data('pathways').join("\n")
-        //             },
-        //             getBoundingClientRect() {
-        //                 return {
-        //                     width: 1000,
-        //                     height: 1000,
-        //                     top: '100px',
-        //                     left: '100px',
-        //                     right: '200px',
-        //                     bottom: '200px'
-        //                 }
-        //             },
-        //             clientHeight: 100,
-        //             clientWidth: 100
-        //         };
-        //         tippy(virtualReference)
-        //         // console.log(evtTarget)
-        //     }
-        // })
     },
     coseOptions: {
       // Called on `layoutready`
@@ -109,7 +81,7 @@ export default {
       // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
       nestingFactor: 0.1,
       // Gravity force (constant)
-      gravity: 0.25,
+      gravity: 0.55,
       // Maximum number of iterations to perform
       numIter: 2500,
       // Whether to tile disconnected nodes

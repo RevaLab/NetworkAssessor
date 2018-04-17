@@ -61,7 +61,7 @@
 
 <style>
     .pathway-menu {
-        border: solid red 1px;
+        /*border: solid red 1px;*/
         display: flex;
         flex-direction: column;
         padding: 0;
@@ -71,7 +71,7 @@
         overflow: auto;
         margin-left: 0;
         padding: 0;
-        border: solid 1px purple;
+        /*border: solid 1px purple;*/
     }
 
     #pathways-ul {
@@ -82,7 +82,7 @@
     li {
         list-style-type: none;
         width: 100%;
-        border: solid 1px green;
+        /*border: solid 1px green;*/
         padding: 0;
     }
 

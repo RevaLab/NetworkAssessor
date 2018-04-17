@@ -8,6 +8,33 @@
                     <p><b>Edges:</b> {{ networkStatistics.edgesLength }}</p>
                 </div>
             </div>
+
+            <div class="network-legend">
+                <div class="network-legend-content">
+                    <h6>Legend</h6>
+                    <ul>
+                        <!--<li>1</li>-->
+                        <!--<li>1</li>-->
+                        <!--<li>1</li>-->
+                        <li v-for="(pathway, index) in selectedPathways" :key="index">
+                                <span>
+
+                                <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }"></div>
+                                <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }"></div>
+
+
+                            <!--<div class="color-box" style="background-color: #FF850A;"></div>-->
+                            <!--<span>-->
+                                <!--QUERY LIST-->
+                                {{ pathwayDisplayNames[pathway] }}
+                                </span>
+                            <!--</span>-->
+                        </li>
+                    </ul>
+                    <!--<p>THIS IS THE NETWORK LEGEND</p>-->
+                </div>
+            </div>
+
         </div>
         <div v-else>Loading...</div>
     </div>
@@ -28,6 +55,9 @@
             }
         },
         computed: {
+            pathwayDisplayNames() {
+                return this.$store.state.pathwayDisplayNames;
+            },
             userPathways() {
                 return this.$store.state.userPathways;
             },
@@ -111,16 +141,16 @@
     #cy {
         width: 100%;
         height: 95vh;
-        display: block;
     }
+
     .network {
         width: 78%;
+        height: 100%;
     }
 
     .statistics {
         width: 10%;
         height: 10%;
-        /*border: solid 1px black;*/
         position:absolute;
         bottom:0;
         right:0;
@@ -139,4 +169,43 @@
     .statistics-content p {
         margin-bottom: 0 !important;
     }
+
+    .network-legend {
+        width: 10%;
+        height: auto;
+        position:absolute;
+        top:0;
+        right:0;
+        margin-top: 50px;
+        margin-right: 50px;
+        border: solid 1px black;
+        padding-left: 2px;
+        /*background-color: #6DDCBD;*/
+    }
+
+    .network-legend-content ul {
+        width: auto;
+        height: 90%;
+        margin: auto;
+        font-size: small;
+        /*transform: translate(-50%, -50%);*/
+    }
+
+    /*.network-legend-content li {*/
+        /*display: inline-block;*/
+        /*!*transform: translate(-50%, -50%);*!*/
+    /*}*/
+    .color-box {
+      float: left;
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+      border: 1px solid rgba(0, 0, 0, .2);
+        /*border-radius: 50%;*/
+    }
+
+    .circle {
+        border-radius: 50%;
+    }
+
 </style>
