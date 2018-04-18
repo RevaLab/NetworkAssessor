@@ -2,6 +2,11 @@
 
 
 export default {
+    hideIsolateNodes(cy) {
+        cy.nodes().forEach(node => {
+            console.log(node.neighborhood())
+        })
+    },
     colorPathways(subnetwork, pathwayColors, selectedPathways, cy) {
         cy.nodes().forEach(node => {
             // pull out only the selected pathways this node's a part of
