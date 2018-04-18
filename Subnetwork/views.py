@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .network_helpers import get_next_degree, normalize_user_pathways_by_gene, find_pathway_edge_count
 from .calculate_network_pathway_pval import calculate_network_pathway_pval
 from networkx.readwrite import json_graph
-
+from .network_utils import Parameter
 
 @csrf_exempt
 def index(request):
@@ -43,21 +43,35 @@ def index(request):
     # db_pathways + user_pathways
     whole_graph = nx.Graph(interaction_db.subgraph(node_list))
 
+    # # find next degree
+    first_degree_sub = get_next_degree(query_genes, whole_graph)
+    first_degree_nodes = list(first_degree_sub.nodes())
+    second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
+    second_degree_nodes = list(second_degree_sub.nodes())
+    third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
+    # third_degree_nodes = third_degree_sub.nodes()
+
     pathways_edge_counts = {}
     pathways_network_p_vals = {}
     # get counts for all pathways
     for pathway in db_pathways:
-        per_pathway_node_list = node_list + db_pathways[pathway]
-        pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
+        pw_nodes = list(db_pathways[pathway])
+        # second_degree_pathway_node_list = first_degree_per_pathway_node_list + first_degree_nodes
+        pathway_edge_counts = {
+            'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes, interaction_db),
+            'second_degree': Parameter.edge_cross(pw_nodes, second_degree_nodes, interaction_db),
+            'third_degree': 0 #Parameter.edge_cross(per_pathway_node_list, second_degree_nodes, interaction_db),
+        }
+        # per_pathway_node_list = node_list + db_pathways[pathway]
         pathways_edge_counts[pathway] = pathway_edge_counts
         # only calculate for pathway_network_p_val, as user pathways don't have distributions yet
         pathway_network_p_val = calculate_network_pathway_pval(node_list, db_pathways[pathway], pathway, interaction_db, all_pw_dist)
         pathways_network_p_vals[pathway] = pathway_network_p_val
 
-    for pathway in user_pathways:
-        per_pathway_node_list = node_list + user_pathways[pathway]['genes']
-        pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
-        pathways_edge_counts[pathway] = pathway_edge_counts
+    # for pathway in user_pathways:
+    #     per_pathway_node_list = node_list + user_pathways[pathway]['genes']
+    #     pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
+    #     pathways_edge_counts[pathway] = pathway_edge_counts
 
     # add user pathways to graph nodes, which may already have pathways
     graph_pathways = nx.get_node_attributes(whole_graph, 'pathways')
@@ -71,10 +85,10 @@ def index(request):
         if gene in node_list:
             current_gene_pathways += user_pathways_by_gene[gene]
     #
-    # # find next degree
-    first_degree_sub = get_next_degree(query_genes, whole_graph)
-    second_degree_sub = get_next_degree(first_degree_sub.nodes(), whole_graph)
-    third_degree_sub = get_next_degree(second_degree_sub.nodes(), whole_graph)
+
+
+    # get edge counts
+
 
     subnetwork_and_edge_counts = {
         'subnetwork': {

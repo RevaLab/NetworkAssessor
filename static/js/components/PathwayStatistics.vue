@@ -9,7 +9,7 @@
         </div>
         <div class="tooltip">
             <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
-            <span class="tooltiptext">Total edges if this pathway is added</span>
+            <span class="tooltiptext">Edges between pathway and current subnetwork</span>
         </div>
     </div>
 </template>
