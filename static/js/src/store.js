@@ -248,11 +248,15 @@ const store = new Vuex.Store({
             store.commit('ADD_GENE_INPUT', geneInput);
         },
         getPathwaySubnetwork(store, queryGenesSelectedPathways) {
+            let t0 = performance.now();
+
             api.post('api/subnetwork/submit_genes/', queryGenesSelectedPathways)
                 .then(
                     response => {
                         const subnetworkAndEdgeCounts = response.body;
                         console.log(subnetworkAndEdgeCounts['pathways_network_p_vals']);
+                        let t1 = performance.now();
+                        console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
                         store.commit('ADD_SUBNETWORK', subnetworkAndEdgeCounts['subnetwork']);
                         store.commit('ADD_PATHWAYS_EDGE_COUNTS', subnetworkAndEdgeCounts['pathways_edge_counts']);
                     }
@@ -262,6 +266,7 @@ const store = new Vuex.Store({
                         store.commit('API_FAIL', error);
                     }
                 )
+
         },
         updateDatabase(store, database) {
           store.commit('UPDATE_NETWORK_DATABASE', database)

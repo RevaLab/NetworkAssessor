@@ -1,7 +1,7 @@
 <template>
     <div class="user-pathways" v-if="userPathwayEdges">
         <div id="user-pathways-header-and-add">
-            <h3>User Pathways</h3>
+            <h5>User Pathways</h5>
             <a class="button is-primary" v-on:click="showAddUserPathwayModal">+</a>
             <modal name="add-user-pathway">
                 <user-pathway-add-form />

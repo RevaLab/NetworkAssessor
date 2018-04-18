@@ -1,5 +1,6 @@
 import networkx as nx
-import pickle
+
+from .network_utils import Parameter
 
 
 def get_next_degree(center, whole_subgraph):
@@ -61,5 +62,6 @@ def find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db):
     pathway_edge_counts['first_degree'] = len(per_pathway_first_degree_sub.edges())
     pathway_edge_counts['second_degree'] = len(per_pathway_second_degree_sub.edges())
     pathway_edge_counts['third_degree'] = len(per_pathway_third_degree_sub.edges())
-    # pathways_edge_counts[pathway] = pathway_edge_counts
+
     return pathway_edge_counts
+

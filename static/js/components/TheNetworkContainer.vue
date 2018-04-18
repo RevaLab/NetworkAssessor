@@ -3,7 +3,7 @@
         <div class="controls">
             <network-controls />
             <user-pathways />
-            <pathway-menu v-bind:predefinedPathways="true"/>
+            <predefined-pathways />
         </div>
         <network />
     </div>
@@ -14,6 +14,7 @@
     import NetworkControls from './NetworkControls.vue'
     import PathwayMenu from './PathwayMenu.vue'
     import UserPathways from './PathwayMenu_UserPathways.vue'
+    import PredefinedPathways from './PathwayMenu_PredefinedPathways.vue'
 
     export default {
         name: "network-container",
@@ -22,6 +23,7 @@
             NetworkControls,
             PathwayMenu,
             UserPathways,
+            PredefinedPathways,
         }
     }
 </script>

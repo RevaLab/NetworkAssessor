@@ -1,5 +1,5 @@
 import json
-import pickle
+import _pickle as pickle
 import networkx as nx
 
 from django.http import JsonResponse
@@ -23,8 +23,9 @@ def index(request):
     db = data['networkDatabase']
 
     # load databases
-    interaction_db = pickle.load(open('static/{}.pkl'.format(db), 'rb'))
+    interaction_db = nx.read_gpickle('static/{}.pkl'.format(db))
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
+    all_pw_dist = pickle.load(open('Pathway_distribution_sorted/all_pw_dist.pkl', 'rb'))
     node_list = list(query_genes)
 
     # Add pathway genes to node list
@@ -49,7 +50,8 @@ def index(request):
         per_pathway_node_list = node_list + db_pathways[pathway]
         pathway_edge_counts = find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db)
         pathways_edge_counts[pathway] = pathway_edge_counts
-        pathway_network_p_val = calculate_network_pathway_pval(query_genes, pathway, db)
+        # only calculate for pathway_network_p_val, as user pathways don't have distributions yet
+        pathway_network_p_val = calculate_network_pathway_pval(node_list, db_pathways[pathway], pathway, interaction_db, all_pw_dist)
         pathways_network_p_vals[pathway] = pathway_network_p_val
 
     for pathway in user_pathways:
