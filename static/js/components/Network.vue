@@ -48,6 +48,7 @@
         name: "network",
         data() {
             return {
+                isolateCount: 0,
             }
         },
         computed: {
@@ -75,7 +76,7 @@
 
                 if (this.subnetwork['elements']['nodes'].length) {
                     statistics = {
-                        nodeLength: this.subnetwork['elements']['nodes'].length,
+                        nodeLength: this.subnetwork['elements']['nodes'].length - this.isolateCount,
                         edgesLength: this.subnetwork['elements']['edges'].length
                     };
                 }
@@ -97,6 +98,7 @@
                 this.runCytoscape(this.subnetwork, this.pathwayColors);
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
                 cytoscapeOptions.applyMouseEvents(cy);
+                this.isolateCount = cytoscapeOptions.hideIsolateNodes(cy);
             }
         },
         methods: {
