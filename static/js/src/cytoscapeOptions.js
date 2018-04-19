@@ -6,12 +6,11 @@ export default {
         let count = 0;
         cy.nodes().forEach(node => {
             if (node.neighborhood().length === 0) {
-                // node.hide();
+                node.hide();
                 count += 1
             }
         });
         return count;
-        // console.log(count)
     },
     colorPathways(subnetwork, pathwayColors, selectedPathways, cy) {
         cy.nodes().forEach(node => {

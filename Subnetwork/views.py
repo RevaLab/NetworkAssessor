@@ -49,7 +49,7 @@ def index(request):
         try:
             pw_nodes = db_pathways[pathway]
         except KeyError:
-            continue
+            pw_nodes = user_pathways[pathway]['genes']
         for node in pw_nodes:
             # If the node has only been added to the list once, that means it's only coming
             # from the pathway and not from query list or other pathways
@@ -59,11 +59,6 @@ def index(request):
                 except KeyError:
                     nodes_just_from_each_pathway[pathway] = [node]
 
-
-    # query_list_with_maintained_pathway_nodes = list(query_genes)
-    # for pathway in maintained_pathways:
-    #     query_list_with_maintained_pathway_nodes = nodes_just_from_each_pathway[pathway]
-
     # Filter out repeat nodes
     node_list = list(set(node_list))
 
@@ -72,12 +67,13 @@ def index(request):
     # db_pathways + user_pathways
     whole_graph = nx.Graph(interaction_db.subgraph(node_list))
 
-    # # find next degree
-    # if len(maintained_pathways) > 0:
-    #     first_degree_sub = get_next_degree(query_list_with_maintained_pathway_nodes, whole_graph)
-    # else:
+    # find degrees
     first_degree_sub = get_next_degree(query_genes, whole_graph)
     first_degree_nodes = list(first_degree_sub.nodes())
+    print(first_degree_nodes)
+    # if there are maintained pathways, include nodes only from those pathways
+    # and ql as new center
+    # maintained_pathway_ql_nodes = first_subgraph_nodes - all_new_pathway_only_nodes
 
     all_new_pathway_only_nodes = []
     for pathway in new_pathways:
@@ -85,46 +81,86 @@ def index(request):
             all_new_pathway_only_nodes += nodes_just_from_each_pathway[pathway]
         except KeyError:
             pass
-    # new_pathway_only_nodes = [node ]
 
-    # nodes_just_from_each_pathway_that_are_in_the_subgraph = {}
-    # first_degree_nodes_with_ql_and_maintained_pws = []
-    # for pathway in new_pathways:
-    #     # new_pathway_nodes_just_from_each_pathway[pathway]
-    first_degree_nodes_with_ql_and_maintained_pws = [node for node in first_degree_nodes if node not in all_new_pathway_only_nodes]
-    # first_degree_nodes_with_ql_and_maintained_pws += nodes_in_subgraph_only_from_ql_and_maintained_pathways
-    print(first_degree_nodes_with_ql_and_maintained_pws)
+    maintained_pw_nodes_in_first_degree_nodes = []
+    # all_maintained_pw_only_nodes = []
+    for pathway in maintained_pathways:
+        maintained_pw_only_nodes = nodes_just_from_each_pathway[pathway]
+        maintained_pw_nodes_in_first_degree_nodes += [node for node in maintained_pw_only_nodes if node in first_degree_nodes]
+    first_degree_nodes_with_ql_and_maintained_pws = maintained_pw_nodes_in_first_degree_nodes + list(query_genes)
 
-    if len(maintained_pathways) > 0:
-        first_degree_sub = get_next_degree(first_degree_nodes_with_ql_and_maintained_pws, whole_graph)
+    if len(first_degree_nodes_with_ql_and_maintained_pws):
+        new_node_list = first_degree_nodes_with_ql_and_maintained_pws + all_new_pathway_only_nodes
+        new_whole_graph = nx.Graph(interaction_db.subgraph(new_node_list))
+        first_degree_sub = get_next_degree(first_degree_nodes_with_ql_and_maintained_pws, new_whole_graph)
         first_degree_nodes = list(first_degree_sub.nodes())
-    second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
-    second_degree_nodes = list(second_degree_sub.nodes())
-    third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
-    third_degree_nodes = list(third_degree_sub.nodes())
-
-    pathways_edge_counts = {}
-    pathways_edge_lists = {}
+        second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
+        second_degree_nodes = list(second_degree_sub.nodes())
+        third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
+        third_degree_nodes = list(third_degree_sub.nodes())
+    else:
+        second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
+        second_degree_nodes = list(second_degree_sub.nodes())
+        third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
+        third_degree_nodes = list(third_degree_sub.nodes())
     pathways_edge_counts = {}
     pathways_network_p_vals = {}
-    # get counts for all pathways
+    # get edge counts for all pathways
+
     for pathway in db_pathways:
-        # For newly added pathways, we've already calculated the edges
+        # For newly added pathways, we've already calculated the edges before selecting
+        # so just report the previous edge count
+        pw_nodes = db_pathways[pathway]
         if pathway in new_pathways:
             pathway_edge_counts = current_pathway_edge_counts[pathway]
-            # pathways_edge_lists = current_pathway_edge_lists[pathway]
             pathways_edge_counts[pathway] = pathway_edge_counts
-            # pathways_edge_lists[pathway] = pathway_edge_lists
             continue
-
-        pw_nodes = db_pathways[pathway]
 
         # For maintained pathways, recalculate the edges using the graph without
         # any of the pathway-exclusive nodes
         if pathway in maintained_pathways:
+            print(pathway)
+            print(nodes_just_from_each_pathway[pathway])
+            # first_degree_nodes_wo_new_pw_nodes = []
             first_degree_nodes_wo_pw_nodes = [node for node in first_degree_nodes if node not in nodes_just_from_each_pathway[pathway]]
             second_degree_nodes_wo_pw_nodes = [node for node in second_degree_nodes if node not in nodes_just_from_each_pathway[pathway]]
             third_degree_nodes_wo_pw_nodes = [node for node in third_degree_nodes if node not in nodes_just_from_each_pathway[pathway]]
+            pathway_edge_counts = {
+                'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes_wo_pw_nodes, interaction_db),
+                'second_degree': Parameter.edge_cross(pw_nodes, second_degree_nodes_wo_pw_nodes, interaction_db),
+                'third_degree': Parameter.edge_cross(pw_nodes, third_degree_nodes_wo_pw_nodes, interaction_db),
+            }
+            pathways_edge_counts[pathway] = pathway_edge_counts
+            if pathway == 'G-Protein_Signaling_path':
+                print("YEP")
+                print(Parameter.edge_cross_list(pw_nodes, first_degree_nodes_wo_pw_nodes, interaction_db))
+            continue
+
+        pathway_edge_counts = {
+            'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes, interaction_db),
+            'second_degree': Parameter.edge_cross(pw_nodes, second_degree_nodes, interaction_db),
+            'third_degree': Parameter.edge_cross(pw_nodes, third_degree_nodes, interaction_db),
+        }
+        pathways_edge_counts[pathway] = pathway_edge_counts
+        # only calculate for pathway_network_p_val, as user pathways don't have distributions yet
+        pathway_network_p_val = calculate_network_pathway_pval(node_list, db_pathways[pathway], pathway, interaction_db, all_pw_dist)
+        pathways_network_p_vals[pathway] = pathway_network_p_val
+
+    for pathway in user_pathways:
+        pw_nodes = list(user_pathways[pathway]['genes'])
+        if pathway in new_pathways and pathway != 'query_list':
+            pathway_edge_counts = current_pathway_edge_counts[pathway]
+            pathways_edge_counts[pathway] = pathway_edge_counts
+            continue
+
+        if pathway in maintained_pathways:
+            print(pathway)
+            first_degree_nodes_wo_pw_nodes = [node for node in first_degree_nodes if
+                                              node not in nodes_just_from_each_pathway[pathway]]
+            second_degree_nodes_wo_pw_nodes = [node for node in second_degree_nodes if
+                                               node not in nodes_just_from_each_pathway[pathway]]
+            third_degree_nodes_wo_pw_nodes = [node for node in third_degree_nodes if
+                                              node not in nodes_just_from_each_pathway[pathway]]
             pathway_edge_counts = {
                 'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes_wo_pw_nodes, interaction_db),
                 'second_degree': Parameter.edge_cross(pw_nodes, second_degree_nodes_wo_pw_nodes, interaction_db),
@@ -138,30 +174,7 @@ def index(request):
             'second_degree': Parameter.edge_cross(pw_nodes, second_degree_nodes, interaction_db),
             'third_degree': Parameter.edge_cross(pw_nodes, third_degree_nodes, interaction_db),
         }
-        pathway_edge_lists = {
-            'first_degree': Parameter.edge_cross_list(pw_nodes, first_degree_nodes, interaction_db),
-            'second_degree': Parameter.edge_cross_list(pw_nodes, second_degree_nodes, interaction_db),
-            'third_degree': Parameter.edge_cross_list(pw_nodes, third_degree_nodes, interaction_db),
-        }
-        pathways_edge_lists[pathway] = pathway_edge_lists
         pathways_edge_counts[pathway] = pathway_edge_counts
-        # only calculate for pathway_network_p_val, as user pathways don't have distributions yet
-        pathway_network_p_val = calculate_network_pathway_pval(node_list, db_pathways[pathway], pathway, interaction_db, all_pw_dist)
-        pathways_network_p_vals[pathway] = pathway_network_p_val
-
-    # for pathway in user_pathways:
-    #     pw_nodes = list(user_pathways[pathway]['genes'])
-        # pathway_edge_counts = {
-        #     'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes, interaction_db),
-        #     'second_degree': Parameter.edge_cross(pw_nodes, second_degree_nodes, interaction_db),
-        #     'third_degree': Parameter.edge_cross(pw_nodes, third_degree_nodes, interaction_db),
-        # }
-        # # pathway_edge_counts = {
-        # #     'first_degree': find_pathway_edge_count(pw_nodes, first_degree_nodes, interaction_db),
-        # #     'second_degree': find_pathway_edge_count(pw_nodes, second_degree_nodes, interaction_db),
-        # #     'third_degree': find_pathway_edge_count(pw_nodes, third_degree_nodes, interaction_db),
-        # # }
-        # pathways_edge_counts[pathway] = pathway_edge_counts
 
     # add user pathways to graph nodes, which may already have pathways
     graph_pathways = nx.get_node_attributes(whole_graph, 'pathways')
@@ -184,9 +197,6 @@ def index(request):
         'pathways_edge_counts': pathways_edge_counts,
         'pathways_network_p_vals': pathways_network_p_vals
     }
-    # try:
-    #     print(pathways_edge_lists['ERK_ext_path'])
-    # except KeyError:
-    #     pass
+
     return JsonResponse(subnetwork_and_edge_counts)
 
