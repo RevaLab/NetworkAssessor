@@ -51,6 +51,7 @@ const store = new Vuex.Store({
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': '#4c1130'
         },
         previousSelectedPathways: [],
+        pathwaysEdgeLists: {},
         pathwaysEdgeCounts: {
             'AKT_ext_path': 0,
             'Apoptosis_path': 0,
