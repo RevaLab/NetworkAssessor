@@ -75,14 +75,16 @@
                 this.$store.dispatch('updateUserPathwayDisplay', displayData);
 
                 // make API call to retrieve graph
-                this.$store.dispatch(
-                    'getPathwaySubnetwork',
-                    {
-                        pathways: [],
-                        networkDatabase: 'hprd',
-                        userPathways
-                    }
-                );
+                // this.$store.dispatch(
+                //     'getPathwaySubnetwork',
+                //     {
+                //         pathways: [],
+                //         networkDatabase: 'hprd',
+                //         userPathways,
+                //         previousSelectedPathways: [],
+                //         pathwaysEdgeCounts: {}
+                //     }
+                // );
 
                 this.$router.push('/network');
             }

@@ -24,19 +24,19 @@
                     return this.$store.state.networkDatabase
                 },
                 set(database) {
-                    const pathways = this.$store.state.selectedPathways;
-                    const queryGenes = this.$store.state.geneInput;
-                    const userPathways = this.$store.state.userPathways;
-
-                    const queryGenesPathwayData = {
-                        pathways,
-                        queryGenes,
-                        userPathways,
-                        networkDatabase: database
-                    };
+                    // const pathways = this.$store.state.selectedPathways;
+                    // const queryGenes = this.$store.state.geneInput;
+                    // const userPathways = this.$store.state.userPathways;
+                    //
+                    // const queryGenesPathwayData = {
+                    //     pathways,
+                    //     queryGenes,
+                    //     userPathways,
+                    //     networkDatabase: database
+                    // };
 
                     this.$store.dispatch('updateDatabase', database);
-                    this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
+                    // this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
                 }
             }
         },

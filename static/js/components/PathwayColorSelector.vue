@@ -61,6 +61,8 @@
                 },
                 set() {
                     let selectedPathways = this.$store.state.selectedPathways;
+                    let previousSelectedPathways = selectedPathways.slice(1);
+                    this.$store.dispatch('holdPreviousSelectedPathways', previousSelectedPathways)
 
                     const isNotSelected = !selectedPathways.includes(this.pathway);
 
@@ -136,12 +138,12 @@
 
                     const queryGenes = this.$store.state.geneInput;
                     const networkDatabase = this.$store.state.networkDatabase;
-
+                    alert('am i even in here??')
                     const queryGenesPathwayData = {
                         pathways: selectedPathways,
                         queryGenes,
                         networkDatabase,
-                        userPathways
+                        userPathways,
                     };
 
                     this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);

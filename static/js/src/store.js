@@ -50,6 +50,7 @@ const store = new Vuex.Store({
             'WNT_ext_path': '#1155cc',
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': '#4c1130'
         },
+        previousSelectedPathways: [],
         pathwaysEdgeCounts: {
             'AKT_ext_path': 0,
             'Apoptosis_path': 0,
@@ -192,6 +193,9 @@ const store = new Vuex.Store({
         'ADD_SUBNETWORK' (state, subnetwork) {
             state.subnetwork = subnetwork;
         },
+        'HOLD_PREVIOUS_SELECTED_PATHWAYS' (state, previousSelectedPathways) {
+            state.previousSelectedPathways = previousSelectedPathways
+        },
         'UPDATE_USER_PATHWAY_COLORS' (state, userPathwayColors) {
             let raw = state.pathwayColors;
             let allowed = state.predefinedPathways;
@@ -241,13 +245,52 @@ const store = new Vuex.Store({
         },
         'UPDATE_USER_PATHWAYS' (state, userPathways) {
             state.userPathways = userPathways;
+        },
+        'UPDATE_OLD_EDGE_COUNTS' (state, currentlySelectedPathways) {
+            // const maintainedSelectedPathways = state.selectedPathways.slice();
+            const currentEdgeCounts = Object.create(state.pathwaysEdgeCounts, {});
+            const maintainedEdgeCounts = Object.create(state.pathwaysEdgeCountsOld, {});
+            const oldEdgeCounts = {};
+
+            currentlySelectedPathways.filter(function(pathway) {
+                return maintainedEdgeCounts[pathway];
+            });
+
+            currentlySelectedPathways.forEach(pathway => {
+                if (pathway === 'query_list') {
+                    return
+                }
+                if (maintainedEdgeCounts[pathway]) {
+                    oldEdgeCounts[pathway] = maintainedEdgeCounts[pathway]
+                } else {
+                    oldEdgeCounts[pathway] = currentEdgeCounts[pathway]
+                }
+            });
+
+            state.pathwaysEdgeCountsOld = oldEdgeCounts;
         }
     },
     actions: {
         addGeneInput(store, geneInput) {
             store.commit('ADD_GENE_INPUT', geneInput);
         },
+        holdPreviousSelectedPathways(store, previousSelectedPathways) {
+            store.commit('HOLD_PREVIOUS_SELECTED_PATHWAYS', previousSelectedPathways)
+        },
+        maintainOldEdgeCounts(store, selectedPathways) {
+           // let oldEdgePathways = [];
+           //  selectedPathways.forEach(pathway => {
+           //      if (pathway === 'query_list') {
+           //          return
+           //      }
+           //
+           //      oldEdgePathways.push(pathway)
+           //  });
+
+        },
         getPathwaySubnetwork(store, queryGenesSelectedPathways) {
+            // const currentlySelectedPathways = queryGenesSelectedPathways['pathways'];
+            // store.commit('UPDATE_OLD_EDGE_COUNTS', currentlySelectedPathways);
             api.post('api/subnetwork/submit_genes/', queryGenesSelectedPathways)
                 .then(
                     response => {

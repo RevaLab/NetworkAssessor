@@ -52,6 +52,9 @@
             }
         },
         computed: {
+            networkDatabase() {
+              return this.$store.state.networkDatabase;
+            },
             pathwayDisplayNames() {
                 return this.$store.state.pathwayDisplayNames;
             },
@@ -91,6 +94,9 @@
             selectedPathways() {
                 this.updateNetwork()
             },
+            networkDatabase() {
+                this.updateNetwork()
+            },
             pathwayColors() {
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
             },
@@ -101,12 +107,18 @@
                 this.isolateCount = cytoscapeOptions.hideIsolateNodes(cy);
             }
         },
+        mounted() {
+            this.updateNetwork()
+        },
         methods: {
             updateNetwork() {
+                // alert('WHEN DOES THIS RUN??')
                 const queryGenesPathwayData = {
                     pathways: this.selectedPathways,
                     networkDatabase: this.$store.state.networkDatabase,
-                    userPathways: this.$store.state.userPathways
+                    userPathways: this.$store.state.userPathways,
+                    previousSelectedPathways: this.$store.state.previousSelectedPathways,
+                    pathwaysEdgeCounts: this.$store.state.pathwaysEdgeCounts
                 };
                 this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
             },

@@ -67,20 +67,28 @@ def normalize_user_pathways_by_gene(user_pathways):
 #     return pathway_edge_counts
 
 
-def find_pathway_edge_count(pathway_nodes, subgraph_nodes, interaction_db):
-    # pathway_edge_counts = {
-    #     'first_degree': 0,
-    #     'second_degree': 0,
-    #     'third_degree': 0
-    # }
-    # per_pathway_subgraph = nx.Graph(interaction_db.subgraph(per_pathway_node_list))
+def find_pathway_edge_count(per_pathway_node_list, query_genes, interaction_db, pw_nodes):
+    # unique_subgraph_nodes = [node for node in subgraph_nodes if node not in pw_nodes]
 
-    # per_pathway_first_degree_sub = get_next_degree(query_genes, per_pathway_subgraph)
-    # per_pathway_second_degree_sub = get_next_degree(per_pathway_first_degree_sub.nodes(), per_pathway_subgraph)
-    # per_pathway_third_degree_sub = get_next_degree(per_pathway_second_degree_sub.nodes(), per_pathway_subgraph)
-    return Parameter.edge_cross(pathway_nodes, subgraph_nodes, interaction_db)
-    # pathway_edge_counts['first_degree'] =
-    # pathway_edge_counts['second_degree'] = len(per_pathway_second_degree_sub.edges())
-    # pathway_edge_counts['third_degree'] = len(per_pathway_third_degree_sub.edges())
+    pathway_edge_counts = {
+        'first_degree': 0,
+        'second_degree': 0,
+        'third_degree': 0
+    }
+    per_pathway_subgraph = nx.Graph(interaction_db.subgraph(per_pathway_node_list))
 
-    # return pathway_edge_counts
+    per_pathway_first_degree_sub = get_next_degree(query_genes, per_pathway_subgraph)
+    per_pathway_second_degree_sub = get_next_degree(per_pathway_first_degree_sub.nodes(), per_pathway_subgraph)
+    per_pathway_third_degree_sub = get_next_degree(per_pathway_second_degree_sub.nodes(), per_pathway_subgraph)
+    # return Parameter.edge_cross(pw_nodes, unique_subgraph_nodes, interaction_db)
+    neighbors_to_pathway = 0
+    for node in pw_nodes:
+        if node in per_pathway_first_degree_sub.nodes():
+            neighbors_to_pathway += len(list(per_pathway_first_degree_sub.neighbors(node)))
+
+    # neighbors_to_pathway = [len(per_pathway_first_degree_sub.neighbors(node)) for node in per_pathway_node_list]
+    pathway_edge_counts['first_degree'] = neighbors_to_pathway
+    pathway_edge_counts['second_degree'] = len(per_pathway_second_degree_sub.edges())
+    pathway_edge_counts['third_degree'] = len(per_pathway_third_degree_sub.edges())
+    #
+    return pathway_edge_counts

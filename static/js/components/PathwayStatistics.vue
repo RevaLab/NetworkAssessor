@@ -36,8 +36,13 @@
             },
             pathwayEdgeCount() {
                 const networkDegree = this.$store.state.networkDegree;
+                const oldEdgeCounts = this.$store.state.pathwayEdgeCountsOld;
 
                 return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree];
+
+                // return oldEdgeCounts[this.pathway] ?
+                //     oldEdgeCounts[this.pathway][networkDegree] :
+                //     this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree];
             },
             pathwayMemberCount() {
                 const userPathway = this.$store.state.userPathways[this.pathway];
