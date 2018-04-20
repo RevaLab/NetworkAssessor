@@ -118,7 +118,8 @@
                     networkDatabase: this.$store.state.networkDatabase,
                     userPathways: this.$store.state.userPathways,
                     previousSelectedPathways: this.$store.state.previousSelectedPathways,
-                    pathwaysEdgeCounts: this.$store.state.pathwaysEdgeCounts
+                    pathwaysEdgeCounts: this.$store.state.pathwaysEdgeCounts,
+                    currentGraph: this.$store.state.subnetwork
                 };
                 this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
             },

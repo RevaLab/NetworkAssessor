@@ -292,6 +292,7 @@ const store = new Vuex.Store({
         getPathwaySubnetwork(store, queryGenesSelectedPathways) {
             // const currentlySelectedPathways = queryGenesSelectedPathways['pathways'];
             // store.commit('UPDATE_OLD_EDGE_COUNTS', currentlySelectedPathways);
+            
             api.post('api/subnetwork/submit_genes/', queryGenesSelectedPathways)
                 .then(
                     response => {
