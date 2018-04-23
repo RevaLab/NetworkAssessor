@@ -15,7 +15,6 @@ For calculating edges:
         Accounts for multiple new pathways
 """
 import networkx as nx
-from .network_helpers import get_next_degree
 
 
 def find_edges_from_current_graph(current_graph, degree):
@@ -31,6 +30,7 @@ def find_edges_from_current_graph(current_graph, degree):
 
 def find_maintained_pathway_nodes_in_center(center, maintained_pathways, db_pathways, user_pathways):
     # Add back maintained pathway nodes that may have been removed
+    # Keeps one degree too many
     all_nodes_from_maintained_pathways_in_center = []
     for pathway in maintained_pathways:
         if pathway == 'query_list':
@@ -109,3 +109,43 @@ def collect_all_nodes_for_subgraph(center, pathways_to_add, db_pathways, user_pa
 
 def create_whole_graph_with_node_list(interaction_db, all_nodes_for_subgraph):
     return nx.Graph(interaction_db.subgraph(all_nodes_for_subgraph))
+
+
+def get_next_degree(center, whole_subgraph):
+    next_degree_nodes = list(center)
+
+    for gene in center:
+        try:
+            next_degree_nodes += whole_subgraph.neighbors(gene)
+        except nx.exception.NetworkXError:
+            pass
+    next_degree_sub = nx.Graph(whole_subgraph.subgraph(next_degree_nodes))
+
+    return next_degree_sub
+
+
+def make_three_degrees_of_graphs(center, whole_graph):
+
+    first_degree_sub = get_next_degree(center, whole_graph)
+    first_degree_nodes = list(first_degree_sub.nodes())
+    second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
+    second_degree_nodes = list(second_degree_sub.nodes())
+    third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
+    third_degree_nodes = list(third_degree_sub.nodes())
+
+    subnetworks = {
+        'first': {
+            'subnetwork': first_degree_sub,
+            'nodes': first_degree_nodes
+        },
+        'second': {
+            'subnetwork': second_degree_sub,
+            'nodes': second_degree_nodes
+        },
+        'third': {
+            'subnetwork': third_degree_sub,
+            'nodes': third_degree_nodes
+        },
+    }
+
+    return subnetworks
