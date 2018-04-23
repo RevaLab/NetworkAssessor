@@ -278,21 +278,7 @@ const store = new Vuex.Store({
         holdPreviousSelectedPathways(store, previousSelectedPathways) {
             store.commit('HOLD_PREVIOUS_SELECTED_PATHWAYS', previousSelectedPathways)
         },
-        maintainOldEdgeCounts(store, selectedPathways) {
-           // let oldEdgePathways = [];
-           //  selectedPathways.forEach(pathway => {
-           //      if (pathway === 'query_list') {
-           //          return
-           //      }
-           //
-           //      oldEdgePathways.push(pathway)
-           //  });
-
-        },
         getPathwaySubnetwork(store, queryGenesSelectedPathways) {
-            // const currentlySelectedPathways = queryGenesSelectedPathways['pathways'];
-            // store.commit('UPDATE_OLD_EDGE_COUNTS', currentlySelectedPathways);
-            
             api.post('api/subnetwork/submit_genes/', queryGenesSelectedPathways)
                 .then(
                     response => {

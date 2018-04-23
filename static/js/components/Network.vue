@@ -27,7 +27,6 @@
                                 </span>
                         </li>
                     </ul>
-                    <!--<p>THIS IS THE NETWORK LEGEND</p>-->
                 </div>
             </div>
 
@@ -66,6 +65,7 @@
             },
             subnetwork() {
                 let networkDegree = this.$store.state.networkDegree;
+                // let networkDegree = 'first_degree';
                 return this.$store.state.subnetwork[networkDegree];
             },
             pathwayColors() {
@@ -89,6 +89,7 @@
         },
         watch: {
             userPathways() {
+                // must hit this to calculate the pathway edge counts for this user pw
                 this.updateNetwork()
             },
             selectedPathways() {
@@ -101,6 +102,7 @@
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
             },
             subnetwork() {
+                alert('subnetwork watcher')
                 this.runCytoscape(this.subnetwork, this.pathwayColors);
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
                 cytoscapeOptions.applyMouseEvents(cy);
@@ -112,15 +114,15 @@
         },
         methods: {
             updateNetwork() {
-                // alert('WHEN DOES THIS RUN??')
                 const queryGenesPathwayData = {
-                    pathways: this.selectedPathways,
+                    pathways: this.$store.state.selectedPathways,
                     networkDatabase: this.$store.state.networkDatabase,
                     userPathways: this.$store.state.userPathways,
                     previousSelectedPathways: this.$store.state.previousSelectedPathways,
                     pathwaysEdgeCounts: this.$store.state.pathwaysEdgeCounts,
                     currentGraph: this.$store.state.subnetwork
                 };
+
                 this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
             },
             runCytoscape(subnetwork) {

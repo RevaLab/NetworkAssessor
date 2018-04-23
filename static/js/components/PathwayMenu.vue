@@ -21,7 +21,6 @@
                     this.$store.state.predefinedPathways :
                     Object.keys(this.$store.state.userPathways);
               const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
-              const networkDegree = this.$store.state.networkDegree;
 
               let sortable = [];
               let ordered_pathways = [];
@@ -34,7 +33,7 @@
                     sortable.push(
                         [
                             pathway,
-                            pathwaysEdgeCounts[pathway][networkDegree]
+                            pathwaysEdgeCounts[pathway]
                         ]
                     );
               });

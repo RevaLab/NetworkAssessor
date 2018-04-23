@@ -1,7 +1,7 @@
 <template>
     <div class="network-controls">
         <database-selector />
-        <!--<degree-selector />-->
+        <degree-selector />
     </div>
 </template>
 

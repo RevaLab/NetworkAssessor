@@ -12,6 +12,7 @@ from .calculate_network_pathway_pval import calculate_network_pathway_pval
 from networkx.readwrite import json_graph
 from .network_utils import Parameter
 
+
 @csrf_exempt
 def index(request):
     if request.method == "POST":
@@ -29,7 +30,6 @@ def index(request):
     current_pathway_edge_counts = data['pathwaysEdgeCounts']
     current_graph = data['currentGraph']
 
-    new_pathways = [pathway for pathway in pathway_list if pathway not in previous_selected_pathways]
     maintained_pathways = [pathway for pathway in pathway_list if pathway in previous_selected_pathways]
     removed_pathways = [pathway for pathway in previous_selected_pathways if pathway not in pathway_list]
 
@@ -38,19 +38,16 @@ def index(request):
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
 
     # calculate graph
-    center = find_new_center(query_genes, current_graph, 'first_degree', removed_pathways, maintained_pathways,
-                             db_pathways, user_pathways)
-    all_nodes_for_subgraph = collect_all_nodes_for_subgraph(center, new_pathways, db_pathways, user_pathways)
+    all_nodes_for_subgraph = collect_all_nodes_for_subgraph(query_genes, pathway_list, db_pathways, user_pathways)
     whole_graph = create_whole_graph_with_node_list(interaction_db, all_nodes_for_subgraph)
-    node_list = create_node_list(query_genes, pathway_list, db_pathways, user_pathways)
+    # node_list = create_node_list(query_genes, pathway_list, db_pathways, user_pathways)
 
     # Find nodes that are just in each pathway
-    first_degree_sub = get_next_degree(center, whole_graph)
+    first_degree_sub = get_next_degree(query_genes, whole_graph)
     first_degree_nodes = list(first_degree_sub.nodes())
-    # second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
-    # second_degree_nodes = list(second_degree_sub.nodes())
-    # third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
-    # third_degree_nodes = list(third_degree_sub.nodes())
+    second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
+    second_degree_nodes = list(second_degree_sub.nodes())
+    third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
 
     # get edge counts for all pathways
     pathways_edge_counts = {}
@@ -69,10 +66,14 @@ def index(request):
             pw_nodes = user_pathways[pathway]['genes']
 
         # For all other pathways, calculate the anticipated connections with the current subgraph
-        pathway_edge_counts = {
-            'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes, interaction_db)
-        }
-        pathways_edge_counts[pathway] = pathway_edge_counts
+        # pathway_edge_counts = {
+        #
+        # }
+        edges = Parameter.edge_cross(pw_nodes, query_genes, interaction_db)
+        if edges:
+            pathways_edge_counts[pathway] = edges
+        else:
+            pathways_edge_counts[pathway] = 0
 
     # get p values for db pathways
     # pathways_p_vals = {}
@@ -94,12 +95,15 @@ def index(request):
         else:
             current_gene_pathways = []
 
-        if gene in node_list:
+        if gene in all_nodes_for_subgraph:
             current_gene_pathways += user_pathways_by_gene[gene]
 
     subnetwork_and_edge_counts = {
         'subnetwork': {
             'first_degree': json_graph.cytoscape_data(first_degree_sub),
+            'second_degree': json_graph.cytoscape_data(second_degree_sub),
+            'third_degree': json_graph.cytoscape_data(third_degree_sub),
+            'whole': json_graph.cytoscape_data(whole_graph)
         },
         'pathways_edge_counts': pathways_edge_counts,
     }

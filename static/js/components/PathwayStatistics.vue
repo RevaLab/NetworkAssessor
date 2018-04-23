@@ -8,7 +8,7 @@
             <span class="tooltiptext">Pathway Members</span>
         </div>
         <div class="tooltip">
-            <p v-if="pathwayEdgesReady">{{ pathwayEdgeCount }}</p>
+            {{ pathwayEdgeCount }}
             <span class="tooltiptext">Edges between pathway and current subnetwork</span>
         </div>
     </div>
@@ -35,14 +35,7 @@
               return this.$store.state.pathwaysEdgeCounts[this.pathway]
             },
             pathwayEdgeCount() {
-                const networkDegree = this.$store.state.networkDegree;
-                const oldEdgeCounts = this.$store.state.pathwayEdgeCountsOld;
-
-                return this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree];
-
-                // return oldEdgeCounts[this.pathway] ?
-                //     oldEdgeCounts[this.pathway][networkDegree] :
-                //     this.$store.state.pathwaysEdgeCounts[this.pathway][networkDegree];
+                return this.$store.state.pathwaysEdgeCounts[this.pathway];
             },
             pathwayMemberCount() {
                 const userPathway = this.$store.state.userPathways[this.pathway];
