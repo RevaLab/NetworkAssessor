@@ -13,6 +13,10 @@
             <input type="radio" id="three" value="third_degree" v-model="picked">
             <label for="three">Three</label>
         </div>
+        <div class="radio-group">
+            <input type="radio" id="whole" value="whole" v-model="picked">
+            <label for="whole">Whole</label>
+        </div>
     </div>
 </template>
 

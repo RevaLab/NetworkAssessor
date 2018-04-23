@@ -25,13 +25,7 @@ def index(request):
     user_pathways = data['userPathways']
     pathway_list = data['pathways'] # all selected pathways
     db = data['networkDatabase']
-
-    previous_selected_pathways = data['previousSelectedPathways']
     current_pathway_edge_counts = data['pathwaysEdgeCounts']
-    current_graph = data['currentGraph']
-
-    maintained_pathways = [pathway for pathway in pathway_list if pathway in previous_selected_pathways]
-    removed_pathways = [pathway for pathway in previous_selected_pathways if pathway not in pathway_list]
 
     # load databases
     interaction_db = nx.read_gpickle('static/{}.pkl'.format(db))
@@ -40,7 +34,6 @@ def index(request):
     # calculate graph
     all_nodes_for_subgraph = collect_all_nodes_for_subgraph(query_genes, pathway_list, db_pathways, user_pathways)
     whole_graph = create_whole_graph_with_node_list(interaction_db, all_nodes_for_subgraph)
-    # node_list = create_node_list(query_genes, pathway_list, db_pathways, user_pathways)
 
     # Find nodes that are just in each pathway
     first_degree_sub = get_next_degree(query_genes, whole_graph)
@@ -66,9 +59,6 @@ def index(request):
             pw_nodes = user_pathways[pathway]['genes']
 
         # For all other pathways, calculate the anticipated connections with the current subgraph
-        # pathway_edge_counts = {
-        #
-        # }
         edges = Parameter.edge_cross(pw_nodes, query_genes, interaction_db)
         if edges:
             pathways_edge_counts[pathway] = edges
