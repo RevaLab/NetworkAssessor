@@ -47,10 +47,10 @@ def index(request):
     # Find nodes that are just in each pathway
     first_degree_sub = get_next_degree(center, whole_graph)
     first_degree_nodes = list(first_degree_sub.nodes())
-    second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
-    second_degree_nodes = list(second_degree_sub.nodes())
-    third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
-    third_degree_nodes = list(third_degree_sub.nodes())
+    # second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
+    # second_degree_nodes = list(second_degree_sub.nodes())
+    # third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
+    # third_degree_nodes = list(third_degree_sub.nodes())
 
     # get edge counts for all pathways
     pathways_edge_counts = {}
@@ -70,11 +70,20 @@ def index(request):
 
         # For all other pathways, calculate the anticipated connections with the current subgraph
         pathway_edge_counts = {
-            'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes, interaction_db),
-            'second_degree': Parameter.edge_cross(pw_nodes, second_degree_nodes, interaction_db),
-            'third_degree': Parameter.edge_cross(pw_nodes, third_degree_nodes, interaction_db),
+            'first_degree': Parameter.edge_cross(pw_nodes, first_degree_nodes, interaction_db)
         }
         pathways_edge_counts[pathway] = pathway_edge_counts
+
+    # get p values for db pathways
+    # pathways_p_vals = {}
+    #
+    # for pathway in db_pathways:
+    #     # For maintained pathways, keep the previously reported p values
+    #     # if pathway in pathway_list:
+    #
+    #     pathway_p_vals = {
+    #         'first_degree'
+    #     }
 
     # add user pathways to graph nodes, which may already have pathways
     graph_pathways = nx.get_node_attributes(whole_graph, 'pathways')
@@ -91,8 +100,6 @@ def index(request):
     subnetwork_and_edge_counts = {
         'subnetwork': {
             'first_degree': json_graph.cytoscape_data(first_degree_sub),
-            'second_degree': json_graph.cytoscape_data(second_degree_sub),
-            'third_degree': json_graph.cytoscape_data(third_degree_sub)
         },
         'pathways_edge_counts': pathways_edge_counts,
     }

@@ -149,3 +149,4 @@ def make_three_degrees_of_graphs(center, whole_graph):
     }
 
     return subnetworks
+

@@ -9,8 +9,8 @@ const store = new Vuex.Store({
     state: {
         subnetwork: {
             'first_degree': {'elements': {'nodes': []}},
-            'second_degree': {'elements': {'nodes': []}},
-            'third_degree': {'elements': {'nodes': []}}
+            // 'second_degree': {'elements': {'nodes': []}},
+            // 'third_degree': {'elements': {'nodes': []}}
         },
         geneInput: [],
         listName: '',

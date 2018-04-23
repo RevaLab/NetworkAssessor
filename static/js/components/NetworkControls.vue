@@ -1,7 +1,7 @@
 <template>
     <div class="network-controls">
         <database-selector />
-        <degree-selector />
+        <!--<degree-selector />-->
     </div>
 </template>
 
@@ -13,7 +13,6 @@
         name: "network-controls",
         data() {
             return {
-                // selectedValue: "first_degree"
             }
         },
         components: {
