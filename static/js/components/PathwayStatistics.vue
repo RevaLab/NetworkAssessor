@@ -9,7 +9,7 @@
         </div>
         <div class="tooltip">
             {{ pathwayEdgeCount }}
-            <span class="tooltiptext">Edges between pathway and current subnetwork</span>
+            <span class="tooltiptext">Edges between pathway and query list</span>
         </div>
     </div>
 </template>

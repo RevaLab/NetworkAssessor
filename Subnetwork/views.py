@@ -5,12 +5,11 @@ import networkx as nx
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from .backend_plan import find_new_center, collect_all_nodes_for_subgraph, create_whole_graph_with_node_list
-from .create_node_list import create_node_list
-from .network_helpers import get_next_degree, normalize_user_pathways_by_gene
-from .calculate_network_pathway_pval import calculate_network_pathway_pval
-from networkx.readwrite import json_graph
-from .network_utils import Parameter
+from .network_functions import \
+    collect_all_nodes_for_subgraph, \
+    make_three_degrees_of_graphs, \
+    calculate_pathway_edge_counts, \
+    assign_user_pathways_to_genes
 
 
 @csrf_exempt
@@ -25,76 +24,24 @@ def index(request):
     user_pathways = data['userPathways']
     pathway_list = data['pathways'] # all selected pathways
     db = data['networkDatabase']
-    current_pathway_edge_counts = data['pathwaysEdgeCounts']
 
     # load databases
     interaction_db = nx.read_gpickle('static/{}.pkl'.format(db))
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
 
-    # calculate graph
+    # calculate graphs
     all_nodes_for_subgraph = collect_all_nodes_for_subgraph(query_genes, pathway_list, db_pathways, user_pathways)
-    whole_graph = create_whole_graph_with_node_list(interaction_db, all_nodes_for_subgraph)
-
-    # Find nodes that are just in each pathway
-    first_degree_sub = get_next_degree(query_genes, whole_graph)
-    first_degree_nodes = list(first_degree_sub.nodes())
-    second_degree_sub = get_next_degree(first_degree_nodes, whole_graph)
-    second_degree_nodes = list(second_degree_sub.nodes())
-    third_degree_sub = get_next_degree(second_degree_nodes, whole_graph)
+    whole_graph = nx.Graph(interaction_db.subgraph(all_nodes_for_subgraph))
+    subnetworks = make_three_degrees_of_graphs(query_genes, whole_graph)
 
     # get edge counts for all pathways
-    pathways_edge_counts = {}
-    all_pathways = list(user_pathways.keys()) + list(db_pathways.keys())
-    for pathway in all_pathways:
-        # For maintained pathways, keep the previously reported edge counts
-        # since this is either the current edges or the previously anticipated connections
-        if pathway in pathway_list and pathway != 'query_list':
-            print(pathway)
-            pathways_edge_counts[pathway] = current_pathway_edge_counts[pathway]
-            continue
-
-        if pathway in db_pathways:
-            pw_nodes = db_pathways[pathway]
-        else:
-            pw_nodes = user_pathways[pathway]['genes']
-
-        # For all other pathways, calculate the anticipated connections with the current subgraph
-        edges = Parameter.edge_cross(pw_nodes, query_genes, interaction_db)
-        if edges:
-            pathways_edge_counts[pathway] = edges
-        else:
-            pathways_edge_counts[pathway] = 0
-
-    # get p values for db pathways
-    # pathways_p_vals = {}
-    #
-    # for pathway in db_pathways:
-    #     # For maintained pathways, keep the previously reported p values
-    #     # if pathway in pathway_list:
-    #
-    #     pathway_p_vals = {
-    #         'first_degree'
-    #     }
+    pathways_edge_counts = calculate_pathway_edge_counts(query_genes, user_pathways, db_pathways, interaction_db)
 
     # add user pathways to graph nodes, which may already have pathways
-    graph_pathways = nx.get_node_attributes(whole_graph, 'pathways')
-    user_pathways_by_gene = normalize_user_pathways_by_gene(user_pathways)
-    for gene in user_pathways_by_gene:
-        if gene in graph_pathways:
-            current_gene_pathways = graph_pathways[gene]
-        else:
-            current_gene_pathways = []
-
-        if gene in all_nodes_for_subgraph:
-            current_gene_pathways += user_pathways_by_gene[gene]
+    assign_user_pathways_to_genes(user_pathways, whole_graph, all_nodes_for_subgraph)
 
     subnetwork_and_edge_counts = {
-        'subnetwork': {
-            'first_degree': json_graph.cytoscape_data(first_degree_sub),
-            'second_degree': json_graph.cytoscape_data(second_degree_sub),
-            'third_degree': json_graph.cytoscape_data(third_degree_sub),
-            'whole': json_graph.cytoscape_data(whole_graph)
-        },
+        'subnetwork': subnetworks,
         'pathways_edge_counts': pathways_edge_counts,
     }
 

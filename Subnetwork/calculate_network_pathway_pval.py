@@ -1,10 +1,9 @@
 from bisect import bisect_left
 
-from .network_utils import Parameter
+# from .all_pw_dist import all_pw_dist
 
 
-def calculate_network_pathway_pval(inter_pw_subgraph_edges, subgraph_nodes, pathway, db, all_pw_distribution):
-    # inter_ql_pw_edges = Parameter.edge_cross(pw_nodes, ql_nodes, db)
+def calculate_network_pathway_pval(inter_pw_subgraph_edges, subgraph_nodes, pathway):
     normalized_inter_pw_subgraph_edges = inter_pw_subgraph_edges / len(subgraph_nodes)
     pw_distribution = all_pw_distribution[pathway]
 
