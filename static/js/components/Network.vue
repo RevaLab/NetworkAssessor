@@ -21,10 +21,12 @@
                         </li>
                         <li v-for="(pathway, index) in selectedPathways" :key="index">
                                 <span>
-                                    <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }"></div>
-                                    <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }"></div>
-                                    {{ pathwayDisplayNames[pathway] }} :
+                                    <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }">
+                                    </div>
+                                    <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }">
+                                    </div>
                                 </span>
+                            {{ pathwayDisplayNames[pathway] }} <i v-if="pathway !== 'query_list'">: {{pathwaysPVals[pathway]}}</i>
                         </li>
                     </ul>
                 </div>
@@ -77,6 +79,9 @@
             },
             pathwayColors() {
                 return this.$store.state.pathwayColors;
+            },
+            pathwaysPVals() {
+                return this.$store.state.pathwaysPVals
             },
             networkStatistics() {
                 let statistics = {
@@ -221,6 +226,10 @@
         border: solid 1px black;
         padding-left: 2px;
         /*background-color: #6DDCBD;*/
+    }
+
+    .legend-entry {
+        background-color: pink;
     }
 
     .network-legend-content ul {
