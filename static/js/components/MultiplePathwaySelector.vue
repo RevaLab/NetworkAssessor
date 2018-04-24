@@ -5,8 +5,7 @@
                 Select All With Edges
             </div>
             <div class="label-and-swatch multi-selector">
-            <input type="checkbox" v-model="clearSelection" />
-                Clear Selection
+            <a class="button is-small" v-on:click="clearSelection">Reset</a>
             </div>
     </div>
 </template>
@@ -14,35 +13,50 @@
 <script>
     export default {
         name: "multiple-pathway-selector",
-        computed: {
-            clearSelection: {
-                get() {
-                    const predefinedPathways = this.$store.state.predefinedPathways.slice();
-                    const selectedPathways = this.$store.state.selectedPathways.slice();
+        methods: {
+          clearSelection() {
+            const userPathways = this.$store.state.userPathways;
+            const selectedPathways = this.$store.state.selectedPathways.slice();
+            let selectedUserPathways = [];
 
-                    // return false if a pathway has edges and is not selected
-                    const predefinedPathwaysSelected = predefinedPathways.some((pathway) => {
-                        return (
-                            selectedPathways.includes(pathway)
-                        )
-                    });
-
-                    return predefinedPathwaysSelected;
-                },
-                set() {
-                    const userPathways = this.$store.state.userPathways;
-                    const selectedPathways = this.$store.state.selectedPathways.slice();
-                    let selectedUserPathways = [];
-
-                    Object.keys(userPathways).forEach((pathway) => {
-                        if (selectedPathways.includes(pathway)) {
-                            selectedUserPathways.push(pathway)
-                        }
-                    });
-
-                    this.$store.dispatch('updateSelectedPathways', selectedUserPathways);
+            Object.keys(userPathways).forEach((pathway) => {
+                if (selectedPathways.includes(pathway)) {
+                    selectedUserPathways.push(pathway)
                 }
-            },
+            });
+
+            this.$store.dispatch('updateSelectedPathways', selectedUserPathways);
+          }
+        },
+        computed: {
+            // clearSelection: {
+            //     get() {
+            //         const predefinedPathways = this.$store.state.predefinedPathways.slice();
+            //         const selectedPathways = this.$store.state.selectedPathways.slice();
+            //
+            //         // return false if a pathway has edges and is not selected
+            //         const predefinedPathwaysSelected = predefinedPathways.some((pathway) => {
+            //             return (
+            //                 selectedPathways.includes(pathway)
+            //             )
+            //         });
+            //
+            //         return predefinedPathwaysSelected;
+            //     },
+            //     set() {
+            //         const userPathways = this.$store.state.userPathways;
+            //         const selectedPathways = this.$store.state.selectedPathways.slice();
+            //         let selectedUserPathways = [];
+            //
+            //         Object.keys(userPathways).forEach((pathway) => {
+            //             if (selectedPathways.includes(pathway)) {
+            //                 selectedUserPathways.push(pathway)
+            //             }
+            //         });
+            //
+            //         this.$store.dispatch('updateSelectedPathways', selectedUserPathways);
+            //     }
+            // },
             allChecked: {
                 get() {
                     const pathwaysEdgeCounts = Object.assign({}, this.$store.state.pathwaysEdgeCounts);
