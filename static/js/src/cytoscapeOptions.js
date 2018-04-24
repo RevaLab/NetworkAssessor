@@ -6,7 +6,7 @@ export default {
         let count = 0;
         cy.nodes().forEach(node => {
             if (node.neighborhood().length === 0) {
-                node.hide();
+                cy.remove(node);
                 count += 1
             }
         });
@@ -26,6 +26,7 @@ export default {
                     node.style('background-color', pathwayColors['query_list']);
                     node.style('text-valign', 'center');
                     node.style('text-halign', 'center');
+                    // node.style('lineColor', 'red');
                     // node.style('text-outline-color', pathwayColors['query_list'])
             } else if
                 (selectedPathwaysWithNode.includes('query_list') &&
@@ -58,50 +59,54 @@ export default {
             }
         })
     },
-    applyMouseEvents(cy, queryGenes) {
+    applyMouseEvents(cy, queryGenes, queryListColor) {
+        let edgesWithQueryGenes, edgesWithoutQueryGenes;
+
         cy.on('mousedown', function(event){
-            console.log(queryGenes)
             let evtTarget = event.target;
             if (evtTarget !== cy) {
                 let edges = evtTarget.connectedEdges();
-                // for (let edge in edges) {
-                //   if (queryGenes.includes(edge.target().id())
-                //       || queryGenes.includes(edge.source().id())) {
-                //       edge.animate({
-                //         style: {lineColor: 'blue'}});
-                //   }
-                //
-                // }
-                // console.log(edges.)
-                // console.log(edges.neighborhood())
-                let edgesWithQueryGenes = edges.filter((edge) => {
-                  return (queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
-                    // console.log(edge.source('node#CDKN1B'))
+                edgesWithQueryGenes = edges.filter((edge) => {
+                  return (queryGenes.includes(edge.target().id()))
                 });
 
                 edgesWithQueryGenes.animate({
                     style: {lineColor: 'red'}
                 });
-                let edgesWithoutQueryGenes = edges.filter((edge) => {
-                  return !(queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
+
+                edgesWithoutQueryGenes = edges.filter((edge) => {
+                  return !(queryGenes.includes(edge.target().id()))
                 });
+
                 edgesWithoutQueryGenes.animate({
                     style: {lineColor: 'blue'}
                 });
-                // console.log(evtTarget.getNeighborsList())
             }
-
         });
-
-        cy.on('mouseup', function(event){
+        cy.on('mouseup', (event) => {
             let evtTarget = event.target;
 
             if (evtTarget !== cy) {
-                evtTarget.connectedEdges().animate({
-                    style: { lineColor: 'gray' }
+                    edgesWithQueryGenes.animate({
+                    style: {lineColor: queryListColor}
+                });
+
+                edgesWithoutQueryGenes.animate({
+                    style: {lineColor: '#b7b7b7'}
                 });
             }
         });
+    },
+    colorQueryGeneEdges(cy, queryGenes, queryListColor) {
+        cy.edges().forEach((edge) => {
+            if (queryGenes.includes(edge.target().id())
+                || queryGenes.includes(edge.source().id())) {
+                edge.style('line-color', queryListColor);
+            } else {
+                edge.style('line-color', '#b7b7b7')
+            }
+        })
+
     },
     coseOptions: {
       // Called on `layoutready`

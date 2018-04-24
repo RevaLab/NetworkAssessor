@@ -109,10 +109,16 @@
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
             },
             subnetwork() {
-                this.runCytoscape(this.subnetwork, this.pathwayColors);
-                cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
-                cytoscapeOptions.applyMouseEvents(cy, this.queryGenes);
-                this.isolateCount = cytoscapeOptions.hideIsolateNodes(cy);
+                // let
+                if (this.pathwayColors) {
+                    this.runCytoscape(this.subnetwork, this.pathwayColors);
+                    cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
+                    cytoscapeOptions.applyMouseEvents(cy, this.queryGenes, this.pathwayColors['query_list']);
+                    // if (this.pathwayColors[]) {
+                    //
+                    // }
+                    cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
+                }
             }
         },
         mounted() {
@@ -141,24 +147,28 @@
                             selector: 'node',
                             style: {
                                 'label': 'data(id)',
-                                'lineColor': '#b7b7b7',
+                                // 'lineColor': '#b7b7b7',
                             }
                         },
                         {
                             selector: 'edge',
                             style: {
-                                'color': '#b7b7b7',
+                                // 'color': '#b7b7b7',
                                 'width': '0.08em',
                             }
                         }
                     ]
                 };
                 cy = cytoscape(cytoscape_options);
+
+                let count = 0;
                 cy.nodes().forEach(node => {
                     if (node.neighborhood().length === 0) {
                         cy.remove(node);
+                        count += 1;
                     }
                 });
+                this.isolateCount = count;
                 cy.fit()
             }
         }
