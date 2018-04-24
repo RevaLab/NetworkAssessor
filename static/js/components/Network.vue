@@ -15,7 +15,7 @@
                     <ul>
                         <li>
                             <span>
-                                <i class="fas fa-star star-icon"></i>
+                                <i class="fas fa-star star-icon" :style="starColor"></i>
                                 Query List & Pathway
                             </span>
                         </li>
@@ -51,6 +51,10 @@
             }
         },
         computed: {
+            starColor() {
+                const queryListColor = this.$store.state.pathwayColors['query_list']
+                return { color: queryListColor}
+            },
             networkDatabase() {
               return this.$store.state.networkDatabase;
             },
@@ -136,12 +140,12 @@
                                 'label': 'data(id)',
                                 'lineColor': '#b7b7b7',
                                 // 'width': '1px',
-                                "text-valign" : "center",
-                                "text-halign" : "center",
-                                'color': 'white',
-                                'text-outline-width': '2px',
-                                'text-outline-opacity': '1',
-                                'text-outline-color': 'black'
+                                // "text-valign" : "center",
+                                // "text-halign" : "center",
+                                // 'color': 'white',
+                                // 'text-outline-width': '2px',
+                                // 'text-outline-opacity': '1',
+                                // 'text-outline-color': 'black'
                             }
                         },
                         {
@@ -238,7 +242,7 @@
     }
 
     .star-icon {
-        color: #00ff00;
+        /*color: #00ff00;*/
         font-size: 20px;
     }
 

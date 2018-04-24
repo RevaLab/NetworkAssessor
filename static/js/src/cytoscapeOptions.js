@@ -24,6 +24,7 @@ export default {
                     node.style('shape', 'rectangle');
                     node.style('width', '70px');
                     node.style('background-color', pathwayColors['query_list']);
+                    node.style()
                     // node.style('text-outline-color', pathwayColors['query_list'])
             } else if
                 (selectedPathwaysWithNode.includes('query_list') &&
@@ -32,7 +33,7 @@ export default {
                 node.style('shape', 'star');
                 node.style('width', '50px');
                 node.style('height', '50px');
-                node.style('background-color', '#00ff00');
+                node.style('background-color', pathwayColors['query_list']);
                 // node.style('text-outline-color', '#00ff00')
             } else if (selectedPathwaysWithNode.length > 1) {
                 node.style('shape', 'ellipse');

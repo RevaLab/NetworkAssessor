@@ -8,7 +8,6 @@
                     shapes="squares"
                     row-length="5"
                     :trigger-style="triggerStyle"
-                    :exceptions="exceptions"
             />
             <pathway-statistics v-bind:pathway="pathway"/>
     </div>
@@ -24,7 +23,7 @@
         data() {
           return {
               pathway: 'query_list',
-              exceptions: ['#00ff00'],
+              // exceptions: ['#00ff00'],
               // triggerStyle: {
               //       width: '20px',
               //       height: '20px',
