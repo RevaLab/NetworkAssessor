@@ -154,6 +154,12 @@
                     ]
                 };
                 cy = cytoscape(cytoscape_options);
+                cy.nodes().forEach(node => {
+                    if (node.neighborhood().length === 0) {
+                        cy.remove(node);
+                    }
+                });
+                cy.fit()
             }
         }
     }
