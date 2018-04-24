@@ -134,7 +134,20 @@
                             selector: 'node',
                             style: {
                                 'label': 'data(id)',
-                                'lineColor': 'gray'
+                                'lineColor': '#b7b7b7',
+                                // 'width': '1px',
+                                "text-valign" : "center",
+                                "text-halign" : "center",
+                                'color': 'white',
+                                'text-outline-width': '2px',
+                                'text-outline-opacity': '1'
+                            }
+                        },
+                        {
+                            selector: 'edge',
+                            style: {
+                                'color': '#b7b7b7',
+                                'width': '0.08em'
                             }
                         }
                     ]
