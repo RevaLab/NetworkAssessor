@@ -136,20 +136,7 @@
                 if (pw_index !== -1) {
                     selectedPathways.splice(pw_index, 1);
                     this.$store.dispatch('updateSelectedPathways', selectedPathways)
-                    //
-                    // const queryGenes = this.$store.state.geneInput;
-                    // const networkDatabase = this.$store.state.networkDatabase;
-                    // const queryGenesPathwayData = {
-                    //     pathways: selectedPathways,
-                    //     queryGenes,
-                    //     networkDatabase,
-                    //     userPathways,
-                    // };
-                    //
-                    // this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
                 }
-
-                // remove pathway from selected pathways
 
                 // update pathways in local storage
                 this.$ls.set('userPathways', JSON.stringify(userPathways));

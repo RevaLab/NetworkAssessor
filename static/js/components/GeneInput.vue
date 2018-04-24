@@ -38,19 +38,12 @@
             addExampleList() {
                 this.geneList =['FLT3', 'SMO', 'GLA', 'SGCB', 'OAT', 'CAPN3', 'ASS1', 'AGXT', 'AKT1', 'PTPN1',
                     'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4'].join("\n")
-                // this.geneList = ['CD4', 'DARS2', 'NDUFA10', 'NDUFC2', 'ALDH6A1', 'NDUFB10', 'NDUFB3', 'SORD',
-                //     'NDUFA9', 'NDUFS1', 'NDUFA3', 'NDUFA12', 'PIK3CD', 'CA1', 'HBA1', 'FGB', 'FGG', 'SLC22A6',
-                //     'HBB', 'FAH', 'WAS', 'CSK', 'TST', 'OAS1', 'SLC22A2', 'INPP5D', 'ADD2', 'ANK1', 'ARHGAP25',
-                //     'ARHGAP30', 'ARHGAP31', 'ARHGEF6', 'BIN2', 'CCT2', 'CCT5', 'COPA', 'DEF6', 'DOCK2', 'EPB41',
-                //     'EPB42', 'EVI2B', 'EVL', 'FMNL1', 'FNBP1', 'FYB1', 'GIPC2', 'GMIP', 'HCLS1', 'LCP1', 'LCP2',
-                //     'LPGAT1', 'MCM3', 'NUMA1', 'SPTA1', 'SPTB', 'TAP1', 'TAP2', 'WDR81', 'USP15', 'YOD1',
-                //     'PTPN6', 'SAMHD1', 'SKAP2', 'CDK17', 'RCSD1', 'CCT8', 'FERMT3', 'COPB2', 'LRPPRC', 'GPSM3',
-                //     'MYO1F', 'SH3BP1', 'SLC4A1', 'IL16', 'LSP1', 'PLEKHF2', 'RMND1', 'HBD', 'PTPRC', 'MCM4',
-                //     'SMC3', 'STK4', 'TAPBP', 'WDR91'].join("\n")
             },
             submitGeneList() {
                 let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
+
                 delete userPathways['query_list'];
+                this.$ls.set('userPathways', JSON.stringify(userPathways));
                 // update gene input as a user pathway
                 let queryListAsUserPathway = {
                     query_list: {
@@ -62,7 +55,6 @@
 
                 // add information for user pathways to store
                 userPathways = {...userPathways, ...queryListAsUserPathway};
-
                 let displayData = {
                     pathways: {},
                     add: true
@@ -75,18 +67,6 @@
 
                 this.$store.dispatch('updateUserPathways', userPathways);
                 this.$store.dispatch('updateUserPathwayDisplay', displayData);
-
-                // make API call to retrieve graph
-                // this.$store.dispatch(
-                //     'getPathwaySubnetwork',
-                //     {
-                //         pathways: [],
-                //         networkDatabase: 'hprd',
-                //         userPathways,
-                //         previousSelectedPathways: [],
-                //         pathwaysEdgeCounts: {}
-                //     }
-                // );
 
                 this.$router.push('/network');
             }

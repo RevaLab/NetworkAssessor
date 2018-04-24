@@ -102,7 +102,6 @@
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
             },
             subnetwork() {
-                alert('subnetwork watcher')
                 this.runCytoscape(this.subnetwork, this.pathwayColors);
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
                 cytoscapeOptions.applyMouseEvents(cy);

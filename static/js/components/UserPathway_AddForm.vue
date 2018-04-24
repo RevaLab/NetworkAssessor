@@ -30,7 +30,8 @@ export default {
     },
     methods: {
         addPathway() {
-            let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
+            // let userPathways = this.$store.state.userPathways;
+            let userPathways = Object.assign({}, this.$store.state.userPathways);
             let snakeCaseTitle = this.title.toLowerCase().split(' ').join("_");
 
             userPathways[snakeCaseTitle] = {
@@ -39,9 +40,10 @@ export default {
                 genes: this.geneList.split("\n")
             };
 
+            this.$store.dispatch('updateUserPathways', userPathways);
+
             this.$ls.set('userPathways', JSON.stringify(userPathways));
 
-            this.$store.dispatch('updateUserPathways', userPathways);
             let displayData = {
               pathways: {},
               add: true
