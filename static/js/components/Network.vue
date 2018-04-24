@@ -152,7 +152,8 @@
                             selector: 'edge',
                             style: {
                                 'color': '#b7b7b7',
-                                'width': '0.08em'
+                                'width': '0.08em',
+                                'stroke-opacity': '0.9'
                             }
                         }
                     ]

@@ -24,7 +24,8 @@ export default {
                     node.style('shape', 'rectangle');
                     node.style('width', '70px');
                     node.style('background-color', pathwayColors['query_list']);
-                    node.style()
+                    node.style('text-valign', 'center');
+                    node.style('text-halign', 'center');
                     // node.style('text-outline-color', pathwayColors['query_list'])
             } else if
                 (selectedPathwaysWithNode.includes('query_list') &&
@@ -34,6 +35,9 @@ export default {
                 node.style('width', '50px');
                 node.style('height', '50px');
                 node.style('background-color', pathwayColors['query_list']);
+                node.style('text-valign', 'center');
+                node.style('text-halign', 'center');
+
                 // node.style('text-outline-color', '#00ff00')
             } else if (selectedPathwaysWithNode.length > 1) {
                 node.style('shape', 'ellipse');
@@ -43,11 +47,13 @@ export default {
                     let pie_index = i + 1;
                     node.style(`pie-${pie_index}-background-color`, pathwayColors[pathway]);
                     node.style(`pie-${pie_index}-background-size`, `${percentPathway}%`);
-                })
+                });
+                // node.style('background-opacity', '0.9')
                 // node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
             } else {
                 node.style('shape','ellipse');
                 node.style('background-color', pathwayColors[selectedPathwaysWithNode[0]]);
+                // node.style('background-opacity', '0.9');
                 // node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
             }
         })
@@ -93,13 +99,13 @@ export default {
       // Node repulsion (non overlapping) multiplier
       nodeRepulsion: 8000,
       // Ideal (intra-graph) edge length
-      idealEdgeLength: 50,
+      idealEdgeLength: 100,
       // Divisor to compute edge forces
       edgeElasticity: 0.45,
       // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
       nestingFactor: 0.1,
       // Gravity force (constant)
-      gravity: 0.55,
+      gravity: 0.15,
       // Maximum number of iterations to perform
       numIter: 2500,
       // Whether to tile disconnected nodes

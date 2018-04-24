@@ -11,7 +11,6 @@
                         shapes="circles"
                         row-length="5"
                         :trigger-style="triggerStyle"
-                        :exceptions="exceptions"
                 />
             </div>
             <pathway-statistics v-bind:pathway="pathway"/>
@@ -29,7 +28,6 @@
         name: "network-controls",
         data() {
             return {
-                exceptions: ['#00ff00'],
                 triggerStyle: {
                     width: '20px',
                     height: '20px',
