@@ -1,8 +1,12 @@
 <template>
     <div class="multiple-pathway-selector">
-            <div class="label-and-swatch">
-                <input type="checkbox" id="pw-checkbox" v-model="checked" />
+            <div class="label-and-swatch multi-selector">
+                <input type="checkbox" v-model="allChecked" />
                 Select All With Edges
+            </div>
+            <div class="label-and-swatch multi-selector">
+            <input type="checkbox" v-model="clearSelection" />
+                Clear Selection
             </div>
     </div>
 </template>
@@ -11,7 +15,25 @@
     export default {
         name: "multiple-pathway-selector",
         computed: {
-            checked: {
+            clearSelection: {
+                get() {
+
+                },
+                set() {
+                    const userPathways = this.$store.state.userPathways;
+                    const selectedPathways = this.$store.state.selectedPathways.slice();
+                    let selectedUserPathways = [];
+
+                    Object.keys(userPathways).forEach((pathway) => {
+                        if (selectedPathways.includes(pathway)) {
+                            selectedUserPathways.push(pathway)
+                        }
+                    });
+
+                    this.$store.dispatch('updateSelectedPathways', selectedUserPathways);
+                }
+            },
+            allChecked: {
                 get() {
                     const pathwaysEdgeCounts = Object.assign({}, this.$store.state.pathwaysEdgeCounts);
                     const predefinedPathways = this.$store.state.predefinedPathways.slice();
@@ -33,7 +55,7 @@
                     const userPathways = this.$store.state.userPathways;
 
                     Object.keys(userPathways).forEach((pathway) => {
-                        if (selectedPathways.indexOf(pathway) !== -1) {
+                        if (selectedPathways.includes(pathway)) {
                             pathwaysWithEdgesAndSelectedUserPathways.push(pathway)
                         }
                     });
@@ -58,6 +80,12 @@
 
 <style>
 .multiple-pathway-selector {
+    display: flex;
+    flex-direction: row;
     border: solid 1px yellow;
 }
+
+    .multi-selector {
+        margin: auto;
+    }
 </style>
