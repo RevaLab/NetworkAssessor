@@ -51,6 +51,9 @@
             }
         },
         computed: {
+            queryGenes() {
+              return this.$store.state.userPathways['query_list']['genes']
+            },
             starColor() {
                 const queryListColor = this.$store.state.pathwayColors['query_list']
                 return { color: queryListColor}
@@ -108,7 +111,7 @@
             subnetwork() {
                 this.runCytoscape(this.subnetwork, this.pathwayColors);
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
-                cytoscapeOptions.applyMouseEvents(cy);
+                cytoscapeOptions.applyMouseEvents(cy, this.queryGenes);
                 this.isolateCount = cytoscapeOptions.hideIsolateNodes(cy);
             }
         },
@@ -139,13 +142,6 @@
                             style: {
                                 'label': 'data(id)',
                                 'lineColor': '#b7b7b7',
-                                // 'width': '1px',
-                                // "text-valign" : "center",
-                                // "text-halign" : "center",
-                                // 'color': 'white',
-                                // 'text-outline-width': '2px',
-                                // 'text-outline-opacity': '1',
-                                // 'text-outline-color': 'black'
                             }
                         },
                         {
@@ -153,7 +149,6 @@
                             style: {
                                 'color': '#b7b7b7',
                                 'width': '0.08em',
-                                'stroke-opacity': '0.9'
                             }
                         }
                     ]

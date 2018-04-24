@@ -58,14 +58,39 @@ export default {
             }
         })
     },
-    applyMouseEvents(cy) {
+    applyMouseEvents(cy, queryGenes) {
         cy.on('mousedown', function(event){
+            console.log(queryGenes)
             let evtTarget = event.target;
             if (evtTarget !== cy) {
-                evtTarget.connectedEdges().animate({
+                let edges = evtTarget.connectedEdges();
+                // for (let edge in edges) {
+                //   if (queryGenes.includes(edge.target().id())
+                //       || queryGenes.includes(edge.source().id())) {
+                //       edge.animate({
+                //         style: {lineColor: 'blue'}});
+                //   }
+                //
+                // }
+                // console.log(edges.)
+                // console.log(edges.neighborhood())
+                let edgesWithQueryGenes = edges.filter((edge) => {
+                  return (queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
+                    // console.log(edge.source('node#CDKN1B'))
+                });
+
+                edgesWithQueryGenes.animate({
+                    style: {lineColor: 'red'}
+                });
+                let edgesWithoutQueryGenes = edges.filter((edge) => {
+                  return !(queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
+                });
+                edgesWithoutQueryGenes.animate({
                     style: {lineColor: 'blue'}
                 });
+                // console.log(evtTarget.getNeighborsList())
             }
+
         });
 
         cy.on('mouseup', function(event){
