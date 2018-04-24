@@ -74,7 +74,7 @@
             }
         },
         components: {
-            PathwayColorSelector
+            PathwayColorSelector,
         }
     }
 </script>
@@ -85,10 +85,11 @@
         display: flex;
         flex-direction: column;
         padding: 0;
+        background-color: #6DDCBD;
     }
 
     ul {
-        overflow: auto;
+        /*overflow: auto;*/
         margin-left: 0;
         padding: 0;
         /*border: solid 1px purple;*/

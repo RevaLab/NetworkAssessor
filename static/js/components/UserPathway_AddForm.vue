@@ -30,7 +30,6 @@ export default {
     },
     methods: {
         addPathway() {
-            // let userPathways = this.$store.state.userPathways;
             let userPathways = Object.assign({}, this.$store.state.userPathways);
             let snakeCaseTitle = this.title.toLowerCase().split(' ').join("_");
 

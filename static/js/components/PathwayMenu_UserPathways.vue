@@ -7,7 +7,9 @@
                 <user-pathway-add-form />
             </modal>
         </div>
-        <pathway-menu v-bind:predefinedPathways="false"/>
+        <!--<div id="user-pathway-menu">-->
+            <pathway-menu v-bind:predefinedPathways="false"/>
+        <!--</div>-->
     </div>
 </template>
 
@@ -33,7 +35,8 @@
 
 <style>
     .user-pathways {
-        height: 35%;
+        /*height: 35%;*/
+        /*overflow-y: scroll;*/
     }
 
     #user-pathways-header-and-add {
@@ -42,4 +45,8 @@
         justify-content: space-between;
     }
 
+    #user-pathway-menu {
+        height: 20vh;
+        overflow-y: scroll;
+    }
 </style>

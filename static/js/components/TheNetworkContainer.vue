@@ -2,8 +2,8 @@
     <div class="network-container" id="network-container">
         <div class="controls">
             <network-controls />
-            <user-pathways />
             <predefined-pathways />
+            <user-pathways />
         </div>
         <network />
     </div>
@@ -37,11 +37,11 @@
     .controls {
         display: flex;
         flex-direction: column;
-        width: 22%;
+        width: 300px;
         height: 95vh;
-        overflow-y: scroll;
+        /*overflow-y: scroll;*/
         margin: 5px;
-        border: solid 1px black;
+        /*border: solid 1px black;*/
         font-size: small;
     }
 </style>
