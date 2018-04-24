@@ -23,7 +23,7 @@
                                 <span>
                                     <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }"></div>
                                     <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }"></div>
-                                    {{ pathwayDisplayNames[pathway] }}
+                                    {{ pathwayDisplayNames[pathway] }} :
                                 </span>
                         </li>
                     </ul>
@@ -211,7 +211,7 @@
     }
 
     .network-legend {
-        width: 10%;
+        width: 18%;
         height: auto;
         position:absolute;
         top:0;

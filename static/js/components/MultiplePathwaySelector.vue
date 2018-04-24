@@ -17,7 +17,17 @@
         computed: {
             clearSelection: {
                 get() {
+                    const predefinedPathways = this.$store.state.predefinedPathways.slice();
+                    const selectedPathways = this.$store.state.selectedPathways.slice();
 
+                    // return false if a pathway has edges and is not selected
+                    const predefinedPathwaysSelected = predefinedPathways.some((pathway) => {
+                        return (
+                            selectedPathways.includes(pathway)
+                        )
+                    });
+
+                    return predefinedPathwaysSelected;
                 },
                 set() {
                     const userPathways = this.$store.state.userPathways;
