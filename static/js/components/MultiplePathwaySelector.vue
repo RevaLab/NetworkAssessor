@@ -13,13 +13,19 @@
         computed: {
             checked: {
                 get() {
-                    // alert('CHECKING')
-                    // let pathwaysWithEdgesAndSelectedUserPathways = [];
-                    // const predefinedPathways = this.$store.state.predefinedPathways.slice();
-                    //
-                    // predefinedPathways.forEach((pathway) => {
-                    //     if (pathways)
-                    // });
+                    const pathwaysEdgeCounts = Object.assign({}, this.$store.state.pathwaysEdgeCounts);
+                    const predefinedPathways = this.$store.state.predefinedPathways.slice();
+                    const selectedPathways = this.$store.state.selectedPathways.slice();
+
+                    // return false if a pathway has edges and is not selected
+                    const notAllPathwaysSelected = predefinedPathways.some((pathway) => {
+                        return (
+                            pathwaysEdgeCounts[pathway]
+                            && (!selectedPathways.includes(pathway))
+                        )
+                    });
+
+                    return !notAllPathwaysSelected;
                 },
                 set(checkedVal) {
                     let pathwaysWithEdgesAndSelectedUserPathways = [];
