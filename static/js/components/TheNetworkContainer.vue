@@ -42,6 +42,7 @@
         /*overflow-y: scroll;*/
         margin: 5px;
         /*border: solid 1px black;*/
+        border-bottom: none;
         font-size: small;
     }
 </style>

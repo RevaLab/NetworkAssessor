@@ -7,9 +7,9 @@
                 <user-pathway-add-form />
             </modal>
         </div>
-        <!--<div id="user-pathway-menu">-->
+        <div id="user-pathway-menu">
             <pathway-menu v-bind:predefinedPathways="false"/>
-        <!--</div>-->
+        </div>
     </div>
 </template>
 

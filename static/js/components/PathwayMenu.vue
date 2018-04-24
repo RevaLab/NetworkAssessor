@@ -19,7 +19,7 @@
             //     return this.$store.state.userPathways;
             // }
           pathways() {
-              const userPathways = this.$store.state.userPathways;
+            const userPathways = this.$store.state.userPathways;
             const pathways =
               this.predefinedPathways ?
                 this.$store.state.predefinedPathways :
@@ -31,9 +31,13 @@
             let sortable = [];
             let ordered_pathways = [];
 
+            // if (this.predefinedPathways) {
+            //     ordered_pathways.push('query_list')
+            // }
+
             pathways.forEach(pathway => {
                 if (pathway === 'query_list') {
-                    ordered_pathways.push('query_list');
+                    // ordered_pathways.push('query_list');
                     return;
                 }
                 if (this.predefinedPathways) {

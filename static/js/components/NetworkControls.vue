@@ -2,12 +2,15 @@
     <div class="network-controls">
         <database-selector />
         <degree-selector />
+        <pathway-color-selector-query-list />
     </div>
 </template>
 
 <script>
     import DatabaseSelector from './NetworkSelectorDatabase.vue'
     import DegreeSelector from './NetworkSelectorDegree.vue'
+    import PathwayColorSelectorQueryList from './PathwayColorSelector_QueryList.vue'
+
 
     export default {
         name: "network-controls",
@@ -17,7 +20,8 @@
         },
         components: {
             DegreeSelector,
-            DatabaseSelector
+            DatabaseSelector,
+            PathwayColorSelectorQueryList
         },
         methods: {
         }

@@ -20,9 +20,14 @@
 </script>
 
 <style>
-#predefined-pathway-menu {
-    /*background-color: #5b80b2;*/
-    height: 55vh;
-    overflow-y: scroll;
-}
+    .predefined-pathways {
+        border: solid 1px black;
+        border-top: none;
+    }
+
+    #predefined-pathway-menu {
+        /*background-color: #5b80b2;*/
+        height: 55vh;
+        overflow-y: scroll;
+    }
 </style>

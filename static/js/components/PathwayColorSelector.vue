@@ -1,19 +1,19 @@
 <template>
     <div class="pathway-color-selector">
-        <div class="pathway" id="query-list" v-if="queryList">
-            <p>Query List</p>
-            <swatches
-                    v-model="color"
-                    colors="text-advanced"
-                    popover-to="right"
-                    shapes="squares"
-                    row-length="5"
-                    :trigger-style="triggerStyle"
-                    :exceptions="exceptions"
-            />
-            <pathway-statistics v-bind:pathway="pathway"/>
-        </div>
-        <div class="pathway" v-else>
+        <!--<div class="pathway" id="query-list" v-if="queryList">-->
+            <!--<p>Query List</p>-->
+            <!--<swatches-->
+                    <!--v-model="color"-->
+                    <!--colors="text-advanced"-->
+                    <!--popover-to="right"-->
+                    <!--shapes="squares"-->
+                    <!--row-length="5"-->
+                    <!--:trigger-style="triggerStyle"-->
+                    <!--:exceptions="exceptions"-->
+            <!--/>-->
+            <!--<pathway-statistics v-bind:pathway="pathway"/>-->
+        <!--</div>-->
+        <div class="pathway">
             <div class="label-and-swatch">
                 <input type="checkbox" id="pw-checkbox" v-model="checked" />
                 {{ pathwayName }}
@@ -42,7 +42,12 @@
         name: "network-controls",
         data() {
             return {
-                exceptions: ['#00ff00']
+                exceptions: ['#00ff00'],
+                triggerStyle: {
+                    width: '20px',
+                    height: '20px',
+                    margin: '5px',
+                }
             }
         },
         props: ['pathway'],
@@ -87,23 +92,23 @@
                   this.$store.dispatch('updatePathwayColors', pathwayColorData)
               }
             },
-            triggerStyle() {
-                let styleOptions = {
-                    width: '20px',
-                    height: '20px',
-                    margin: '5px',
-                };
-
-                if (this.queryList) {
-                    // renders query list selector as a square
-                  styleOptions['border-radius'] = '0px'
-                }
-
-                return styleOptions;
-            },
-            queryList () {
-                return this.pathway === 'query_list';
-            }
+            // triggerStyle() {
+            //     let styleOptions = {
+            //         width: '20px',
+            //         height: '20px',
+            //         margin: '5px',
+            //     };
+            //
+            //     if (this.queryList) {
+            //         // renders query list selector as a square
+            //       styleOptions['border-radius'] = '0px'
+            //     }
+            //
+            //     return styleOptions;
+            // },
+            // queryList () {
+            //     return this.pathway === 'query_list';
+            // }
         },
         components: {
             Swatches,
@@ -159,9 +164,9 @@
         justify-content: space-between;
     }
 
-    #query-list {
-        margin: auto;
-    }
+    /*#query-list {*/
+        /*margin: auto;*/
+    /*}*/
 
     .label-and-swatch {
         display: flex;
