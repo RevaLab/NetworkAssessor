@@ -12,8 +12,6 @@
 </template>
 
 <script>
-    import Swatches from 'vue-swatches'
-    import PathwayColorSelector from './PathwayColorSelector.vue'
     import userPathwayAddForm from './UserPathway_AddForm.vue'
     import PathwayMenu from './PathwayMenu.vue'
 
@@ -23,8 +21,6 @@
         },
         components: {
             PathwayMenu,
-            // PathwayColorSelector,
-            // Swatches,
             userPathwayAddForm
         },
         methods: {

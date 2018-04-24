@@ -10,6 +10,7 @@ from .network_functions import \
     make_three_degrees_of_graphs, \
     calculate_pathway_edge_counts, \
     assign_user_pathways_to_genes
+from .calculate_network_pathway_pval import calculate_all_pathways_p_vals
 
 
 @csrf_exempt
@@ -28,6 +29,7 @@ def index(request):
     # load databases
     interaction_db = nx.read_gpickle('static/{}.pkl'.format(db))
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
+    all_pw_distribution = pickle.load(open('static/all_pw_dist.pkl', 'rb'))
 
     # calculate graphs
     all_nodes_for_subgraph = collect_all_nodes_for_subgraph(query_genes, pathway_list, db_pathways, user_pathways)
@@ -36,6 +38,7 @@ def index(request):
 
     # get edge counts for all pathways
     pathways_edge_counts = calculate_pathway_edge_counts(query_genes, user_pathways, db_pathways, interaction_db)
+    pathways_p_vals = calculate_all_pathways_p_vals(pathways_edge_counts, query_genes, all_pw_distribution)
 
     # add user pathways to graph nodes, which may already have pathways
     assign_user_pathways_to_genes(user_pathways, whole_graph, all_nodes_for_subgraph)
@@ -43,6 +46,7 @@ def index(request):
     subnetwork_and_edge_counts = {
         'subnetwork': subnetworks,
         'pathways_edge_counts': pathways_edge_counts,
+        'pathways_p_vals': pathways_p_vals
     }
 
     return JsonResponse(subnetwork_and_edge_counts)

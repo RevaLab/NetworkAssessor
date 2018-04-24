@@ -20,7 +20,9 @@
                   this.predefinedPathways ?
                     this.$store.state.predefinedPathways :
                     Object.keys(this.$store.state.userPathways);
+
               const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
+              const pathwaysPVals = this.$store.state.pathwaysPVals;
 
               let sortable = [];
               let ordered_pathways = [];
@@ -30,17 +32,32 @@
                         ordered_pathways.push('query_list');
                         return;
                     }
-                    sortable.push(
-                        [
-                            pathway,
-                            pathwaysEdgeCounts[pathway]
-                        ]
-                    );
+                    if (this.predefinedPathways) {
+                        sortable.push(
+                            [
+                                pathway,
+                                pathwaysPVals[pathway]
+                            ]
+                        );
+                    } else {
+                        sortable.push(
+                            [
+                                pathway,
+                                pathwaysEdgeCounts[pathway]
+                            ]
+                        );
+                    }
               });
 
-              sortable.sort(function(a, b) {
-                    return b[1] - a[1];
-              });
+              if (this.predefinedPathways) {
+                  sortable.sort(function(a, b) {
+                        return a[1] - b[1];
+                  });
+              } else {
+                  sortable.sort(function(a, b) {
+                        return b[1] - a[1];
+                  });
+              }
 
               sortable.forEach(pathway => {
                   ordered_pathways.push(pathway[0])

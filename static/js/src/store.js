@@ -51,8 +51,39 @@ const store = new Vuex.Store({
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': '#4c1130'
         },
         previousSelectedPathways: [],
-        pathwaysEdgeLists: {},
         pathwaysEdgeCounts: {
+            'AKT_ext_path': 0,
+            'Apoptosis_path': 0,
+            'Apoptosis_ext_path': 0,
+            'CALC_PKC_ext_path': 0,
+            'Cellular_Architecture_and_Microenvironment_path': 0,
+            'Cell_Cycle_Control_path': 0,
+            'Cell_Cycle_ext_path': 0,
+            'Chromatin_Remodeling-DNA_Methylation_path': 0,
+            'DNA_Damage_path': 0,
+            'ERK_ext_path': 0,
+            'G-Protein_Signaling_path': 0,
+            'Hedgehog_Signaling_path': 0,
+            'HIPPO_ext_path': 0,
+            'Hormone_Signaling_path': 0,
+            'Immune_Checkpoints_path': 0,
+            'B-Catenin-WNT_Signaling_path': 0,
+            'Jack_Stat_ext_path': 0,
+            'Janus_Kinase_JAK-or-Signal_Transducers_and_Activators_of_Transcription_STAT_path': 0,
+            'Kinase_Fusions_path': 0,
+            'Metabolic_Signaling_path': 0,
+            'NFKB_ext_path': 0,
+            'Notch_ext_path': 0,
+            'PI3K-AKT1-MTOR_Signaling_path': 0,
+            'Protein_Degradation_Ubiquitination_path': 0,
+            'Receptor_Tyrosine_KinaseORGrowth_Factor_Signaling_path': 0,
+            'RNA_Splicing_path': 0,
+            'TGF-B_Signaling_path': 0,
+            'TGFB_ext_path': 0,
+            'WNT_ext_path': 0,
+            'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 0
+        },
+        pathwaysPVals: {
             'AKT_ext_path': 0,
             'Apoptosis_path': 0,
             'Apoptosis_ext_path': 0,
@@ -191,6 +222,9 @@ const store = new Vuex.Store({
         'ADD_PATHWAYS_EDGE_COUNTS' (state, pathwaysEdgeCounts) {
             state.pathwaysEdgeCounts = pathwaysEdgeCounts
         },
+        'ADD_PATHWAYS_P_VALS' (state, pathwaysPVals) {
+            state.pathwaysPVals = pathwaysPVals
+        },
         'ADD_SUBNETWORK' (state, subnetwork) {
             state.subnetwork = subnetwork;
         },
@@ -285,6 +319,7 @@ const store = new Vuex.Store({
                         const subnetworkAndEdgeCounts = response.body;
                         store.commit('ADD_SUBNETWORK', subnetworkAndEdgeCounts['subnetwork']);
                         store.commit('ADD_PATHWAYS_EDGE_COUNTS', subnetworkAndEdgeCounts['pathways_edge_counts']);
+                        store.commit('ADD_PATHWAYS_P_VALS', subnetworkAndEdgeCounts['pathways_p_vals']);
                     }
                 )
                 .catch(

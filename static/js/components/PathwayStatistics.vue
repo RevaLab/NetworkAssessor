@@ -11,6 +11,10 @@
             {{ pathwayEdgeCount }}
             <span class="tooltiptext">Edges between pathway and query list</span>
         </div>
+        <div class="tooltip" v-if="pathwayPVal">
+            {{ pathwayPVal }}
+            <span class="tooltiptext">Significance</span>
+        </div>
     </div>
 </template>
 
@@ -31,11 +35,18 @@
             modalName() {
               return this.pathway + "_members"
             },
-            pathwayEdgesReady() {
-              return this.$store.state.pathwaysEdgeCounts[this.pathway]
-            },
             pathwayEdgeCount() {
                 return this.$store.state.pathwaysEdgeCounts[this.pathway];
+            },
+            pathwayPVal() {
+                const pVal = this.$store.state.pathwaysPVals[this.pathway];
+                if (pVal) {
+                    if (pVal === 1) {
+                        return 1
+                    }
+                    return pVal.toExponential(2)
+                }
+                return false;
             },
             pathwayMemberCount() {
                 const userPathway = this.$store.state.userPathways[this.pathway];
