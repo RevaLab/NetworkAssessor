@@ -1,18 +1,5 @@
 <template>
     <div class="pathway-color-selector">
-        <!--<div class="pathway" id="query-list" v-if="queryList">-->
-            <!--<p>Query List</p>-->
-            <!--<swatches-->
-                    <!--v-model="color"-->
-                    <!--colors="text-advanced"-->
-                    <!--popover-to="right"-->
-                    <!--shapes="squares"-->
-                    <!--row-length="5"-->
-                    <!--:trigger-style="triggerStyle"-->
-                    <!--:exceptions="exceptions"-->
-            <!--/>-->
-            <!--<pathway-statistics v-bind:pathway="pathway"/>-->
-        <!--</div>-->
         <div class="pathway">
             <div class="label-and-swatch">
                 <input type="checkbox" id="pw-checkbox" v-model="checked" />

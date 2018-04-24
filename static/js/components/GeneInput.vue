@@ -47,7 +47,7 @@
                 // update gene input as a user pathway
                 let queryListAsUserPathway = {
                     query_list: {
-                        color: '#dd7e6b',
+                        color: '#00ff00',
                         genes: this.geneList.split("\n"),
                         displayName: 'Query List'
                     }

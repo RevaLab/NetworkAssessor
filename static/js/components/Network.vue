@@ -140,7 +140,8 @@
                                 "text-halign" : "center",
                                 'color': 'white',
                                 'text-outline-width': '2px',
-                                'text-outline-opacity': '1'
+                                'text-outline-opacity': '1',
+                                'text-outline-color': 'black'
                             }
                         },
                         {

@@ -19,7 +19,7 @@ const store = new Vuex.Store({
         networkDatabase: 'hprd',
         selectedPathways: ['query_list'],
         pathwayColors: {
-            'query_list': '#e06666',
+            'query_list': '#00ff00',
             'AKT_ext_path': '#ff9900',
             'Apoptosis_path': '#ffff00',
             'Apoptosis_ext_path': '#ffa730',

@@ -22,15 +22,18 @@ export default {
             if (selectedPathwaysWithNode.includes('query_list') &&
                 selectedPathwaysWithNode.length === 1) {
                     node.style('shape', 'rectangle');
+                    node.style('width', '70px');
                     node.style('background-color', pathwayColors['query_list']);
-                    node.style('text-outline-color', pathwayColors['query_list'])
+                    // node.style('text-outline-color', pathwayColors['query_list'])
             } else if
                 (selectedPathwaysWithNode.includes('query_list') &&
                 selectedPathwaysWithNode.length > 1)
             {
                 node.style('shape', 'star');
+                node.style('width', '50px');
+                node.style('height', '50px');
                 node.style('background-color', '#00ff00');
-                node.style('text-outline-color', '#00ff00')
+                // node.style('text-outline-color', '#00ff00')
             } else if (selectedPathwaysWithNode.length > 1) {
                 node.style('shape', 'ellipse');
                 node.style('pie-size', '100%');
@@ -40,11 +43,11 @@ export default {
                     node.style(`pie-${pie_index}-background-color`, pathwayColors[pathway]);
                     node.style(`pie-${pie_index}-background-size`, `${percentPathway}%`);
                 })
-                node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
+                // node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
             } else {
                 node.style('shape','ellipse');
                 node.style('background-color', pathwayColors[selectedPathwaysWithNode[0]]);
-                node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
+                // node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
             }
         })
     },
@@ -87,7 +90,7 @@ export default {
       // Whether to enable incremental mode
       randomize: true,
       // Node repulsion (non overlapping) multiplier
-      nodeRepulsion: 4500,
+      nodeRepulsion: 8000,
       // Ideal (intra-graph) edge length
       idealEdgeLength: 50,
       // Divisor to compute edge forces
