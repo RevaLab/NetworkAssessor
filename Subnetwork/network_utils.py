@@ -15,7 +15,7 @@ from collections import Counter
 import networkx as nx
 
 mpl.use('TkAgg')
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 class Dataclean(object):
