@@ -107,6 +107,7 @@
             },
             pathwayColors() {
                 cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
+                cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
             },
             subnetwork() {
                 // let
