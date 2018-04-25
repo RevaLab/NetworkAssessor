@@ -1,5 +1,6 @@
 <template>
-        <div class="pathway-query-list" id="query-list">
+    <div class="pathway-query-list" id="query-list">
+        <div id="query-list-content">
             <p>Query List</p>
             <swatches
                     v-model="color"
@@ -10,6 +11,7 @@
                     :trigger-style="triggerStyle"
             />
             <pathway-statistics v-bind:pathway="pathway"/>
+        </div>
     </div>
 </template>
 
@@ -64,12 +66,15 @@
 </script>
 
 <style>
-
     #query-list {
+        border: solid 1px yellow;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #query-list-content {
         display: flex;
         flex-direction: row;
-        /*justify-content: space-around;*/
         margin: auto;
-        /*height: 3vh;*/
     }
 </style>

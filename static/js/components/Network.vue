@@ -18,7 +18,6 @@
     // import RingLoader from 'vue-spinner/src/RingLoader.vue'
 
     cytoscape.use( coseBilkent );
-    let cy;
 
     export default {
         name: "network",

@@ -1,9 +1,9 @@
 <template>
     <div class="toggle-legend">
-        <span>
+        <div id="toggle-legend-content">
             Legend
-            <a class="button is-small" v-on:click="toggleLegend">{{ buttonLabel }}</a>
-        </span>
+            <a class="button is-small legend-button" v-on:click="toggleLegend">{{ buttonLabel }}</a>
+        </div>
     </div>
 </template>
 
@@ -38,5 +38,19 @@
 </script>
 
 <style>
+    .toggle-legend {
+        border: solid 1px yellow;
+        display: flex;
+        justify-content: space-between;
+    }
 
+    #toggle-legend-content {
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+    }
+
+    .legend-button {
+        margin-left: 10px;
+    }
 </style>

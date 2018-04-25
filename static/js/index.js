@@ -16,6 +16,7 @@ Vue.use(VueLocalStorage, {
   bind: true
 });
 Vue.use(VModal);
+Vue.prototype.$cy = {}
 
 const routes = [
     { path: '/', component: GeneInput },
