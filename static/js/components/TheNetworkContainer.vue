@@ -5,23 +5,21 @@
             <predefined-pathways />
             <user-pathways />
         </div>
-        <network />
+        <network-and-statistics />
     </div>
 </template>
 
 <script>
-    import Network from './Network.vue'
+    import NetworkAndStatistics from './TheNetworkAndStatistics.vue'
     import NetworkControls from './NetworkControls.vue'
-    import PathwayMenu from './PathwayMenu.vue'
     import UserPathways from './PathwayMenu_UserPathways.vue'
     import PredefinedPathways from './PathwayMenu_PredefinedPathways.vue'
 
     export default {
         name: "network-container",
         components: {
-            Network,
+            NetworkAndStatistics,
             NetworkControls,
-            PathwayMenu,
             UserPathways,
             PredefinedPathways,
         }

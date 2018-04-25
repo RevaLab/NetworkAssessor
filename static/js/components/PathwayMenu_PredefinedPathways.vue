@@ -1,6 +1,7 @@
 <template>
     <div class="predefined-pathways">
         <h5>Major Cancer Pathways</h5>
+        <multiple-pathway-selector />
         <div id="predefined-pathway-menu">
             <pathway-menu v-bind:predefinedPathways="true" />
         </div>
@@ -9,12 +10,15 @@
 
 <script>
     import PathwayMenu from './PathwayMenu.vue'
+    import MultiplePathwaySelector from './MultiplePathwaySelector.vue'
 
 
     export default {
         name: "predefined-pathways",
         components: {
             PathwayMenu,
+            MultiplePathwaySelector
+
         }
     }
 </script>
