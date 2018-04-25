@@ -12,7 +12,7 @@
         name: "toggle-legend",
         data() {
             return {
-               shown: true
+               shown: false
             }
         },
         computed: {
@@ -30,7 +30,6 @@
                     legend.style.display = 'block';
                 } else {
                     legend.style.display = 'none';
-                    console.log('hide legend')
                 }
             }
         }

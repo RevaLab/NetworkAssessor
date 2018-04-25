@@ -146,19 +146,19 @@ export default {
       // Maximum number of iterations to perform
       numIter: 2500,
       // Whether to tile disconnected nodes
-      tile: false,
+      tile: true,
       // Type of layout animation. The option set is {'during', 'end', false}
       animate: false,
       // Amount of vertical space to put between degree zero nodes during tiling (can also be a function)
-      tilingPaddingVertical: 10,
+      tilingPaddingVertical: 0,
       // Amount of horizontal space to put between degree zero nodes during tiling (can also be a function)
-      tilingPaddingHorizontal: 10,
+      tilingPaddingHorizontal: 0,
       // Gravity range (constant) for compounds
       gravityRangeCompound: 1.5,
       // Gravity force (constant) for compounds
       gravityCompound: 1.0,
       // Gravity range (constant)
-      gravityRange: 3.8,
+      gravityRange: 1.5,
       // Initial cooling factor for incremental layout
       initialEnergyOnIncremental: 0.5
     }
