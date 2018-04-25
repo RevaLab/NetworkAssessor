@@ -1,6 +1,6 @@
 <template>
     <div class="network-legend" id="network-legend">
-        <vue-draggable-resizable :handles="['tl', 'tr']">
+        <vue-draggable-resizable :handles="['tl', 'ml', 'bl', 'tr', 'mr', 'br']">
             <div class="network-legend-content">
                 <h6>Legend</h6>
                 <ul>
