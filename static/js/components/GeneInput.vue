@@ -32,11 +32,8 @@
                 geneList: ''
             }
         },
-        computed: {
-        },
         methods: {
             addExampleList() {
-                // this.geneList = ['OLFML3', 'LOC441208 ', 'ZNRF2P1', 'PEMT', 'KIAA1609 ', 'TLDC1', 'MMP2', 'FOXA2', 'XBP1'].join("\n")
                 this.geneList =['FLT3', 'SMO', 'GLA', 'SGCB', 'OAT', 'CAPN3', 'ASS1', 'AGXT', 'AKT1', 'PTPN1',
                     'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4'].join("\n")
             },
@@ -45,15 +42,22 @@
 
                 delete userPathways['query_list'];
                 this.$ls.set('userPathways', JSON.stringify(userPathways));
+
+                let geneListArr = [];
+                if (this.geneList.includes("\t")) {
+                    geneListArr = this.geneList.trim().split("\t");
+                } else {
+                    geneListArr = this.geneList.split("\n")
+                }
+
                 // update gene input as a user pathway
                 let queryListAsUserPathway = {
                     query_list: {
                         color: '#00ffff',
-                        genes: this.geneList.split("\n"),
+                        genes: geneListArr,
                         displayName: 'Query List'
                     }
                 };
-
                 // add information for user pathways to store
                 userPathways = {...userPathways, ...queryListAsUserPathway};
                 let displayData = {
