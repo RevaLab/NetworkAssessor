@@ -26,7 +26,7 @@
                                     <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }">
                                     </div>
                                 </span>
-                            {{ pathwayDisplayNames[pathway] }} <i v-if="pathway !== 'query_list'">: {{pathwaysPVals[pathway]}}</i>
+                            {{ pathwayDisplayNames[pathway] }} <i v-if="pathway !== 'query_list'">: {{pathwaysPValsScientificNotation[pathway]}}</i>
                         </li>
                     </ul>
                 </div>
@@ -80,8 +80,19 @@
             pathwayColors() {
                 return this.$store.state.pathwayColors;
             },
-            pathwaysPVals() {
-                return this.$store.state.pathwaysPVals
+            pathwaysPValsScientificNotation() {
+                let pathwaysPValsScientificNotation = {};
+                const pVals = this.$store.state.pathwaysPVals;
+                for (let pathway in pVals) {
+                        let pVal = pVals[pathway];
+                        if (pVal === 1 || pVal === 0) {
+                            pathwaysPValsScientificNotation[pathway] = pVal
+                        } else {
+                            pathwaysPValsScientificNotation[pathway] = pVal.toExponential(2)
+                        }
+
+                }
+                return pathwaysPValsScientificNotation;
             },
             networkStatistics() {
                 let statistics = {

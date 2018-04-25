@@ -29,48 +29,26 @@
           }
         },
         computed: {
-            // clearSelection: {
-            //     get() {
-            //         const predefinedPathways = this.$store.state.predefinedPathways.slice();
-            //         const selectedPathways = this.$store.state.selectedPathways.slice();
-            //
-            //         // return false if a pathway has edges and is not selected
-            //         const predefinedPathwaysSelected = predefinedPathways.some((pathway) => {
-            //             return (
-            //                 selectedPathways.includes(pathway)
-            //             )
-            //         });
-            //
-            //         return predefinedPathwaysSelected;
-            //     },
-            //     set() {
-            //         const userPathways = this.$store.state.userPathways;
-            //         const selectedPathways = this.$store.state.selectedPathways.slice();
-            //         let selectedUserPathways = [];
-            //
-            //         Object.keys(userPathways).forEach((pathway) => {
-            //             if (selectedPathways.includes(pathway)) {
-            //                 selectedUserPathways.push(pathway)
-            //             }
-            //         });
-            //
-            //         this.$store.dispatch('updateSelectedPathways', selectedUserPathways);
-            //     }
-            // },
             allChecked: {
                 get() {
+
                     const pathwaysEdgeCounts = Object.assign({}, this.$store.state.pathwaysEdgeCounts);
                     const predefinedPathways = this.$store.state.predefinedPathways.slice();
                     const selectedPathways = this.$store.state.selectedPathways.slice();
 
+                    // this means
+                    if (selectedPathways.length === 1) {
+                        return false;
+                    }
+
+                    let notAllPathwaysSelected = true;
                     // return false if a pathway has edges and is not selected
-                    const notAllPathwaysSelected = predefinedPathways.some((pathway) => {
+                    notAllPathwaysSelected = predefinedPathways.some((pathway) => {
                         return (
                             pathwaysEdgeCounts[pathway]
                             && (!selectedPathways.includes(pathway))
                         )
                     });
-
                     return !notAllPathwaysSelected;
                 },
                 set(checkedVal) {
@@ -96,8 +74,13 @@
                     }
 
                     this.$store.dispatch('updateSelectedPathways', pathwaysWithEdgesAndSelectedUserPathways);
+                    // return checkedVal;
+
                 }
             }
+        },
+        mounted() {
+            this.allChecked = false;
         }
     }
 </script>

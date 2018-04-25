@@ -67,7 +67,7 @@ export default {
             if (evtTarget !== cy) {
                 let edges = evtTarget.connectedEdges();
                 edgesWithQueryGenes = edges.filter((edge) => {
-                  return (queryGenes.includes(edge.target().id()))
+                  return (queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
                 });
 
                 edgesWithQueryGenes.animate({
@@ -75,7 +75,7 @@ export default {
                 });
 
                 edgesWithoutQueryGenes = edges.filter((edge) => {
-                  return !(queryGenes.includes(edge.target().id()))
+                  return !(queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
                 });
 
                 edgesWithoutQueryGenes.animate({
@@ -102,6 +102,7 @@ export default {
             if (queryGenes.includes(edge.target().id())
                 || queryGenes.includes(edge.source().id())) {
                 edge.style('line-color', queryListColor);
+                edge.style('width', '0.1em');
             } else {
                 edge.style('line-color', '#b7b7b7')
             }
