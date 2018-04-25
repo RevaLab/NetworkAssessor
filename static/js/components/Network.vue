@@ -14,7 +14,6 @@
     import cytoscape from 'cytoscape';
     import coseBilkent from 'cytoscape-cose-bilkent';
     import cytoscapeOptions from '../src/cytoscapeOptions.js'
-    import RingLoader from 'vue-spinner/src/RingLoader.vue'
 
     cytoscape.use( coseBilkent );
     let cy;
@@ -28,7 +27,6 @@
             }
         },
         components: {
-          RingLoader
         },
         computed: {
             queryGenes() {

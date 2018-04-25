@@ -71,7 +71,7 @@
 <style>
 
     .network-legend {
-        display: none;
+        /*display: block;*/
         width: 200px;
         height: auto;
         position:absolute;

@@ -12,7 +12,7 @@
         name: "toggle-legend",
         data() {
             return {
-               shown: false
+               shown: true
             }
         },
         computed: {
