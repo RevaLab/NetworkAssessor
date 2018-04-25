@@ -12,7 +12,9 @@ export default {
         });
         return count;
     },
-    colorPathways(subnetwork, pathwayColors, selectedPathways, cy) {
+    colorPathwaysAndCheckForQLAndPWHits(subnetwork, pathwayColors, selectedPathways, cy) {
+        let queryListAndPathwayHit = false;
+
         cy.nodes().forEach(node => {
             // pull out only the selected pathways this node's a part of
             let selectedPathwaysWithNode = node.data('pathways').filter(function(n) {
@@ -32,6 +34,7 @@ export default {
                 (selectedPathwaysWithNode.includes('query_list') &&
                 selectedPathwaysWithNode.length > 1)
             {
+                queryListAndPathwayHit = true;
                 node.style('shape', 'star');
                 node.style('width', '50px');
                 node.style('height', '50px');
@@ -58,6 +61,8 @@ export default {
                 // node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
             }
         })
+
+        return queryListAndPathwayHit;
     },
     applyMouseEvents(cy, queryGenes, queryListColor) {
         let edgesWithQueryGenes, edgesWithoutQueryGenes;

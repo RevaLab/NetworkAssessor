@@ -4,7 +4,7 @@
             <div class="network-legend-content">
                 <h6>Legend</h6>
                 <ul>
-                    <li v-if="queryListAndPathwayHit">
+                    <li v-if="queryListAndPWHit">
                         <span>
                             <i class="fas fa-star star-icon" :style="starColor"></i>
                             Query List & Pathway
@@ -34,8 +34,8 @@
             VueDraggableResizable
         },
         computed: {
-            queryListAndPathwayHit() {
-              return false;
+            queryListAndPWHit() {
+              return this.$store.state.queryListAndPWHit;
             },
             pathwayColors() {
                 return this.$store.state.pathwayColors;

@@ -1,13 +1,12 @@
 <template>
     <div class="network">
-        <!--<div v-if="subnetwork">-->
-            <div id="cy"></div>
-            <div class="statistics">
-                <div class="statistics-content">
-                    <p><b>Nodes:</b> {{ networkStatistics.nodeLength }}</p>
-                    <p><b>Edges:</b> {{ networkStatistics.edgesLength }}</p>
-                </div>
-            </div>
+        <div id="cy"></div>
+        <!--<div class="statistics">-->
+            <!--<div class="statistics-content">-->
+                <!--<p><b>Nodes:</b> {{ networkStatistics.nodeLength }}</p>-->
+                <!--<p><b>Edges:</b> {{ networkStatistics.edgesLength }}</p>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
 </template>
 
@@ -15,20 +14,21 @@
     import cytoscape from 'cytoscape';
     import coseBilkent from 'cytoscape-cose-bilkent';
     import cytoscapeOptions from '../src/cytoscapeOptions.js'
-    // import RingLoader from 'vue-spinner/src/RingLoader.vue'
+    import RingLoader from 'vue-spinner/src/RingLoader.vue'
 
     cytoscape.use( coseBilkent );
+    let cy;
 
     export default {
         name: "network",
         data() {
             return {
                 isolateCount: 0,
-                // loading: true,
+                loading: true,
             }
         },
         components: {
-          // RingLoader
+          RingLoader
         },
         computed: {
             queryGenes() {
@@ -78,38 +78,31 @@
                 this.updateNetwork()
             },
             pathwayColors() {
-                cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
+                cytoscapeOptions.colorPathwaysAndCheckForQLAndPWHits(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
                 cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
             },
             subnetwork() {
                 // let
-                if (this.pathwayColors) {
-                    this.runCytoscape(this.subnetwork, this.pathwayColors);
-                    cytoscapeOptions.colorPathways(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
-                    cytoscapeOptions.applyMouseEvents(cy, this.queryGenes, this.pathwayColors['query_list']);
-                    // if (this.pathwayColors[]) {
-                    //
-                    // }
-                    cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
+                if (!this.pathwayColors) {
+                    return;
                 }
+                this.runCytoscape(this.subnetwork, this.pathwayColors);
+                const queryListAndPWHit = cytoscapeOptions.colorPathwaysAndCheckForQLAndPWHits(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
+                cytoscapeOptions.applyMouseEvents(cy, this.queryGenes, this.pathwayColors['query_list']);
+                cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
+                this.$store.dispatch('updateQueryListAndPathwayHit', queryListAndPWHit)
             }
         },
         mounted() {
-            this.updateNetwork()
+            this.updateNetwork();
         },
         beforeUpdate(){
-          // console.log('in before update')
-            this.loading = false;
         },
         updated() {
-          // console.log('updated')
             // this.loading = false;
         },
         methods: {
             updateNetwork() {
-                // let loader = document.getElementById('my-loader');
-                // console.log(loader)
-                // this.loading = true;
                 const queryGenesPathwayData = {
                     pathways: this.$store.state.selectedPathways,
                     networkDatabase: this.$store.state.networkDatabase,

@@ -215,6 +215,7 @@ const store = new Vuex.Store({
             'WNT_ext_path': 'WNT Extension',
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 'MAP Kinase Signaling'
         },
+        queryListAndPWHit: false
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
@@ -275,6 +276,9 @@ const store = new Vuex.Store({
                 }
             }
 
+        },
+        'UPDATE_QL_AND_PW_HIT' (state, queryListAndPWHit) {
+          state.queryListAndPWHit = queryListAndPWHit;
         },
         'UPDATE_SELECTED_PATHWAYS' (state, selectedPathways) {
             state.selectedPathways = selectedPathways
@@ -341,6 +345,9 @@ const store = new Vuex.Store({
         },
         updatePathwayColors(store, pathway_color_data) {
             store.commit('UPDATE_PATHWAY_COLOR', pathway_color_data)
+        },
+        updateQueryListAndPathwayHit(store, queryListAndPWHit) {
+            store.commit('UPDATE_QL_AND_PW_HIT', queryListAndPWHit)
         },
         updateUserPathways(store, userPathways) {
             store.commit('UPDATE_USER_PATHWAYS', userPathways);
