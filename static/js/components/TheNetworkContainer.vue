@@ -10,10 +10,10 @@
 </template>
 
 <script>
-    import NetworkAndStatistics from './TheNetworkAndStatistics.vue'
-    import NetworkControls from './NetworkControls.vue'
-    import UserPathways from './PathwayMenu_UserPathways.vue'
-    import PredefinedPathways from './PathwayMenu_PredefinedPathways.vue'
+    import NetworkAndStatistics from './TheNetworkAndStatistics.vue';
+    import NetworkControls from './NetworkControls.vue';
+    import UserPathways from './PathwayMenu_UserPathways.vue';
+    import PredefinedPathways from './PathwayMenu_PredefinedPathways.vue';
 
     export default {
         name: "network-container",

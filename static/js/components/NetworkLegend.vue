@@ -1,31 +1,38 @@
 <template>
-    <div class="network-legend">
-        <div class="network-legend-content">
-            <h6>Legend</h6>
-            <ul>
-                <li>
-                    <span>
-                        <i class="fas fa-star star-icon" :style="starColor"></i>
-                        Query List & Pathway
-                    </span>
-                </li>
-                <li v-for="(pathway, index) in selectedPathways" :key="index">
+    <div class="network-legend" id="network-legend">
+        <vue-draggable-resizable :handles="['tl', 'tr']">
+            <div class="network-legend-content">
+                <h6>Legend</h6>
+                <ul>
+                    <li>
                         <span>
-                            <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }">
-                            </div>
-                            <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }">
-                            </div>
+                            <i class="fas fa-star star-icon" :style="starColor"></i>
+                            Query List & Pathway
                         </span>
-                    {{ pathwayDisplayNames[pathway] }} <i v-if="pathway !== 'query_list'">: {{pathwaysPValsScientificNotation[pathway]}}</i>
-                </li>
-            </ul>
-        </div>
+                    </li>
+                    <li v-for="(pathway, index) in selectedPathways" :key="index">
+                            <span>
+                                <div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }">
+                                </div>
+                                <div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }">
+                                </div>
+                            </span>
+                        {{ pathwayDisplayNames[pathway] }} <i v-if="pathway !== 'query_list'">: {{pathwaysPValsScientificNotation[pathway]}}</i>
+                    </li>
+                </ul>
+            </div>
+        </vue-draggable-resizable>
     </div>
 </template>
 
 <script>
+    import VueDraggableResizable from 'vue-draggable-resizable'
+
     export default {
         name: "network-legend",
+        components: {
+            VueDraggableResizable
+        },
         computed: {
             pathwayColors() {
                 return this.$store.state.pathwayColors;
@@ -61,14 +68,14 @@
 <style>
 
     .network-legend {
-        width: 18%;
+        display: block;
+        width: 200px;
         height: auto;
         position:absolute;
         top:0;
         right:0;
         margin-top: 50px;
         margin-right: 50px;
-        border: solid 1px black;
         padding-left: 2px;
     }
 
@@ -88,11 +95,18 @@
         font-size: 20px;
     }
 
+    .network-legend-content {
+        border: solid 1px black;
+        padding: 2px;
+        /*height: auto;*/
+    }
+
     .network-legend-content ul {
         width: auto;
-        height: 90%;
+        height: auto;
         margin: auto;
         font-size: small;
+        /*padding: 2px;*/
         /*transform: translate(-50%, -50%);*/
     }
 

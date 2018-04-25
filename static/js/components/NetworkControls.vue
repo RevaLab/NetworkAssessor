@@ -2,6 +2,7 @@
     <div class="network-controls">
         <database-selector />
         <degree-selector />
+        <toggle-legend />
         <pathway-color-selector-query-list />
     </div>
 </template>
@@ -10,6 +11,7 @@
     import DatabaseSelector from './NetworkSelectorDatabase.vue'
     import DegreeSelector from './NetworkSelectorDegree.vue'
     import PathwayColorSelectorQueryList from './PathwayColorSelector_QueryList.vue'
+    import ToggleLegend from "./ToggleLegend.vue";
 
 
     export default {
@@ -19,6 +21,7 @@
             }
         },
         components: {
+            ToggleLegend,
             DegreeSelector,
             DatabaseSelector,
             PathwayColorSelectorQueryList,

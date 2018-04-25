@@ -8,34 +8,6 @@
                     <p><b>Edges:</b> {{ networkStatistics.edgesLength }}</p>
                 </div>
             </div>
-
-            <!--<div class="network-legend">-->
-                <!--<div class="network-legend-content">-->
-                    <!--<h6>Legend</h6>-->
-                    <!--<ul>-->
-                        <!--<li>-->
-                            <!--<span>-->
-                                <!--<i class="fas fa-star star-icon" :style="starColor"></i>-->
-                                <!--Query List & Pathway-->
-                            <!--</span>-->
-                        <!--</li>-->
-                        <!--<li v-for="(pathway, index) in selectedPathways" :key="index">-->
-                                <!--<span>-->
-                                    <!--<div v-if="pathway==='query_list'" class="color-box" v-bind:style="{ background: pathwayColors[pathway] }">-->
-                                    <!--</div>-->
-                                    <!--<div v-else class="color-box circle" v-bind:style="{ background: pathwayColors[pathway] }">-->
-                                    <!--</div>-->
-                                <!--</span>-->
-                            <!--{{ pathwayDisplayNames[pathway] }} <i v-if="pathway !== 'query_list'">: {{pathwaysPValsScientificNotation[pathway]}}</i>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--<div id="my-loader">-->
-            <!--<ring-loader :loading="loading" color="#cc181e" size="45px" />-->
-        <!--</div>-->
-        <!--</div>-->
-        <!--<div v-else>Loading...</div>-->
     </div>
 </template>
 
@@ -57,7 +29,7 @@
             }
         },
         components: {
-          RingLoader
+          // RingLoader
         },
         computed: {
             queryGenes() {
