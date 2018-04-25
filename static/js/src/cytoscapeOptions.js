@@ -124,6 +124,7 @@ export default {
       },
       // Whether to include labels in node dimensions. Useful for avoiding label overlap
       nodeDimensionsIncludeLabels: true,
+        // spacingFactor: 0,
       // number of ticks per frame; higher is faster but more jerky
       refresh: 30,
       // Whether to fit the network view after when done
@@ -141,11 +142,11 @@ export default {
       // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
       nestingFactor: 0.1,
       // Gravity force (constant)
-      gravity: 0.15,
+      gravity: 0.65,
       // Maximum number of iterations to perform
       numIter: 2500,
       // Whether to tile disconnected nodes
-      tile: true,
+      tile: false,
       // Type of layout animation. The option set is {'during', 'end', false}
       animate: false,
       // Amount of vertical space to put between degree zero nodes during tiling (can also be a function)

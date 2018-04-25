@@ -118,7 +118,10 @@
                     container: document.getElementById('cy'),
                     layout: {
                         name: 'cose-bilkent',
-                        ...cytoscapeOptions.coseOptions
+                        ...cytoscapeOptions.coseOptions,
+                        spacingFactor: 0,
+                        // padding: 0,
+                        condense: true
                     },
                     style: [
                         {
@@ -148,6 +151,7 @@
                 });
                 this.isolateCount = count;
                 cy.fit();
+                // cy.center(cy.nodes());
             }
         }
     }
