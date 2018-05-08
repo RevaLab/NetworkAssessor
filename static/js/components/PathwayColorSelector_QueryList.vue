@@ -58,14 +58,14 @@
 </script>
 
 <style>
-  .pathway-query-list {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
+.pathway-query-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
-  .query-list-swatch {
-    margin: 0 10px;
-  }
+.query-list-swatch {
+  margin: 0 10px;
+}
 </style>
