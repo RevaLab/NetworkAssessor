@@ -10,6 +10,8 @@
 </template>
 
 <style>
+
+/* START STYLE RESET */
   html, body, header, nav, h1, a,
   ul, li, strong, main, button, i,
   section, img, div, h2, h3, h4, h5, p, form,
@@ -19,7 +21,7 @@
     padding: 0;
     border: 0;
     outline: 0;
-    font: inherit;
+    font: sans-serif;
     color: inherit;
     text-align: inherit;
     text-decoration: inherit;
@@ -52,4 +54,12 @@
   input[type="submit"] {
     cursor: pointer;
   }
+/* END RESET */
+
+.nav-bar h3 {
+  font-size: 1.5em;
+  text-align: center;
+  padding: .5em 0;
+}
+
 </style>
