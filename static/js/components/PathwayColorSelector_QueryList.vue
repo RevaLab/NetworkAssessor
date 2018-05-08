@@ -1,18 +1,17 @@
 <template>
-    <div class="pathway-query-list" id="query-list">
-        <div id="query-list-content">
-            <p>Query List</p>
-            <swatches
-                    v-model="color"
-                    colors="text-advanced"
-                    popover-to="right"
-                    shapes="squares"
-                    row-length="5"
-                    :trigger-style="triggerStyle"
-            />
-            <pathway-statistics v-bind:pathway="pathway"/>
-        </div>
-    </div>
+  <div class="pathway-query-list" id="query-list">
+    <div>Query List</div>
+    <swatches
+      class="query-list-swatch"
+      v-model="color"
+      colors="text-advanced"
+      popover-to="right"
+      shapes="squares"
+      row-length="5"
+      :trigger-style="triggerStyle"
+    />
+    <pathway-statistics v-bind:pathway="pathway"/>
+  </div>
 </template>
 
 <script>
@@ -25,13 +24,6 @@
         data() {
           return {
               pathway: 'query_list',
-              // exceptions: ['#00ff00'],
-              // triggerStyle: {
-              //       width: '20px',
-              //       height: '20px',
-              //       margin: '5px',
-              //       'border-radius': '0px'
-              //   }
           }
         },
         components: {
@@ -66,15 +58,14 @@
 </script>
 
 <style>
-    #query-list {
-        border: solid 1px yellow;
-        display: flex;
-        justify-content: space-between;
-    }
+  .pathway-query-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
 
-    #query-list-content {
-        display: flex;
-        flex-direction: row;
-        margin: auto;
-    }
+  .query-list-swatch {
+    margin: 0 10px;
+  }
 </style>

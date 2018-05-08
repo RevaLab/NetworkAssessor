@@ -89,7 +89,6 @@
 .multiple-pathway-selector {
     display: flex;
     flex-direction: row;
-    border: solid 1px yellow;
 }
 
     .multi-selector {

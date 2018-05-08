@@ -40,5 +40,8 @@
         margin: 5px;
         border-bottom: none;
         font-size: small;
+        background-color: lightgrey;
+        padding: 10px;
+        box-sizing: border-box;
     }
 </style>
