@@ -37,9 +37,7 @@
         flex-direction: column;
         width: 300px;
         height: 95vh;
-        /*overflow-y: scroll;*/
         margin: 5px;
-        /*border: solid 1px black;*/
         border-bottom: none;
         font-size: small;
     }
