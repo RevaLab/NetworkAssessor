@@ -30,7 +30,7 @@
     background: transparent;
   }
 
-  ul {
+  ul, li {
     list-style: none;
   }
 
@@ -60,6 +60,11 @@
   font-size: 1.5em;
   text-align: center;
   padding: .5em 0;
+  height: 60px;
+}
+
+.content {
+  height: calc(100vh - 100px);
 }
 
 </style>
