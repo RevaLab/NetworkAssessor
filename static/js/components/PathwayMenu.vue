@@ -1,6 +1,6 @@
 <template>
   <div class="pathway-menu">
-    <ul id="pathways-ul">
+    <ul>
       <li v-for="pathway in pathways">
         <pathway-color-selector v-bind:pathway="pathway"/>
       </li>
@@ -87,24 +87,13 @@ export default {
 .pathway-menu {
   display: flex;
   flex-direction: column;
-  padding: 0;
   background-color: lightgrey;
 }
 
-ul {
-  margin-left: 0;
+.pathway-menu ul {
+  margin: 0;
   padding: 0;
-}
-
-#pathways-ul {
-  padding: 0;
-  margin: auto 5px;
-}
-
-li {
-  list-style-type: none;
-  width: 100%;
-  padding: 0;
+  list-style: none;
 }
 
 </style>

@@ -43,5 +43,6 @@
         background-color: lightgrey;
         padding: 10px;
         box-sizing: border-box;
+        overflow: auto;
     }
 </style>
