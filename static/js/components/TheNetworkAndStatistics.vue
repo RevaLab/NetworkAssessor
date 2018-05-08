@@ -20,7 +20,6 @@
 
 <style>
     .network-and-statistics {
-        width: 78%;
         height: 100%;
     }
 </style>

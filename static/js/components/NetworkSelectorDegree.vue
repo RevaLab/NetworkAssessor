@@ -46,8 +46,6 @@ export default {
 
 <style>
 .degree-selector {
-  padding: 10px;
-  border: solid 1px yellow;
   display: flex;
   flex-direction: column;
 }
@@ -56,6 +54,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 10px 0;
 }
 
 </style>

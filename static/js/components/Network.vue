@@ -162,8 +162,6 @@
         height: 95vh;
     }
 
-
-
     .statistics {
         width: 10%;
         height: 10%;
