@@ -92,7 +92,7 @@
             }
         },
         mounted() {
-            this.updateNetwork();
+            // this.updateNetwork();
         },
         beforeUpdate(){
         },
