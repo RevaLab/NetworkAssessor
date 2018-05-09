@@ -1,37 +1,39 @@
 <template>
-    <div class="predefined-pathways">
-        <h5>Major Cancer Pathways</h5>
-        <multiple-pathway-selector />
-        <div id="predefined-pathway-menu">
-            <pathway-menu v-bind:predefinedPathways="true" />
-        </div>
+  <div class="predefined-pathways">
+    <div class="predefined-pathways-header">
+      <div>Major Cancer Pathways</div>
+      <multiple-pathway-selector />
     </div>
+    <div id="predefined-pathway-menu">
+      <pathway-menu v-bind:predefinedPathways="true" />
+    </div>
+  </div>
 </template>
 
 <script>
-    import PathwayMenu from './PathwayMenu.vue'
-    import MultiplePathwaySelector from './MultiplePathwaySelector.vue'
+import PathwayMenu from './PathwayMenu.vue'
+import MultiplePathwaySelector from './MultiplePathwaySelector.vue'
 
 
-    export default {
-        name: "predefined-pathways",
-        components: {
-            PathwayMenu,
-            MultiplePathwaySelector
-
-        }
-    }
+export default {
+  name: "predefined-pathways",
+  components: {
+    PathwayMenu,
+    MultiplePathwaySelector
+  }
+}
 </script>
 
 <style>
-    .predefined-pathways {
-        border: solid 1px black;
-        border-top: none;
-    }
+  .predefined-pathways-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
 
-    #predefined-pathway-menu {
-        /*background-color: #5b80b2;*/
-        height: 55vh;
-        overflow-y: scroll;
-    }
+  .predefined-pathways-header {
+    font-size: 1.2em;
+  }
 </style>

@@ -1,13 +1,9 @@
 <template>
-    <div class="multiple-pathway-selector">
-            <div class="label-and-swatch multi-selector">
-                <input type="checkbox" v-model="allChecked" />
-                Select All With Edges
-            </div>
-            <div class="label-and-swatch multi-selector">
-            <a class="button is-small" v-on:click="clearSelection">Reset</a>
-            </div>
+  <div class="multiple-pathway-selector">
+    <div class="label-and-swatch multi-selector">
+      <a class="button is-small" v-on:click="clearSelection">Clear</a>
     </div>
+  </div>
 </template>
 
 <script>
@@ -89,7 +85,6 @@
 .multiple-pathway-selector {
     display: flex;
     flex-direction: row;
-    border: solid 1px yellow;
 }
 
     .multi-selector {

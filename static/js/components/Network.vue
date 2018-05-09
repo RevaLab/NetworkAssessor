@@ -162,7 +162,9 @@
         height: 95vh;
     }
 
-
+    .network {
+      width: 100%;
+    }
 
     .statistics {
         width: 10%;
@@ -185,13 +187,5 @@
     .statistics-content p {
         margin-bottom: 0 !important;
     }
-
-
-
-    /*.network-legend-content li {*/
-        /*display: inline-block;*/
-        /*!*transform: translate(-50%, -50%);*!*/
-    /*}*/
-
 
 </style>
