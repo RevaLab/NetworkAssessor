@@ -11,6 +11,7 @@ from .network_functions import \
     calculate_pathway_edge_counts, \
     assign_user_pathways_to_genes
 from .calculate_network_pathway_pval import calculate_all_pathways_p_vals
+from .calculate_internal_p_val import calculate_internal_p_val
 
 
 @csrf_exempt
@@ -30,13 +31,18 @@ def index(request):
     interaction_db = nx.read_gpickle('static/{}.pkl'.format(db))
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
     all_pw_distribution = pickle.load(open('static/all_pw_dist.pkl', 'rb'))
+    db_distribution = pickle.load(open('static/{}_dist.pkl'.format(db), 'rb'))
 
     # calculate graphs
     all_nodes_for_subgraph = collect_all_nodes_for_subgraph(query_genes, pathway_list, db_pathways, user_pathways)
     whole_graph = nx.Graph(interaction_db.subgraph(all_nodes_for_subgraph))
     subnetworks = make_three_degrees_of_graphs(query_genes, whole_graph)
 
-    # get edge counts for all pathways
+    # calculate internal p val
+    internal_p_val = calculate_internal_p_val(query_genes, interaction_db, db_distribution)
+    print(internal_p_val)
+
+    # get edge counts for all pathways and calculate p vals
     pathways_edge_counts = calculate_pathway_edge_counts(query_genes, user_pathways, db_pathways, interaction_db)
     pathways_p_vals = calculate_all_pathways_p_vals(pathways_edge_counts, query_genes, all_pw_distribution)
 
@@ -46,7 +52,8 @@ def index(request):
     subnetwork_and_edge_counts = {
         'subnetwork': subnetworks,
         'pathways_edge_counts': pathways_edge_counts,
-        'pathways_p_vals': pathways_p_vals
+        'pathways_p_vals': pathways_p_vals,
+        'internal_p_val': internal_p_val
     }
 
     return JsonResponse(subnetwork_and_edge_counts)

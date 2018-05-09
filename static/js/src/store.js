@@ -322,6 +322,7 @@ const store = new Vuex.Store({
                 .then(
                     response => {
                         const subnetworkAndEdgeCounts = response.body;
+                        console.log(subnetworkAndEdgeCounts['internal_p_val']);
                         store.commit('ADD_SUBNETWORK', subnetworkAndEdgeCounts['subnetwork']);
                         store.commit('ADD_PATHWAYS_EDGE_COUNTS', subnetworkAndEdgeCounts['pathways_edge_counts']);
                         store.commit('ADD_PATHWAYS_P_VALS', subnetworkAndEdgeCounts['pathways_p_vals']);
