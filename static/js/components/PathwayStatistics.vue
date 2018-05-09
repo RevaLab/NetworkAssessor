@@ -67,31 +67,42 @@
 </script>
 
 <style>
-    .tooltip {
-        display: inline-block;
-        border-bottom: 1px dotted black;
-    }
+.tooltip {
+  display: inline-block;
+}
 
-    .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 120px;
-        background-color: black;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px 0;
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
 
-        /* Position the tooltip */
-        position: absolute;
-        /*z-index: 1;*/
-    }
+  /* Position the tooltip */
+  position: absolute;
+  /*z-index: 1;*/
+}
 
-    .tooltip:hover .tooltiptext {
-        visibility: visible;
-    }
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
-    .pathway-statistics {
-        justify-content: right;
-    }
+.pathway-statistics {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 50%;
+  margin-left: 10px;
+}
+
+.pathway-statistics a {
+  color: purple;
+}
+
+.pathway-statistics a:hover {
+  text-decoration: underline;
+}
 
 </style>
