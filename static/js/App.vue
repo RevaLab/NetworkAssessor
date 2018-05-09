@@ -67,4 +67,7 @@
   height: calc(100vh - 100px);
 }
 
+#app{
+  overflow: hidden;
+}
 </style>
