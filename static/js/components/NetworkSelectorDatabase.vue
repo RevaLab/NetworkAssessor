@@ -1,14 +1,14 @@
 <template>
   <div class="db-selector">
     <p>PPI Database:</p>
-      <div class="radio-group">
-        <input type="radio" id="biogrid" value="biogrid" v-model="picked">
-        <label for="biogrid">BioGRID</label>
-      </div>
-      <div class="radio-group">
-        <input type="radio" id="hprd" value="hprd" v-model="picked">
-        <label for="hprd">HPRD</label>
-      </div>
+    <div class="radio-group">
+      <input type="radio" id="biogrid" value="biogrid" v-model="picked">
+      <label for="biogrid">BioGRID</label>
+    </div>
+    <div class="radio-group">
+      <input type="radio" id="hprd" value="hprd" v-model="picked">
+      <label for="hprd">HPRD</label>
+    </div>
   </div>
 </template>
 
