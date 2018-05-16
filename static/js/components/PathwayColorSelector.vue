@@ -2,8 +2,8 @@
   <div class="pathway-color-selector">
     <div class="pathway">
       <div class="pathway-label">
-        <input type="checkbox" id="pw-checkbox" v-model="checked" />
-        <label for="pw-checkbox">{{ pathwayName }}</label>
+        <input type="checkbox" v-bind:id="`checkbox-${pathway}`" v-model="checked" />
+        <label v-bind:for="`checkbox-${pathway}`">{{ pathwayName }}</label>
       </div>
       <swatches
       class="pathway-swatch"

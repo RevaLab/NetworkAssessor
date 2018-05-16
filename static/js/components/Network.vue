@@ -110,7 +110,6 @@ export default {
       this.$store.dispatch('getPathwaySubnetwork', queryGenesPathwayData);
     },
     runCytoscape(subnetwork) {
-      // console.log('running cytoscape')
       let cytoscape_options = {
         ...subnetwork,
         container: document.getElementById('cy'),

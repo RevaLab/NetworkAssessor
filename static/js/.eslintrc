@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/essential"
+  ],
+  "plugins": ["vue"],
+  "rules": {
+    "semi": ["warn"],
+    "no-unused-vars": ["warn"],
+    "no-console": 0,
+  },
+  "env": {
+    "es6": "true",
+    "browser": "true"
+  }
+}
