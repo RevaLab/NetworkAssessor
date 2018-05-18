@@ -84,10 +84,11 @@
 }
 
 .nav-bar h4 {
-  font-size: 1.5em;
+  font-size: 2em;
   /*text-align: center;*/
   padding: .6em 0;
   height: 80px;
+    font-weight: bold;
 }
 
 .nav-bar .network-icon {
