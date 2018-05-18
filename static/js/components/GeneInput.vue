@@ -43,13 +43,22 @@
                 delete userPathways['query_list'];
                 this.$ls.set('userPathways', JSON.stringify(userPathways));
 
-                let geneListArr = [];
-                if (this.geneList.includes("\t")) {
-                    geneListArr = this.geneList.trim().split("\t");
-                } else {
-                    geneListArr = this.geneList.split("\n")
+                if (!this.geneList.length) {
+                    alert("Please enter genes.")
+                    return;
                 }
 
+                let geneListArr = [];
+                const trimmedGeneList = this.geneList.trim();
+                if (trimmedGeneList.includes("\t")) {
+                    geneListArr = trimmedGeneList.split("\t");
+                } else if (trimmedGeneList.includes(" ")) {
+                    geneListArr = trimmedGeneList.split(" ");
+                } else {
+                    geneListArr = trimmedGeneList.split("\n")
+                }
+
+                console.log(geneListArr)
                 // update gene input as a user pathway
                 let queryListAsUserPathway = {
                     query_list: {
