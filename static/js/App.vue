@@ -5,6 +5,7 @@
             <div class="network-icon-and-page-title">
                 <img class="network-icon" src="static/network-icon.jpg">
                 <h4>Network Assessor</h4>
+                <h2>beta</h2>
             </div>
             <div class="sinai-logo">
                 <img src="static/MSSMLogo.png">
@@ -74,7 +75,6 @@
 .nav-bar {
     display: flex;
     flex-direction: row;
-    flex: 0 0 25%;
     justify-content: space-between;
     min-width: 100%;
 }
@@ -84,8 +84,6 @@
     flex-direction: row;
     margin-right: 100px;
     flex-shrink: 0;
-    /*width: 60%;*/
-    /*min-width: 100%;*/
 }
 
 .nav-bar h4 {
@@ -94,6 +92,10 @@
   padding: .6em 0;
   /*height: 80px;*/
     font-weight: bold;
+}
+
+.nav-bar h2 {
+    margin-top: 20px;
 }
 
 .nav-bar .network-icon {
@@ -105,7 +107,7 @@
 .nav-bar .sinai-logo {
     height: 69px;
     width: 353px;
-    overflow-x: hidden;
+    /*overflow-x: hidden;*/
 }
 
 .content {
