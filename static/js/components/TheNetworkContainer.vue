@@ -30,6 +30,7 @@ export default {
 .network-container {
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 }
 
 .controls {
@@ -38,7 +39,7 @@ export default {
   min-width: 300px;
   max-height: calc(100vh - 100px);
   margin: 5px;
-  border-bottom: none;
+  /*border-bottom: none;*/
   font-size: small;
   background-color: lightgrey;
   padding: 10px;

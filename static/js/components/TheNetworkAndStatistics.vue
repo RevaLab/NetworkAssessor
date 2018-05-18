@@ -22,7 +22,7 @@ export default {
 .network-and-statistics {
   height: calc(100vh - 110px);
   width: calc(100vw - 300px);
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   margin: 10px;
 }
 
