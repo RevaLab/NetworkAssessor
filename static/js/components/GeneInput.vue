@@ -105,7 +105,7 @@
     width: 100%;
     margin: 20px auto;
     border: 1px solid;
-    height: 400px;
+    height: 30vh;
 }
 
 .gene-input .button {
