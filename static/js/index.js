@@ -8,6 +8,7 @@ import store from './src/store.js';
 import App from './App.vue'
 import GeneInput from "./components/GeneInput.vue";
 import TheNetworkContainer from "./components/TheNetworkContainer.vue";
+import UsageGuide from "./components/UsageGuide.vue";
 
 
 Vue.use(VueRouter);
@@ -19,7 +20,8 @@ Vue.use(VModal);
 
 const routes = [
     { path: '/', component: GeneInput },
-    { path: '/network', component: TheNetworkContainer }
+    { path: '/network', component: TheNetworkContainer },
+    { path: '/usage-guide', component: UsageGuide }
 ];
 
 const router = new VueRouter({ routes });
