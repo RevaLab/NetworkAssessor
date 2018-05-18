@@ -38,6 +38,7 @@ export default {
                 node.style('shape', 'star');
                 node.style('width', '50px');
                 node.style('height', '50px');
+                node.style('border', 'solid 1px black');
                 node.style('background-color', pathwayColors['query_list']);
                 node.style('text-valign', 'center');
                 node.style('text-halign', 'center');
