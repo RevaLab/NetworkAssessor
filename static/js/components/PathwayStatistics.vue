@@ -7,7 +7,7 @@
             <a v-on:click="showPathwayMembers">{{ pathwayMemberCount }}</a>
             <span class="tooltiptext">Pathway Members</span>
         </div>
-        <div class="tooltip">
+        <div class="tooltip" v-if="notQueryList">
             {{ pathwayEdgeCount }}
             <span class="tooltiptext">Edges between pathway and query list</span>
         </div>
@@ -32,6 +32,9 @@
             pathwayMembers
         },
         computed: {
+            notQueryList() {
+                return this.pathway !== 'query_list';
+            },
             modalName() {
               return this.pathway + "_members"
             },
