@@ -67,7 +67,7 @@
 .nav-bar-wrapper {
     margin: 30px auto;
     /*width: */
-    max-width: 45%;
+    max-width: 60%;
     min-width: 450px;
 }
 
