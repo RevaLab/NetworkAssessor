@@ -98,9 +98,11 @@
         },
         updated() {
             // this.loading = false;
+            alert('done updating!!')
         },
         methods: {
             updateNetwork() {
+                alert('updated!!')
                 const queryGenesPathwayData = {
                     pathways: this.$store.state.selectedPathways,
                     networkDatabase: this.$store.state.networkDatabase,

@@ -1,7 +1,15 @@
 <template>
   <div id="app">
-    <div class="nav-bar">
-      <h3>GO Network and Pathway Analysis</h3>
+    <div class="nav-bar-wrapper">
+        <div class="nav-bar">
+            <div class="network-icon-and-page-title">
+                <img class="network-icon" src="static/network-icon.jpg">
+                <h4>Network Assessor</h4>
+            </div>
+            <div class="sinai-logo">
+                <img src="static/MSSMLogo.png">
+            </div>
+        </div>
     </div>
     <div class="content">
       <router-view></router-view>
@@ -56,11 +64,41 @@
   }
 /* END RESET */
 
-.nav-bar h3 {
+.nav-bar-wrapper {
+    margin: 30px auto;
+    /*width: */
+    max-width: 45%;
+    min-width: 450px;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.network-icon-and-page-title {
+    display: flex;
+    flex-direction: row;
+    margin-right: 100px;
+}
+
+.nav-bar h4 {
   font-size: 1.5em;
-  text-align: center;
-  padding: .5em 0;
-  height: 60px;
+  /*text-align: center;*/
+  padding: .6em 0;
+  height: 80px;
+}
+
+.nav-bar .network-icon {
+    height: 80px;
+    width: 80px;
+    margin-right: 10px;
+}
+
+.nav-bar .sinai-logo {
+    height: 69px;
+    width: 353px;
 }
 
 .content {
