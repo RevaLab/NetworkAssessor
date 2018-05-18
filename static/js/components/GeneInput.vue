@@ -96,7 +96,7 @@
 }
 
 .gene-input .button {
-    width: 100%;
+    width: 95%;
     margin: auto;
 }
 

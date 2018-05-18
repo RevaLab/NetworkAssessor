@@ -5,6 +5,8 @@ import api from './api.js'
 Vue.use(Vuex) // only required if you're using modules.
               // We're using modules, so there you go.
 
+const apiRoot = ''
+
 const store = new Vuex.Store({
     state: {
         subnetwork: {
@@ -318,7 +320,7 @@ const store = new Vuex.Store({
             store.commit('HOLD_PREVIOUS_SELECTED_PATHWAYS', previousSelectedPathways)
         },
         getPathwaySubnetwork(store, queryGenesSelectedPathways) {
-            api.post('api/subnetwork/submit_genes/', queryGenesSelectedPathways)
+            api.post(`${apiRoot}/api/subnetwork/submit_genes/`, queryGenesSelectedPathways)
                 .then(
                     response => {
                         const subnetworkAndEdgeCounts = response.body;
