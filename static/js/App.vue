@@ -75,19 +75,22 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    min-width: 100%;
 }
 
 .network-icon-and-page-title {
     display: flex;
     flex-direction: row;
     margin-right: 100px;
+    /*width: 60%;*/
+    /*min-width: 100%;*/
 }
 
 .nav-bar h4 {
   font-size: 2em;
   /*text-align: center;*/
   padding: .6em 0;
-  height: 80px;
+  /*height: 80px;*/
     font-weight: bold;
 }
 
@@ -100,6 +103,7 @@
 .nav-bar .sinai-logo {
     height: 69px;
     width: 353px;
+    overflow-x: hidden;
 }
 
 .content {
