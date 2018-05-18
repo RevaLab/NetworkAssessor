@@ -50,6 +50,10 @@
 
                 let geneListArr = [];
                 const trimmedGeneList = this.geneList.trim();
+                if (trimmedGeneList.includes("\t") && trimmedGeneList.includes(" ")) {
+                    alert("Enter genes separated by a newline, tab, or space. Your list seems to include multiple separators.")
+                }
+
                 if (trimmedGeneList.includes("\t")) {
                     geneListArr = trimmedGeneList.split("\t");
                 } else if (trimmedGeneList.includes(" ")) {
