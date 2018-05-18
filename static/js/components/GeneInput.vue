@@ -22,8 +22,11 @@
             Analyze
        </button>
         <div class="lab-info">
-            <p>Under development at: Reva Lab</p>
-            <p>Contact: anna.calinawan@mssm.edu</p>
+            <div>Under development at: <strong>Reva Lab</strong>
+                <br></div>
+            <div>
+            Contact: anna.calinawan@mssm.edu
+            </div>
         </div>
     </div>
 </template>
@@ -124,4 +127,13 @@
     max-width: 20%;
     min-width: 150px;
 }
+
+    .lab-info {
+        display: inline-block;
+        font-size: small;
+        background-color: lightgray;
+        margin-top: 30px;
+        padding: 8px;
+        /*width: 100%;*/
+    }
 </style>
