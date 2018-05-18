@@ -21,6 +21,10 @@
        >
             Analyze
        </button>
+        <div class="lab-info">
+            <p>Under development at: Reva Lab</p>
+            <p>Contact: anna.calinawan@mssm.edu</p>
+        </div>
     </div>
 </template>
 
