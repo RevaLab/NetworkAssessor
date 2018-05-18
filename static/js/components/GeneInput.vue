@@ -159,7 +159,7 @@
         display: inline-block;
         font-size: small;
         background-color: lightgray;
-        margin-top: 30px;
+        margin-top: 80px;
         padding: 8px;
         /*width: 100%;*/
     }
