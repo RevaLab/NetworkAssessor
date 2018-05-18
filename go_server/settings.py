@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'webpack_loader',
     'backend',
+    'corsheaders',
+    'Subnetwork'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'go_server.urls'
@@ -131,3 +135,13 @@ WEBPACK_LOADER = {
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
 }
+
+CORS_ORIGIN_WHITELIST = (
+    'google.com',
+    'networkassessor.net',
+    'www.networkassessor.net',
+    'pythonanywhere.com',
+    'www.pythonanywhere.com',
+    'localhost:8000',
+    '127.0.0.1:8000'
+)
