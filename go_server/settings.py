@@ -136,12 +136,13 @@ WEBPACK_LOADER = {
     }
 }
 
-CORS_ORIGIN_WHITELIST = (
-    'google.com',
-    'networkassessor.net',
-    'www.networkassessor.net',
-    'pythonanywhere.com',
-    'www.pythonanywhere.com',
-    'localhost:8000',
-    '127.0.0.1:8000'
-)
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = (
+#     'google.com',
+#     'networkassessor.net',
+#     'www.networkassessor.net',
+#     'pythonanywhere.com',
+#     'www.pythonanywhere.com',
+#     'localhost:8000',
+#     '127.0.0.1:8000'
+# )

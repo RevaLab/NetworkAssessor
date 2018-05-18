@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="nav-bar-wrapper">
+    <div class="nav-bar-wrapper" v-on:click="navigateHome">
         <div class="nav-bar">
             <div class="network-icon-and-page-title">
                 <img class="network-icon" src="static/network-icon.jpg">
@@ -17,6 +17,16 @@
     </div>
   </div>
 </template>
+
+<script>
+    export default {
+        methods: {
+            navigateHome() {
+               this.$router.push('/');
+            }
+        }
+    }
+</script>
 
 <style>
 
@@ -70,6 +80,7 @@
     /*width: */
     max-width: 60%;
     min-width: 450px;
+    cursor: pointer;
 }
 
 .nav-bar {
@@ -107,6 +118,7 @@
 .nav-bar .sinai-logo {
     height: 69px;
     width: 353px;
+    min-width: 353px;
     /*overflow-x: hidden;*/
 }
 

@@ -1,11 +1,19 @@
 <template>
     <div class="gene-input">
-        <button id="try-example"
-                class="button is-info"
-                v-on:click="addExampleList"
-        >
-            Try Example
-        </button>
+        <div class="navigation-from-input">
+                    <button id="usage-guide"
+                        class="button is-warning"
+                        v-on:click="viewUsageGuide"
+                >
+                    Usage Guide
+                </button>
+                <button id="try-example"
+                        class="button is-info"
+                        v-on:click="addExampleList"
+                >
+                    Try Example
+                </button>
+        </div>
         <textarea
             v-model="geneList"
             placeholder="Enter Query Gene List"
@@ -32,7 +40,11 @@
 </template>
 
 <script>
+
+    import UsageGuide from "./UsageGuide.vue";
+
     export default {
+        components: {UsageGuide},
         name: "gene-input",
         data () {
             return {
@@ -40,6 +52,9 @@
             }
         },
         methods: {
+            viewUsageGuide() {
+                this.$router.push('/usage-guide');
+            },
             addExampleList() {
                 this.geneList =['FLT3', 'SMO', 'GLA', 'SGCB', 'OAT', 'CAPN3', 'ASS1', 'AGXT', 'AKT1', 'PTPN1',
                     'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4'].join("\n")
@@ -69,7 +84,6 @@
                     geneListArr = trimmedGeneList.split("\n")
                 }
 
-                console.log(geneListArr)
                 // update gene input as a user pathway
                 let queryListAsUserPathway = {
                     query_list: {
@@ -100,6 +114,7 @@
 </script>
 
 <style>
+
 .gene-input {
     display: flex;
     flex-direction: column;
@@ -128,6 +143,18 @@
     min-width: 150px;
 }
 
+.gene-input #usage-guide {
+    margin-left:0;
+    margin-right:auto;
+    margin-bottom: -10px;
+    max-width: 20%;
+    min-width: 150px;
+}
+
+.navigation-from-input {
+    display: flex;
+    flex-direction: row;
+}
     .lab-info {
         display: inline-block;
         font-size: small;
