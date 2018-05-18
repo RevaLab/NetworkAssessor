@@ -74,6 +74,7 @@
 .nav-bar {
     display: flex;
     flex-direction: row;
+    flex: 0 0 25%;
     justify-content: space-between;
     min-width: 100%;
 }
@@ -82,6 +83,7 @@
     display: flex;
     flex-direction: row;
     margin-right: 100px;
+    flex-shrink: 0;
     /*width: 60%;*/
     /*min-width: 100%;*/
 }
