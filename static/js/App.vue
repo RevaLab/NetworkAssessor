@@ -115,6 +115,8 @@
 }
 
 #app{
-  overflow: hidden;
+  /*overflow: hidden;*/
+    /*max-height: 100vh;*/
+    /*position: relative;*/
 }
 </style>

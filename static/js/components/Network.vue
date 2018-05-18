@@ -166,11 +166,13 @@
 <style>
     #cy {
         width: 100%;
-        height: 95vh;
+        height: 90%;
+        border: solid 1px black;
     }
 
     .network {
       width: 100%;
+        height: 100%;
     }
 
     .statistics {
