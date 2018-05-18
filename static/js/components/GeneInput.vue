@@ -30,10 +30,10 @@
             Analyze
        </button>
         <div class="lab-info">
-            <div>Under development at: <strong>Reva Lab</strong>
+            <div>Under development at: <strong>Reva Lab</strong> by Anna Calinawan
                 <br></div>
             <div>
-            Contact: anna.calinawan@mssm.edu
+            Contact: anna.calinawan@mssm.edu, boris.reva@mssm.edu
             </div>
         </div>
     </div>

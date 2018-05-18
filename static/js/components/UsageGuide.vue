@@ -1,5 +1,16 @@
 <template>
     <div class="usage-guide">
+
+    </div>
+    <div class="usage-guide-steps">
+        <div class="usage-guide-step">
+                    <button
+                class="button is-warning"
+                v-on:click="navigateHome"
+        >
+            Return to Input Page
+        </button>
+        </div>
         <div class="usage-guide-step">
             <h4>Enter a query gene list</h4>
             Enter a gene list of consideration. Genes may be separated by line breaks, spaces, or tabs.
@@ -57,13 +68,18 @@
 
 <script>
     export default {
-        name: "usage-guide"
+        name: "usage-guide",
+        methods: {
+            navigateHome() {
+                this.$router.push('/')
+            }
+        }
     }
 </script>
 
 <style>
 
-    .usage-guide img {
+    .usage-guide-step img {
         border: solid 1px black;
         margin-top: 5px;
         width: 100%;
@@ -72,7 +88,7 @@
     .usage-guide-step h4 {
         font-weight: bold;
         text-align: center;
-vertical-align: middle;
+        vertical-align: middle;
     }
 
     .usage-guide-step {
@@ -81,7 +97,7 @@ vertical-align: middle;
         padding: 5px;
     }
 
-    .usage-guide {
+    .usage-guide-steps {
           display: flex;
           flex-direction: column;
         width: 60%;
