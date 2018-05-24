@@ -40,7 +40,6 @@ def index(request):
 
     # calculate internal p val
     internal_p_val = calculate_internal_p_val(query_genes, interaction_db, db_distribution)
-    print(internal_p_val)
 
     # get edge counts for all pathways and calculate p vals
     pathways_edge_counts = calculate_pathway_edge_counts(query_genes, user_pathways, db_pathways, interaction_db)
