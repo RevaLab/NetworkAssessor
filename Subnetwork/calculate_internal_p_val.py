@@ -7,6 +7,10 @@ def calculate_internal_p_val(query_genes, interaction_db, db_distribution):
     query_genes_subgraph = nx.Graph(interaction_db.subgraph(query_genes))
     internal_edges = len(query_genes_subgraph.edges())
     internal_nodes = len(query_genes_subgraph.nodes())
+
+    if internal_nodes == 0:
+        return 1.0
+
     normalized_internal_edges = internal_edges / internal_nodes
 
     rank = len(db_distribution) - bisect_left(db_distribution, normalized_internal_edges)
