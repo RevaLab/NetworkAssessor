@@ -18,6 +18,7 @@ import networkx as nx
 from .network_utils import Parameter
 from networkx.readwrite import json_graph
 
+
 def normalize_user_pathways_by_gene(user_pathways):
     user_pathways_by_gene = {}
 
