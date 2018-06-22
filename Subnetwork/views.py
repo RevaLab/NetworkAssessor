@@ -23,6 +23,7 @@ def index(request):
 
     # pull data from request
     query_genes = list(set(data['userPathways']['query_list']['genes']))
+    len_query_gene_set = len(query_genes)
     user_pathways = data['userPathways']
     pathway_list = data['pathways'] # all selected pathways
     db = data['networkDatabase']
@@ -30,7 +31,7 @@ def index(request):
     # load databases
     interaction_db = nx.read_gpickle('static/{}.pkl'.format(db))
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
-    all_pw_distribution = pickle.load(open('static/all_pw_dist.pkl', 'rb'))
+    all_gene_set_pathway_p_vals = pickle.load(open('static/p_vals_per_gene_count_per_edge_count_biogrid.pkl', 'rb'))
     db_distribution = pickle.load(open('static/{}_dist.pkl'.format(db), 'rb'))
 
     # calculate graphs
@@ -43,7 +44,8 @@ def index(request):
 
     # get edge counts for all pathways and calculate p vals
     pathways_edge_counts = calculate_pathway_edge_counts(query_genes, user_pathways, db_pathways, interaction_db)
-    pathways_p_vals = calculate_all_pathways_p_vals(pathways_edge_counts, query_genes, all_pw_distribution)
+    pathways_p_vals = calculate_all_pathways_p_vals(pathways_edge_counts, len_query_gene_set, all_gene_set_pathway_p_vals)
+    print(pathways_p_vals)
 
     # add user pathways to graph nodes, which may already have pathways
     assign_user_pathways_to_genes(user_pathways, whole_graph, all_nodes_for_subgraph)

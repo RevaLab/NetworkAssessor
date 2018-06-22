@@ -147,6 +147,7 @@
                 cy = cytoscape(cytoscape_options);
 
                 let count = 0;
+                // REMOVES ISOLATES
                 cy.nodes().forEach(node => {
                     if (node.neighborhood().length === 0) {
                         cy.remove(node);
