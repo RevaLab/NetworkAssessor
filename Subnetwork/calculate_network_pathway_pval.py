@@ -30,11 +30,27 @@ def calculate_all_pathways_p_vals(pathways_edge_counts, len_query_gene_set, all_
     pathway_p_vals_for_gene_set_of_current_count = all_gene_set_pathway_p_vals[len_query_gene_set]
 
     for pathway in pathways_edge_counts:
+
         if pathway not in major_cancer_pathways:
             continue
 
         inter_pw_subgraph_edges = pathways_edge_counts[pathway]
+
+        if inter_pw_subgraph_edges >= pathway_p_vals_for_gene_set_of_current_count[pathway]['max']:
+            p_val = .00001
+            pathways_p_vals[pathway] = p_val
+            continue
+
+        if inter_pw_subgraph_edges >= pathway_p_vals_for_gene_set_of_current_count[pathway]['max']:
+            p_val = 1
+            pathways_p_vals[pathway] = p_val
+            continue
+
+        while inter_pw_subgraph_edges not in pathway_p_vals_for_gene_set_of_current_count[pathway]:
+            inter_pw_subgraph_edges += 1
+
         p_val = pathway_p_vals_for_gene_set_of_current_count[pathway][inter_pw_subgraph_edges]
+
         pathways_p_vals[pathway] = p_val
 
     return pathways_p_vals

@@ -45,7 +45,6 @@ def index(request):
     # get edge counts for all pathways and calculate p vals
     pathways_edge_counts = calculate_pathway_edge_counts(query_genes, user_pathways, db_pathways, interaction_db)
     pathways_p_vals = calculate_all_pathways_p_vals(pathways_edge_counts, len_query_gene_set, all_gene_set_pathway_p_vals)
-    print(pathways_p_vals)
 
     # add user pathways to graph nodes, which may already have pathways
     assign_user_pathways_to_genes(user_pathways, whole_graph, all_nodes_for_subgraph)

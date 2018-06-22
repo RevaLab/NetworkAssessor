@@ -12,7 +12,7 @@
             <span class="tooltiptext">Edges between pathway and query list</span>
         </div>
         <div class="tooltip" v-if="pathwayPVal">
-            {{ pathwayPVal }}
+            {{ isMinPVal }}{{ pathwayPVal }}
             <span class="tooltiptext">Significance</span>
         </div>
     </div>
@@ -25,6 +25,7 @@
         name: "pathway-statistics",
         data() {
             return {
+                isMinPVal: '',
             }
         },
         props: ['pathway'],
@@ -44,8 +45,11 @@
             pathwayPVal() {
                 const pVal = this.$store.state.pathwaysPVals[this.pathway];
                 if (pVal) {
-                    if (pVal === 1) {
-                        return 1
+                    if (pVal === .00001) {
+                        this.isMinPVal = '< '
+                    }
+                    if (pVal >= .05) {
+                        return pVal
                     }
                     return pVal.toExponential(2)
                 }
