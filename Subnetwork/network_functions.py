@@ -19,6 +19,9 @@ from .network_utils import Parameter
 from networkx.readwrite import json_graph
 
 
+from .list_utils import *
+
+
 def normalize_user_pathways_by_gene(user_pathways):
     user_pathways_by_gene = {}
 
@@ -87,16 +90,26 @@ def make_three_degrees_of_graphs(query_genes, whole_graph):
     return subnetworks
 
 
-def calculate_pathway_edge_counts(query_genes, user_pathways, db_pathways, interaction_db):
+def calculate_pathway_edge_counts(query_genes, db_pathways, pathway_neighbors):
     pathways_edge_counts = {}
-    all_pathways = list(user_pathways.keys()) + list(db_pathways.keys())
-    for pathway in all_pathways:
-        if pathway in db_pathways:
-            pw_nodes = db_pathways[pathway]
-        else:
-            pw_nodes = user_pathways[pathway]['genes']
+    # all_pathways = list(user_pathways.keys()) + list(db_pathways.keys())
+    for pathway in db_pathways:
+        # if pathway in db_pathways:
+        #     pw_nodes = db_pathways[pathway]
+        # else:
+        #     pw_nodes = user_pathways[pathway]['genes']
 
-        edges = Parameter.edge_cross(pw_nodes, query_genes, interaction_db)
+        pw_nodes = db_pathways[pathway]
+
+        query_genes_with_edges_to_pathway = []
+
+        for node in pw_nodes:
+            if node in pathway_neighbors[pathway]:
+                query_genes_that_are_neighbors_of_this_pw_node = intersect(pathway_neighbors[pathway][node], query_genes)
+                query_genes_with_edges_to_pathway += query_genes_that_are_neighbors_of_this_pw_node
+
+        edges = len(query_genes_with_edges_to_pathway)
+
         if edges:
             pathways_edge_counts[pathway] = edges
         else:
