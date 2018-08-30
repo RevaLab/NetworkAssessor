@@ -90,6 +90,7 @@
                 cytoscapeOptions.applyMouseEvents(cy, this.queryGenes, this.pathwayColors['query_list']);
                 cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
                 this.$store.dispatch('updateQueryListAndPathwayHit', queryListAndPWHit)
+                cytoscapeOptions.addRelationsToEdges(cy)
             }
         },
         methods: {

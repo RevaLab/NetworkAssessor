@@ -57,7 +57,7 @@
             },
             addExampleList() {
                 this.geneList =['FLT3', 'SMO', 'GLA', 'SGCB', 'OAT', 'CAPN3', 'ASS1', 'AGXT', 'AKT1', 'PTPN1',
-                    'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4'].join("\n")
+                    'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4', 'ATG7','ATG12','BAD','BCL2L1'].join("\n")
             },
             submitGeneList() {
                 let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));

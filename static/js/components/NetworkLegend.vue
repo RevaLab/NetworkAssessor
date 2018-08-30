@@ -12,7 +12,7 @@
           <!--</li>-->
           <li v-if="queryListAndPWHit">
             <span>
-              <i class="color-box circle" v-bind:style="{ background: pathwayColors['query_list'], border: 'solid 2px black' }"></i>
+              <i class="color-box circle" v-bind:style="{ background: pathwayColors['query_list'], border: 'solid 2px red' }"></i>
               Query List & Pathway
             </span>
           </li>

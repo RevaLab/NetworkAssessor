@@ -29,7 +29,8 @@ def index(request):
     db = data['networkDatabase']
 
     # load databases
-    interaction_db = nx.read_gpickle('static/{}_with_pathways.pkl'.format(db))
+    # interaction_db = nx.read_gpickle('static/{}_with_pathways.pkl'.format(db))
+    interaction_db = nx.read_gpickle('static/{}_with_relations.pkl'.format(db))
     pathway_neighbors = pickle.load(open('static/pathway_neighbors_{}.pkl'.format(db), 'rb'))
     db_pathways = pickle.load(open('static/important_pathways.pkl', 'rb'))
     all_gene_set_pathway_p_vals = pickle.load(open('static/p_vals_per_gene_count_per_edge_count_biogrid.pkl', 'rb'))
