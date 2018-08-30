@@ -12,42 +12,51 @@ export default {
         });
         return count;
     },
-    colorPathwaysAndCheckForQLAndPWHits(subnetwork, pathwayColors, selectedPathways, cy) {
+    colorPathwaysAndCheckForQLAndPWHits(
+        subnetwork,
+        pathwayColors,
+        selectedPathways,
+        cy
+    ) {
         let queryListAndPathwayHit = false;
 
         cy.nodes().forEach(node => {
-            // pull out only the selected pathways this node's a part of
-            let selectedPathwaysWithNode = node.data('pathways').filter(function(n) {
-                return selectedPathways.indexOf(n) !== -1;
-            });
+            // node pathways intersection selected pathways
+            let selectedPathwaysWithNode =
+                node.data('pathways').filter(function(n) {
+                    return selectedPathways.indexOf(n) !== -1;
+                });
 
-            if (selectedPathwaysWithNode.includes('query_list') &&
-                selectedPathwaysWithNode.length === 1) {
+            // console.log(selectedPathwaysWithNode)
+
+            if (
+                selectedPathwaysWithNode.includes('query_list') &&
+                selectedPathwaysWithNode.length === 1
+            ) {
                     node.style('shape', 'rectangle');
                     node.style('width', '70px');
                     node.style('background-color', pathwayColors['query_list']);
                     node.style('text-valign', 'center');
                     node.style('text-halign', 'center');
-                    // node.style('lineColor', 'red');
-                    // node.style('text-outline-color', pathwayColors['query_list'])
-            } else if
-                (selectedPathwaysWithNode.includes('query_list') &&
-                selectedPathwaysWithNode.length > 1)
-            {
-                queryListAndPathwayHit = true;
-                node.style('shape', 'star');
-                node.style('width', '50px');
-                node.style('height', '50px');
-                node.style('border-width', '1px');
-                node.style('border-style', 'solid');
-                node.style('border-color', 'black');
-                node.style('border-opacity', '.8');
-                node.style('background-color', pathwayColors['query_list']);
-                node.style('text-valign', 'center');
-                node.style('text-halign', 'center');
-
-                // node.style('text-outline-color', '#00ff00')
-            } else if (selectedPathwaysWithNode.length > 1) {
+            // } else if (
+            //     selectedPathwaysWithNode.includes('query_list') &&
+            //     selectedPathwaysWithNode.length > 1
+            // ) {
+            //     queryListAndPathwayHit = true;
+            //     node.style('shape', 'star');
+            //     node.style('width', '50px');
+            //     node.style('height', '50px');
+            //     node.style('border-width', '1px');
+            //     node.style('border-style', 'solid');
+            //     node.style('border-color', 'black');
+            //     node.style('border-opacity', '.8');
+            //     // change pathway color to pathwayhit
+            //     node.style('background-color', pathwayColors['query_list']);
+            //     node.style('text-valign', 'center');
+            //     node.style('text-halign', 'center');
+            } else if (
+                selectedPathwaysWithNode.length > 1
+            ) {
                 node.style('shape', 'ellipse');
                 node.style('pie-size', '100%');
                 let percentPathway = (100/(selectedPathwaysWithNode.length)).toString();
@@ -56,15 +65,19 @@ export default {
                     node.style(`pie-${pie_index}-background-color`, pathwayColors[pathway]);
                     node.style(`pie-${pie_index}-background-size`, `${percentPathway}%`);
                 });
-                // node.style('background-opacity', '0.9')
-                // node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
+                if (selectedPathwaysWithNode.includes('query_list')) {
+                    queryListAndPathwayHit = true;
+
+                    node.style('border-width', '2px');
+                    node.style('border-style', 'solid');
+                    node.style('border-color', 'black');
+                    node.style('border-opacity', '.8');
+                }
             } else {
                 node.style('shape','ellipse');
                 node.style('background-color', pathwayColors[selectedPathwaysWithNode[0]]);
-                // node.style('background-opacity', '0.9');
-                // node.style('text-outline-color', pathwayColors[selectedPathwaysWithNode[0]])
             }
-        })
+        });
 
         return queryListAndPathwayHit;
     },
