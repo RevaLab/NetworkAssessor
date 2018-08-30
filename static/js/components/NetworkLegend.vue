@@ -4,9 +4,15 @@
       <div class="network-legend-content">
         <h6>Legend</h6>
         <ul>
+          <!--<li v-if="queryListAndPWHit">-->
+            <!--<span>-->
+              <!--<i class="fas fa-star star-icon" :style="starColor"></i>-->
+              <!--Query List & Pathway-->
+            <!--</span>-->
+          <!--</li>-->
           <li v-if="queryListAndPWHit">
             <span>
-              <i class="fas fa-star star-icon" :style="starColor"></i>
+              <i class="color-box circle" v-bind:style="{ background: pathwayColors['query_list'], border: 'solid 2px black' }"></i>
               Query List & Pathway
             </span>
           </li>

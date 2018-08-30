@@ -67,13 +67,10 @@
         },
         watch: {
             userPathways() {
-                // must hit this to calculate the pathway edge counts for this user pw
                 this.updateNetwork();
-                // alert('done updating');
             },
             selectedPathways() {
                 this.updateNetwork();
-                // alert('done updating');
             },
             networkDatabase() {
                 this.updateNetwork();
@@ -82,7 +79,6 @@
                 cytoscapeOptions.colorPathwaysAndCheckForQLAndPWHits(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
                 cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
                 cytoscapeOptions.applyMouseEvents(cy, this.queryGenes, this.pathwayColors['query_list']);
-
             },
             subnetwork() {
                 // let
@@ -95,14 +91,6 @@
                 cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
                 this.$store.dispatch('updateQueryListAndPathwayHit', queryListAndPWHit)
             }
-        },
-        mounted() {
-            // this.updateNetwork();
-        },
-        beforeUpdate(){
-        },
-        updated() {
-            // this.loading = false;
         },
         methods: {
             updateNetwork() {
