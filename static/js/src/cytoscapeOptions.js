@@ -12,6 +12,27 @@ export default {
         });
         return count;
     },
+    addRelationsToEdges(cy) {
+        cy.edges().forEach(edge => {
+            console.log(edge.data());
+            if (edge.data('relation')) {
+                if (edge.data('relation') === 'activation') {
+                    edge.style('curve-style', 'bezier');
+                    edge.style('source-arrow-shape', 'triangle');
+                    edge.style('source-arrow-color', 'green');
+                    edge.style('arrow-scale', '2');
+                }
+
+                if (edge.data('relation') === 'inhibition') {
+                    edge.style('curve-style', 'bezier');
+                    edge.style('source-arrow-shape', 'tee');
+                    edge.style('source-arrow-color', 'red');
+                    edge.style('arrow-scale', '3');
+                }
+
+            }
+        })
+    },
     colorPathwaysAndCheckForQLAndPWHits(
         subnetwork,
         pathwayColors,
@@ -19,7 +40,7 @@ export default {
         cy
     ) {
         let queryListAndPathwayHit = false;
-
+        // console.log(cy.edges())
         cy.nodes().forEach(node => {
             // node pathways intersection selected pathways
             let selectedPathwaysWithNode =
@@ -70,8 +91,10 @@ export default {
 
                     node.style('border-width', '2px');
                     node.style('border-style', 'solid');
-                    node.style('border-color', 'black');
+                    node.style('border-color', 'red');
                     node.style('border-opacity', '.8');
+                    node.style('width', '55px');
+                    node.style('height', '55px');
                 }
             } else {
                 node.style('shape','ellipse');
