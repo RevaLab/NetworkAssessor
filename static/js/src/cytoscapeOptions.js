@@ -14,13 +14,13 @@ export default {
     },
     addRelationsToEdges(cy) {
         cy.edges().forEach(edge => {
-            console.log(edge.data());
             if (edge.data('relation')) {
                 if (edge.data('relation') === 'activation') {
                     edge.style('curve-style', 'bezier');
                     edge.style('source-arrow-shape', 'triangle');
                     edge.style('source-arrow-color', 'green');
                     edge.style('arrow-scale', '2');
+                    edge.style('line-color', 'green');
                 }
 
                 if (edge.data('relation') === 'inhibition') {
@@ -28,6 +28,7 @@ export default {
                     edge.style('source-arrow-shape', 'tee');
                     edge.style('source-arrow-color', 'red');
                     edge.style('arrow-scale', '3');
+                    edge.style('line-color', 'red');
                 }
 
             }
@@ -105,42 +106,48 @@ export default {
         return queryListAndPathwayHit;
     },
     applyMouseEvents(cy, queryGenes, queryListColor) {
-        let edgesWithQueryGenes, edgesWithoutQueryGenes;
-
-        cy.on('mousedown', function(event){
-            let evtTarget = event.target;
-            if (evtTarget !== cy) {
-                let edges = evtTarget.connectedEdges();
-                edgesWithQueryGenes = edges.filter((edge) => {
-                  return (queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
-                });
-
-                edgesWithQueryGenes.animate({
-                    style: {lineColor: 'red'}
-                });
-
-                edgesWithoutQueryGenes = edges.filter((edge) => {
-                  return !(queryGenes.includes(edge.target().id()) || queryGenes.includes(edge.source().id()))
-                });
-
-                edgesWithoutQueryGenes.animate({
-                    style: {lineColor: 'blue'}
-                });
-            }
-        });
-        cy.on('mouseup', (event) => {
-            let evtTarget = event.target;
-
-            if (evtTarget !== cy) {
-                    edgesWithQueryGenes.animate({
-                    style: {lineColor: queryListColor}
-                });
-
-                edgesWithoutQueryGenes.animate({
-                    style: {lineColor: '#b7b7b7'}
-                });
-            }
-        });
+        // let edgesWithQueryGenes, edgesWithoutQueryGenes, inhibitionEdges;
+        //
+        // cy.on('mousedown', function(event){
+        //     let evtTarget = event.target;
+        //     if (evtTarget !== cy) {
+        //         let edges = evtTarget.connectedEdges();
+        //         edgesWithQueryGenes = edges.filter((edge) => {
+        //           return ((queryGenes.includes(edge.target().id())
+        //                     || queryGenes.includes(edge.source().id())))
+        //         });
+        //         //
+        //         // inhibitionEdges = edges.filter((edge) => {
+        //         //   return (edge.data('relation') === 'inhibition')
+        //         // });
+        //
+        //         edgesWithQueryGenes.animate({
+        //             style: {lineColor: 'yellow'}
+        //         });
+        //
+        //         edgesWithoutQueryGenes = edges.filter((edge) => {
+        //           return !((queryGenes.includes(edge.target().id())
+        //               || queryGenes.includes(edge.source().id())))
+        //         });
+        //
+        //         edgesWithoutQueryGenes.animate({
+        //             style: {lineColor: 'blue'}
+        //         });
+        //     }
+        // });
+        // cy.on('mouseup', (event) => {
+        //     let evtTarget = event.target;
+        //
+        //     if (evtTarget !== cy) {
+        //         edgesWithQueryGenes.animate({
+        //             style: {lineColor: queryListColor}
+        //         });
+        //
+        //         edgesWithoutQueryGenes.animate({
+        //             style: {lineColor: '#b7b7b7'}
+        //         });
+        //     }
+        // });
     },
     colorQueryGeneEdges(cy, queryGenes, queryListColor) {
         cy.edges().forEach((edge) => {
