@@ -17,9 +17,9 @@ export default {
             if (edge.data('relation')) {
                 if (edge.data('relation') === 'activation') {
                     edge.style('curve-style', 'bezier');
-                    edge.style('source-arrow-shape', 'triangle');
+                    edge.style('source-arrow-shape', 'vee');
                     edge.style('source-arrow-color', 'green');
-                    edge.style('arrow-scale', '2');
+                    edge.style('arrow-scale', '1');
                     edge.style('line-color', 'green');
                 }
 
@@ -27,7 +27,7 @@ export default {
                     edge.style('curve-style', 'bezier');
                     edge.style('source-arrow-shape', 'tee');
                     edge.style('source-arrow-color', 'red');
-                    edge.style('arrow-scale', '3');
+                    edge.style('arrow-scale', '1');
                     edge.style('line-color', 'red');
                 }
 
