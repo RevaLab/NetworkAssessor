@@ -16,7 +16,7 @@
         </div>
         <textarea
             v-model="geneList"
-            placeholder="Enter Query Gene List"
+            placeholder="Enter Query Gene List, Up to 200 genes"
         >
         </textarea>
         <!--<input-->
@@ -66,7 +66,7 @@
                 this.$ls.set('userPathways', JSON.stringify(userPathways));
 
                 if (!this.geneList.length) {
-                    alert("Please enter genes.")
+                    alert("Please enter genes.");
                     return;
                 }
 
@@ -74,6 +74,7 @@
                 const trimmedGeneList = this.geneList.trim();
                 if (trimmedGeneList.includes("\t") && trimmedGeneList.includes(" ")) {
                     alert("Enter genes separated by a newline, tab, or space. Your list seems to include multiple separators.")
+                    return;
                 }
 
                 if (trimmedGeneList.includes("\t")) {
@@ -82,6 +83,11 @@
                     geneListArr = trimmedGeneList.split(" ");
                 } else {
                     geneListArr = trimmedGeneList.split("\n")
+                }
+
+                if (geneListArr.length > 200) {
+                    alert("Please limit gene set to 200 for now");
+                    return;
                 }
 
                 // update gene input as a user pathway
