@@ -15,11 +15,16 @@
     <div class="content">
       <router-view></router-view>
     </div>
+    <bug-report/>
   </div>
 </template>
 
 <script>
+    import BugReport from "./components/BugReport.vue";
+
+
     export default {
+        components: {BugReport},
         methods: {
             navigateHome() {
                this.$router.push('/');
