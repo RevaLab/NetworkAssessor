@@ -336,6 +336,18 @@ const store = new Vuex.Store({
                 )
 
         },
+        submitBugReport(store, bugReport) {
+          api.post('/api/subnetwork/bug-report/', { bugReport })
+              .then(
+                    response => {
+                    }
+                )
+                .catch(
+                    error => {
+                        store.commit('API_FAIL', error);
+                    }
+                )
+        },
         updateDatabase(store, database) {
           store.commit('UPDATE_NETWORK_DATABASE', database)
         },

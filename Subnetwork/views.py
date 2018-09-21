@@ -1,8 +1,9 @@
+import datetime
 import json
 import _pickle as pickle
 import networkx as nx
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .network_functions import \
@@ -25,7 +26,7 @@ def index(request):
     query_genes = list(set(data['userPathways']['query_list']['genes']))
     len_query_gene_set = len(query_genes)
     user_pathways = data['userPathways']
-    pathway_list = data['pathways'] # all selected pathways
+    pathway_list = data['pathways']  # all selected pathways
     db = data['networkDatabase']
 
     # load databases
@@ -42,7 +43,8 @@ def index(request):
     subnetworks = make_three_degrees_of_graphs(query_genes, whole_graph)
 
     # calculate internal p val
-    internal_p_val = calculate_internal_p_val(query_genes, interaction_db, db_distribution)
+    # internal_p_val = calculate_internal_p_val(query_genes, interaction_db, db_distribution)
+    internal_p_val = 0
 
     # get edge counts for all pathways and calculate p vals
     pathways_edge_counts = calculate_pathway_edge_counts(query_genes, db_pathways, pathway_neighbors)
@@ -59,4 +61,28 @@ def index(request):
     }
 
     return JsonResponse(subnetwork_and_edge_counts)
+
+
+
+@csrf_exempt
+def bug_report(request):
+    data = json.loads(request.body.decode('utf-8'))
+    bug_report = data['bugReport']
+
+    today = datetime.date.today()
+    bug_report_file = 'bug_reports/{}.txt'.format(today)
+    with open(bug_report_file, 'a+') as f:
+        time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        f.write(time)
+        f.write("\n")
+        for el in bug_report:
+            if len(bug_report[el]):
+                f.write(el)
+                f.write("\n")
+                f.write(bug_report[el])
+            f.write("\n")
+        f.write("*****************************")
+        f.write("\n")
+
+    return HttpResponse(status=200)
 
