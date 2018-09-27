@@ -5,7 +5,7 @@ import api from './api.js'
 Vue.use(Vuex) // only required if you're using modules.
               // We're using modules, so there you go.
 
-const apiRoot = ''
+const apiRoot = '';
 
 const store = new Vuex.Store({
     state: {
