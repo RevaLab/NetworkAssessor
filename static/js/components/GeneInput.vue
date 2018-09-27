@@ -22,7 +22,7 @@
                     placeholder="Enter Query Gene List, Up to 200 genes"
                 >
                 </textarea>
-                <label class="gene-input-filter" v-if="filtering" for="unfiltered-gene-list">Unfiltered: {{ geneListArr.length }}</label>
+                <label class="gene-input-filter" v-if="filtering" for="unfiltered-gene-list">Unfiltered: {{ geneListArr.length }} genes</label>
             </div>
             <div v-if="filtering" v-bind:class="{ 'half-area': filtering }">
                 <textarea
@@ -37,11 +37,13 @@
             <!--v-model="title"-->
             <!--placeholder="Optional List Title"-->
         <!--/>-->
-
+        <div v-if="filtering">
+            <filtering-container />
+        </div>
        <button class="button is-primary"
            v-on:click="submitGeneList"
        >
-            Analyze
+            {{ analyzeButtonText[filtering] }}
        </button>
         <button class="button is-warning"
            v-on:click="filterGenes"
@@ -59,19 +61,26 @@
 </template>
 
 <script>
-
     import UsageGuide from "./UsageGuide.vue";
+    import FilteringContainer from "./FilteringContainer.vue"
 
     export default {
-        components: {UsageGuide},
+        components: {
+            UsageGuide,
+            FilteringContainer
+        },
         name: "gene-input",
         data () {
             return {
+                analyzeButtonText: {
+                    true: 'Analyze Unfiltered Genes',
+                    false: 'Analyze'
+                },
                 geneList: '',
                 filtering: false,
                 filteredGeneList: '',
                 geneFiltering: {
-                    true: 'Submit Filtered Genes',
+                    true: 'Analyze Filtered Genes',
                     false: 'Filter Genes'
                 },
             }
@@ -80,6 +89,10 @@
             geneListArr() {
                 let geneListArr = [];
                 const trimmedGeneList = this.geneList.trim();
+
+                if (trimmedGeneList.length === 0) {
+                    return []
+                }
                 if (trimmedGeneList.includes("\t") && trimmedGeneList.includes(" ")) {
                     alert("Enter genes separated by a newline, tab, or space. Your list seems to include multiple separators.")
                     return;
@@ -92,7 +105,7 @@
                 } else {
                     geneListArr = trimmedGeneList.split("\n")
                 }
-                // this.geneListArr = geneListArr
+
                 return geneListArr;
             }
         },
@@ -118,21 +131,6 @@
                     return;
                 }
 
-                // let geneListArr = [];
-                // const trimmedGeneList = this.geneList.trim();
-                // if (trimmedGeneList.includes("\t") && trimmedGeneList.includes(" ")) {
-                //     alert("Enter genes separated by a newline, tab, or space. Your list seems to include multiple separators.")
-                //     return;
-                // }
-                //
-                // if (trimmedGeneList.includes("\t")) {
-                //     geneListArr = trimmedGeneList.split("\t");
-                // } else if (trimmedGeneList.includes(" ")) {
-                //     geneListArr = trimmedGeneList.split(" ");
-                // } else {
-                //     geneListArr = trimmedGeneList.split("\n")
-                // }
-
                 if (this.geneListArr.length > 200) {
                     alert("Please limit gene set to 200 for now");
                     return;
@@ -146,6 +144,7 @@
                         displayName: 'Query List'
                     }
                 };
+
                 // add information for user pathways to store
                 userPathways = {...userPathways, ...queryListAsUserPathway};
                 let displayData = {
