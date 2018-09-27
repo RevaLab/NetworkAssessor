@@ -14,21 +14,40 @@
                     Try Example
                 </button>
         </div>
-        <textarea
-            v-model="geneList"
-            placeholder="Enter Query Gene List, Up to 200 genes"
-        >
-        </textarea>
+        <div id="gene-input-texts">
+            <div v-bind:class="{ 'half-area': filtering, 'full-area': !filtering }">
+                <textarea
+                    id="unfiltered-gene-list"
+                    v-model="geneList"
+                    placeholder="Enter Query Gene List, Up to 200 genes"
+                >
+                </textarea>
+                <label class="gene-input-filter" v-if="filtering" for="unfiltered-gene-list">Unfiltered: {{ geneListArr.length }}</label>
+            </div>
+            <div v-if="filtering" v-bind:class="{ 'half-area': filtering }">
+                <textarea
+                    id="filtered-gene-list"
+                    v-model="filteredGeneList"
+                ></textarea>
+                <label class="gene-input-filter"  for="filtered-gene-list">Filtered</label>
+            </div>
+        </div>
         <!--<input-->
             <!--type="text"-->
             <!--v-model="title"-->
             <!--placeholder="Optional List Title"-->
         <!--/>-->
+
        <button class="button is-primary"
            v-on:click="submitGeneList"
        >
             Analyze
        </button>
+        <button class="button is-warning"
+           v-on:click="filterGenes"
+        >
+            {{ geneFiltering[filtering] }}
+        </button>
         <div class="lab-info">
             <div>Under development at: <strong>Reva Lab</strong> by Anna Calinawan
                 <br></div>
@@ -48,28 +67,17 @@
         name: "gene-input",
         data () {
             return {
-                geneList: ''
+                geneList: '',
+                filtering: false,
+                filteredGeneList: '',
+                geneFiltering: {
+                    true: 'Submit Filtered Genes',
+                    false: 'Filter Genes'
+                },
             }
         },
-        methods: {
-            viewUsageGuide() {
-                this.$router.push('/usage-guide');
-            },
-            addExampleList() {
-                this.geneList =['FLT3', 'SMO', 'GLA', 'SGCB', 'OAT', 'CAPN3', 'ASS1', 'AGXT', 'AKT1', 'PTPN1',
-                    'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4', 'ATG7','ATG12','BAD','BCL2L1'].join("\n")
-            },
-            submitGeneList() {
-                let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
-
-                delete userPathways['query_list'];
-                this.$ls.set('userPathways', JSON.stringify(userPathways));
-
-                if (!this.geneList.length) {
-                    alert("Please enter genes.");
-                    return;
-                }
-
+        computed: {
+            geneListArr() {
                 let geneListArr = [];
                 const trimmedGeneList = this.geneList.trim();
                 if (trimmedGeneList.includes("\t") && trimmedGeneList.includes(" ")) {
@@ -84,8 +92,48 @@
                 } else {
                     geneListArr = trimmedGeneList.split("\n")
                 }
+                // this.geneListArr = geneListArr
+                return geneListArr;
+            }
+        },
+        methods: {
+            viewUsageGuide() {
+                this.$router.push('/usage-guide');
+            },
+            addExampleList() {
+                this.geneList =['FLT3', 'SMO', 'GLA', 'SGCB', 'OAT', 'CAPN3', 'ASS1', 'AGXT', 'AKT1', 'PTPN1',
+                    'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4', 'ATG7','ATG12','BAD','BCL2L1'].join("\n")
+            },
+            filterGenes() {
+              this.filtering = true
+            },
+            submitGeneList() {
+                let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
 
-                if (geneListArr.length > 200) {
+                delete userPathways['query_list'];
+                this.$ls.set('userPathways', JSON.stringify(userPathways));
+
+                if (!this.geneList.length) {
+                    alert("Please enter genes.");
+                    return;
+                }
+
+                // let geneListArr = [];
+                // const trimmedGeneList = this.geneList.trim();
+                // if (trimmedGeneList.includes("\t") && trimmedGeneList.includes(" ")) {
+                //     alert("Enter genes separated by a newline, tab, or space. Your list seems to include multiple separators.")
+                //     return;
+                // }
+                //
+                // if (trimmedGeneList.includes("\t")) {
+                //     geneListArr = trimmedGeneList.split("\t");
+                // } else if (trimmedGeneList.includes(" ")) {
+                //     geneListArr = trimmedGeneList.split(" ");
+                // } else {
+                //     geneListArr = trimmedGeneList.split("\n")
+                // }
+
+                if (this.geneListArr.length > 200) {
                     alert("Please limit gene set to 200 for now");
                     return;
                 }
@@ -94,7 +142,7 @@
                 let queryListAsUserPathway = {
                     query_list: {
                         color: '#00ffff',
-                        genes: geneListArr,
+                        genes: this.geneListArr,
                         displayName: 'Query List'
                     }
                 };
@@ -120,47 +168,63 @@
 </script>
 
 <style>
+    #gene-input-texts {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
 
-.gene-input {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    max-width: 45%;
-    min-width: 450px;
-}
+    .half-area {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
 
-.gene-input textarea {
-    width: 100%;
-    margin: 20px auto;
-    border: 1px solid;
-    height: 30vh;
-}
+    .full-area {
+        width: 100%;
+    }
 
-.gene-input .button {
-    width: 95%;
-    margin: auto;
-}
+    .gene-input {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        max-width: 45%;
+        min-width: 450px;
+    }
 
-.gene-input #try-example {
-    margin-left:auto;
-    margin-right:0;
-    margin-bottom: -10px;
-    max-width: 20%;
-    min-width: 150px;
-}
 
-.gene-input #usage-guide {
-    margin-left:0;
-    margin-right:auto;
-    margin-bottom: -10px;
-    max-width: 20%;
-    min-width: 150px;
-}
+    .gene-input textarea {
+        margin: 20px 2px auto;
+        border: 1px solid;
+        height: 30vh;
+        width: 100%;
+    }
 
-.navigation-from-input {
-    display: flex;
-    flex-direction: row;
-}
+    .gene-input .button {
+        width: 95%;
+        margin: 10px auto;
+    }
+
+    .gene-input #try-example {
+        margin-left:auto;
+        margin-right:0;
+        margin-bottom: -10px;
+        max-width: 20%;
+        min-width: 150px;
+    }
+
+    .gene-input #usage-guide {
+        margin-left:0;
+        margin-right:auto;
+        margin-bottom: -10px;
+        max-width: 20%;
+        min-width: 150px;
+    }
+
+    .navigation-from-input {
+        display: flex;
+        flex-direction: row;
+    }
     .lab-info {
         display: inline-block;
         font-size: small;
@@ -169,4 +233,9 @@
         padding: 8px;
         /*width: 100%;*/
     }
+
+    .gene-input-filter {
+        margin: 2px auto
+    }
+
 </style>

@@ -30,7 +30,6 @@ export default {
                     edge.style('arrow-scale', '1');
                     edge.style('line-color', 'red');
                 }
-
             }
         })
     },
