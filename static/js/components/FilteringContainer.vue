@@ -1,88 +1,26 @@
 <template>
     <div class="filtering-container">
-        <div class="search-bar">
-            <div class="field">
-              <div class="control">
-                <input class="input is-small" type="text" placeholder="Search" v-model="searchTerm">
-              </div>
-            </div>
-        </div>
-        <div class="select-all">
-            <label class="checkbox">
-            <input type="checkbox" v-model="selectAllChecked" v-on:click="selectAll">
-                Select All
-        </label>
-        </div>
-        <div class="go-terms-selector" v-for="(goTermData, goTerm) in goTerms">
-            <go-term-selector
-                    v-bind:goTerm="goTerm"
-                    v-bind:goTermData="goTermData"
-                    v-bind:ontology="ontology"
-            ></go-term-selector>
-        </div>
+        <filtering-card v-bind:ontology="'cellularLocation'"/>
+        <filtering-card v-bind:ontology="'molecularFunction'"/>
+        <filtering-card v-bind:ontology="'biologicalProcess'"/>
     </div>
 </template>
 
 <script>
-    import GoTermSelector from './GoTermSelector.vue';
+    import FilteringCard from './FilteringCard.vue';
 
     export default {
         name: "filtering-container",
-        data() {
-            return {
-                ontology: 'cellularLocation', // Should be prop,
-                searchTerm: '',
-                selectAllChecked: false,
-                goTermsLength: 0,
-            };
-        },
         components: {
-            GoTermSelector,
+            FilteringCard
         },
-        computed: {
-            goTerms() {
-                const goData = this.$store.state.GO[this.ontology];
-                return Object.keys(goData).reduce(
-                    (acc, goTerm) => {
-                        return goData[goTerm].name.toLowerCase()
-                            .indexOf(this.searchTerm.toLowerCase()) > -1 ?
-                            {...acc, [goTerm]: goData[goTerm]} : acc
-                    },
-                    {}
-                )
-            }
-        },
-        methods: {
-            selectAll(event) {
-                for (let goTerm in this.goTerms) {
-                    if (this.goTerms.hasOwnProperty(goTerm)) {
-                        this.$store.dispatch(
-                            'updateGOTermSelection',
-                            {
-                                ontology: this.ontology,
-                                goTerm,
-                                selected: event.target.checked
-                            }
-                        );
-                    }
-                }
-            },
-        },
-        watch: {
-            goTerms() {
-                // if new length is greater than this.listLength, then selectAll = false
-                if (Object.keys(this.goTerms).length > this.goTermsLength) {
-                    this.selectAllChecked = false;
-                }
-
-                this.goTermsLength = Object.keys(this.goTerms).length;
-            }
-        }
     }
 </script>
 
 <style scoped>
-    .go-terms-selector {
-        display: block;
+    .filtering-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 </style>
