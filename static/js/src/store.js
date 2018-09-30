@@ -217,7 +217,28 @@ const store = new Vuex.Store({
             'WNT_ext_path': 'WNT Extension',
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 'MAP Kinase Signaling'
         },
-        queryListAndPWHit: false
+        queryListAndPWHit: false,
+        GO: {
+            cellularLocation: {
+                'GO:12345': {
+                    genes: ['AKT1', 'GLA', 'ASS1'], // input genes intersection GO term genes
+                    name: 'nucleus',
+                    selected: false,
+                },
+                'GO:23456': {
+                    genes: ['OAT', 'AKT1'],
+                    name: 'replication',
+                    selected: false,
+                },
+            },
+            molecularFunction: {
+                'GO:23456': {
+                    genes: ['RBP1'],
+                    name: 'replication',
+                    selected: false,
+                }
+            }
+        },
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
@@ -310,6 +331,9 @@ const store = new Vuex.Store({
             });
 
             state.pathwaysEdgeCountsOld = oldEdgeCounts;
+        },
+        'UPDATE_GO_TERM_SELECTION' (state, { ontology, goTerm }) {
+            state.GO[ontology][goTerm].selected = !state.GO[ontology][goTerm].selected;
         }
     },
     actions: {
@@ -373,6 +397,9 @@ const store = new Vuex.Store({
         },
         updateUserPathwayDisplay(store, displayData) {
             store.commit('UPDATE_USER_PATHWAY_DISPLAY', displayData)
+        },
+        updateGOTermSelection(store, goTermData) {
+            store.commit('UPDATE_GO_TERM_SELECTION', goTermData)
         }
     },
 });
