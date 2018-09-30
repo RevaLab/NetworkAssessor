@@ -37,10 +37,13 @@
                 get() {
                     return this.$store.state.GO[this.ontology][this.goTerm].selected;
                 },
-                set() {
+                set(selected) {
                     this.$store.dispatch(
                         'updateGOTermSelection',
-                        { ontology: this.ontology, goTerm: this.goTerm }
+                        {   ontology: this.ontology,
+                            goTerm: this.goTerm,
+                            selected
+                        }
                     );
                 }
             }

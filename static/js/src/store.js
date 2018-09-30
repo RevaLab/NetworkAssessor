@@ -333,8 +333,15 @@ const store = new Vuex.Store({
 
             state.pathwaysEdgeCountsOld = oldEdgeCounts;
         },
-        'UPDATE_GO_TERM_SELECTION' (state, { ontology, goTerm }) {
-            state.GO[ontology][goTerm].selected = !state.GO[ontology][goTerm].selected;
+        'UPDATE_GO_TERM_SELECTION' (
+            state,
+            {
+                ontology,
+                goTerm,
+                selected
+            })
+        {
+            state.GO[ontology][goTerm].selected = selected;
         }
     },
     actions: {
