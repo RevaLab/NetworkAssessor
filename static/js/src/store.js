@@ -237,7 +237,8 @@ const store = new Vuex.Store({
                     name: 'replication',
                     selected: false,
                 }
-            }
+            },
+            biologicalProcess: {}
         },
     },
     mutations: {

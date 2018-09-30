@@ -108,13 +108,20 @@
                 return geneListArr;
             },
             filteredGeneList() {
-                let filteredGeneList = Object.keys(this.$store.state.GO.cellularLocation).reduce(
-                    (acc, goTerm) => {
-                        const goData = this.$store.state.GO.cellularLocation[goTerm];
-                        return goData.selected ? acc.concat(goData.genes) : acc
-                    },
-                    []);
-                return Array.from(new Set(filteredGeneList))
+                let finalFiltered = [];
+                const ontologies = this.$store.state.GO;
+                for (let ontology in ontologies) {
+                    if (ontologies.hasOwnProperty(ontology)) {
+                        let filteredGeneList = Object.keys(ontologies[ontology]).reduce(
+                            (acc, goTerm) => {
+                                const goData = ontologies[ontology][goTerm];
+                                return goData.selected ? acc.concat(goData.genes) : acc
+                            },
+                            []);
+                        finalFiltered = finalFiltered.concat(filteredGeneList)
+                    }
+                }
+                return Array.from(new Set(finalFiltered))
             },
             filteredGeneListStr() {
                 return this.filteredGeneList.join("\n")

@@ -1,5 +1,12 @@
 <template>
     <div class="filtering-container">
+        <div class="search-bar">
+            <div class="field">
+              <div class="control">
+                <input class="input is-small" type="text" placeholder="Search" v-model="searchTerm">
+              </div>
+            </div>
+        </div>
         <div class="go-terms-selector" v-for="(goTermData, goTerm) in goTerms">
             <go-term-selector
                     v-bind:goTerm="goTerm"
@@ -17,7 +24,8 @@
         name: "filtering-container",
         data() {
             return {
-                ontology: 'cellularLocation',
+                ontology: 'cellularLocation', // Should be prop,
+                searchTerm: ''
             };
         },
         components: {
@@ -25,9 +33,19 @@
         },
         computed: {
             goTerms() {
-                return this.$store.state.GO.cellularLocation;
-            },
+                const goData = this.$store.state.GO[this.ontology];
+                return Object.keys(goData).reduce(
+                    (acc, goTerm) => {
+                        return goData[goTerm].name.toLowerCase()
+                            .indexOf(this.searchTerm.toLowerCase()) > -1 ?
+                            {...acc, [goTerm]: goData[goTerm]} : acc
+                    },
+                    {}
+                )
+            }
         },
+        methods: {
+        }
     }
 </script>
 
