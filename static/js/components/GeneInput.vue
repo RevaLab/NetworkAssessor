@@ -27,7 +27,7 @@
             <div v-if="filtering" v-bind:class="{ 'half-area': filtering }">
                 <textarea
                     id="filtered-gene-list"
-                    v-model="filteredGeneList"
+                    v-model="filteredGeneListStr"
                 ></textarea>
                 <label class="gene-input-filter"  for="filtered-gene-list">Filtered</label>
             </div>
@@ -78,7 +78,6 @@
                 },
                 geneList: '',
                 filtering: false,
-                filteredGeneList: '',
                 geneFiltering: {
                     true: 'Analyze Filtered Genes',
                     false: 'Filter Genes'
@@ -107,6 +106,18 @@
                 }
 
                 return geneListArr;
+            },
+            filteredGeneList() {
+                let filteredGeneList = Object.keys(this.$store.state.GO.cellularLocation).reduce(
+                    (acc, goTerm) => {
+                        const goData = this.$store.state.GO.cellularLocation[goTerm];
+                        return goData.selected ? acc.concat(goData.genes) : acc
+                    },
+                    []);
+                return Array.from(new Set(filteredGeneList))
+            },
+            filteredGeneListStr() {
+                return this.filteredGeneList.join("\n")
             }
         },
         methods: {
