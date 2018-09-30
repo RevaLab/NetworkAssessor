@@ -7,6 +7,12 @@
               </div>
             </div>
         </div>
+        <div class="select-all">
+            <label class="checkbox">
+            <input type="checkbox" v-model="selectAllChecked" v-on:click="selectAll">
+                Select All
+        </label>
+        </div>
         <div class="go-terms-selector" v-for="(goTermData, goTerm) in goTerms">
             <go-term-selector
                     v-bind:goTerm="goTerm"
@@ -25,7 +31,9 @@
         data() {
             return {
                 ontology: 'cellularLocation', // Should be prop,
-                searchTerm: ''
+                searchTerm: '',
+                selectAllChecked: false,
+                goTermsLength: 0,
             };
         },
         components: {
@@ -45,6 +53,30 @@
             }
         },
         methods: {
+            selectAll(event) {
+                for (let goTerm in this.goTerms) {
+                    if (this.goTerms.hasOwnProperty(goTerm)) {
+                        this.$store.dispatch(
+                            'updateGOTermSelection',
+                            {
+                                ontology: this.ontology,
+                                goTerm,
+                                selected: event.target.checked
+                            }
+                        );
+                    }
+                }
+            },
+        },
+        watch: {
+            goTerms() {
+                // if new length is greater than this.listLength, then selectAll = false
+                if (Object.keys(this.goTerms).length > this.goTermsLength) {
+                    this.selectAllChecked = false;
+                }
+
+                this.goTermsLength = Object.keys(this.goTerms).length;
+            }
         }
     }
 </script>
