@@ -19,7 +19,7 @@
                 <textarea
                     id="unfiltered-gene-list"
                     v-model="geneList"
-                    placeholder="Enter Query Gene List, Up to 200 genes"
+                    placeholder="Enter Query Gene List"
                 >
                 </textarea>
                 <label class="gene-input-filter" v-if="filtering" for="unfiltered-gene-list">Unfiltered: {{ geneListArr.length }} genes</label>
@@ -85,13 +85,13 @@
         data () {
             return {
                 analyzeButtonText: {
-                    true: 'Analyze Unfiltered Genes',
-                    false: 'Analyze'
+                    true: 'Analyze Unfiltered Genes (Up to 200)',
+                    false: 'Analyze (Up to 200 genes)'
                 },
                 geneList: '',
                 filtering: false,
                 geneFiltering: {
-                    true: 'Analyze Filtered Genes',
+                    true: 'Analyze Filtered Genes (Up to 200)',
                     false: 'Filter Genes'
                 },
             }
@@ -107,6 +107,7 @@
                 if (trimmedGeneList.length === 0) {
                     return []
                 }
+
                 if (trimmedGeneList.includes("\t") && trimmedGeneList.includes(" ")) {
                     alert("Enter genes separated by a newline, tab, or space. Your list seems to include multiple separators.")
                     return;
@@ -233,7 +234,7 @@
         display: flex;
         flex-direction: column;
         margin: auto;
-        max-width: 45%;
+        max-width: 80%;
         min-width: 450px;
     }
 

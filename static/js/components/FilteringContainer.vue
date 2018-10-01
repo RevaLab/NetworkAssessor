@@ -21,6 +21,7 @@
     .filtering-container {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-evenly;
+        height: 30vh;
     }
 </style>
