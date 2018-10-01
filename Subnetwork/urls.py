@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('submit_genes/', views.index, name='index'),
     path('bug-report/', views.bug_report, name='bug_report'),
+    path('go-terms/', views.go_terms, name='go-terms'),
     # path('select_pathways/', views.pathway_graph, name='pathway_graph'),
     # url(r'^(?P<gene_list>[\w|\W]+)', views.index),
 ]

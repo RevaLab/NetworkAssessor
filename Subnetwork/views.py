@@ -63,7 +63,6 @@ def index(request):
     return JsonResponse(subnetwork_and_edge_counts)
 
 
-
 @csrf_exempt
 def bug_report(request):
     data = json.loads(request.body.decode('utf-8'))
@@ -86,3 +85,31 @@ def bug_report(request):
 
     return HttpResponse(status=200)
 
+
+@csrf_exempt
+def go_terms(request):
+    if request.method != "POST":
+        raise ValueError('requests to subnetwork should be POST')
+
+    data = json.loads(request.body.decode('utf-8'))
+    gene_list = set(data['geneList'])
+
+    response = {
+        'molecularFunction': {},
+        'biologicalProcess': {},
+        'cellularLocation': {}
+    }
+
+    go_db = nx.read_gpickle('static/GO.pkl')
+    for ontology in go_db:
+        for go_id in go_db[ontology]:
+            go_data = go_db[ontology][go_id]
+            overlap = go_data['genes'].intersection(gene_list)
+            if len(overlap):
+                response[ontology][go_id] = {
+                    'genes': list(overlap),
+                    'name': go_data['name'],
+                    'selected': False
+                }
+
+    return JsonResponse(response)

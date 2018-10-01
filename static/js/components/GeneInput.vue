@@ -1,9 +1,9 @@
 <template>
     <div class="gene-input">
         <div class="navigation-from-input">
-                    <button id="usage-guide"
-                        class="button is-warning"
-                        v-on:click="viewUsageGuide"
+                <button id="usage-guide"
+                    class="button is-warning"
+                    v-on:click="viewUsageGuide"
                 >
                     Usage Guide
                 </button>
@@ -29,7 +29,7 @@
                     id="filtered-gene-list"
                     v-model="filteredGeneListStr"
                 ></textarea>
-                <label class="gene-input-filter"  for="filtered-gene-list">Filtered</label>
+                <label class="gene-input-filter"  for="filtered-gene-list">Filtered: {{ filteredGeneList.length }}</label>
             </div>
         </div>
         <!--<input-->
@@ -45,6 +45,7 @@
        >
             {{ analyzeButtonText[filtering] }}
        </button>
+        <!--IS ACTIVE IF THIS.GENELIST HAS LENGTH-->
         <button class="button is-warning"
            v-on:click="filterGenes"
            v-if="!filtering"
@@ -150,12 +151,15 @@
                     'PIAS1', 'CDKN1B', 'THEM4', 'CCNE1', 'MAP2K4', 'ATG7','ATG12','BAD','BCL2L1'].join("\n")
             },
             filterGenes() {
-              this.filtering = true
+                this.$store.dispatch(
+                    'fetchGOTerms',
+                    { geneList: this.geneListArr }
+                );
+                this.filtering = true
             },
             submitGeneList(filteredGeneList) {
 
                 if (filteredGeneList) {
-                    console.log(this.filteredGeneList)
                     this.geneList = this.filteredGeneList
                 }
 
