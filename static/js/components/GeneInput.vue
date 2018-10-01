@@ -41,14 +41,21 @@
             <filtering-container />
         </div>
        <button class="button is-primary"
-           v-on:click="submitGeneList"
+           v-on:click="submitGeneList(filteredGeneList=false)"
        >
             {{ analyzeButtonText[filtering] }}
        </button>
         <button class="button is-warning"
            v-on:click="filterGenes"
+           v-if="!filtering"
         >
-            {{ geneFiltering[filtering] }}
+            Filter genes
+        </button>
+        <button class="button is-warning"
+            v-on:click="submitGeneList(filteredGeneList=true)"
+            v-if="filtering"
+        >
+            Analyze filtered genes
         </button>
         <div class="lab-info">
             <div>Under development at: <strong>Reva Lab</strong> by Anna Calinawan
@@ -86,6 +93,9 @@
         },
         computed: {
             geneListArr() {
+                if (Array.isArray(this.geneList)) {
+                    return this.geneList;
+                }
                 let geneListArr = [];
                 const trimmedGeneList = this.geneList.trim();
 
@@ -107,21 +117,25 @@
 
                 return geneListArr;
             },
-            filteredGeneList() {
-                let finalFiltered = [];
-                const ontologies = this.$store.state.GO;
-                for (let ontology in ontologies) {
-                    if (ontologies.hasOwnProperty(ontology)) {
-                        let filteredGeneList = Object.keys(ontologies[ontology]).reduce(
-                            (acc, goTerm) => {
-                                const goData = ontologies[ontology][goTerm];
-                                return goData.selected ? acc.concat(goData.genes) : acc
-                            },
-                            []);
-                        finalFiltered = finalFiltered.concat(filteredGeneList)
+            filteredGeneList: {
+                set() {
+                },
+                get() {
+                    let finalFiltered = [];
+                    const ontologies = this.$store.state.GO;
+                    for (let ontology in ontologies) {
+                        if (ontologies.hasOwnProperty(ontology)) {
+                            let filteredGeneList = Object.keys(ontologies[ontology]).reduce(
+                                (acc, goTerm) => {
+                                    const goData = ontologies[ontology][goTerm];
+                                    return goData.selected ? acc.concat(goData.genes) : acc
+                                },
+                                []);
+                            finalFiltered = finalFiltered.concat(filteredGeneList)
+                        }
                     }
+                    return Array.from(new Set(finalFiltered))
                 }
-                return Array.from(new Set(finalFiltered))
             },
             filteredGeneListStr() {
                 return this.filteredGeneList.join("\n")
@@ -138,7 +152,13 @@
             filterGenes() {
               this.filtering = true
             },
-            submitGeneList() {
+            submitGeneList(filteredGeneList) {
+
+                if (filteredGeneList) {
+                    console.log(this.filteredGeneList)
+                    this.geneList = this.filteredGeneList
+                }
+
                 let userPathways = JSON.parse(this.$ls.get('userPathways', '{}'));
 
                 delete userPathways['query_list'];

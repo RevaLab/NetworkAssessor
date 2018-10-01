@@ -1,5 +1,8 @@
 <template>
     <div class="filtering-card">
+        <div class="filtering-card-header">
+            <h5>{{ displayNames[ontology] }}</h5>
+        </div>
         <div class="search-bar">
             <div class="field">
               <div class="control">
@@ -34,6 +37,11 @@
                 searchTerm: '',
                 selectAllChecked: false,
                 goTermsLength: 0,
+                displayNames: {
+                    'cellularLocation': 'Cellular Location',
+                    'molecularFunction': 'Molecular Function',
+                    'biologicalProcess': 'Biological Process'
+                },
             };
         },
         props: ['ontology'],
@@ -83,6 +91,10 @@
 </script>
 
 <style scoped>
+    .filtering-card {
+        border: 1px solid black;
+    }
+
     .go-terms-selector {
         display: block;
     }
