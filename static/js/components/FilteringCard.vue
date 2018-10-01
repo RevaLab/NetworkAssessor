@@ -16,10 +16,10 @@
                 Select All
         </label>
         </div>
-        <div class="go-terms-selector" v-for="(goTermData, goTerm) in goTerms">
+        <div class="go-terms-selector" v-for="goTerm in goTerms">
             <go-term-selector
-                    v-bind:goTerm="goTerm"
-                    v-bind:goTermData="goTermData"
+                    v-bind:goTerm="goTerm.goId"
+                    v-bind:goTermData="goTerm"
                     v-bind:ontology="ontology"
             ></go-term-selector>
         </div>
@@ -51,14 +51,24 @@
         computed: {
             goTerms() {
                 const goData = this.$store.state.GO[this.ontology];
-                return Object.keys(goData).reduce(
+                const unsortedTerms = Object.keys(goData).reduce(
                     (acc, goTerm) => {
                         return goData[goTerm].name.toLowerCase()
                             .indexOf(this.searchTerm.toLowerCase()) > -1 ?
-                            {...acc, [goTerm]: goData[goTerm]} : acc
+                            acc.concat({ ...goData[goTerm], goId: goTerm }) : acc;
                     },
-                    {}
-                )
+                    []
+                );
+
+                function compare(a,b) {
+                      if (a.genes.length < b.genes.length)
+                          return 1;
+                      if (a.genes.length > b.genes.length)
+                          return -1;
+                      return 0;
+                }
+
+                return unsortedTerms.sort(compare);
             }
         },
         methods: {
@@ -93,9 +103,29 @@
 <style scoped>
     .filtering-card {
         border: 1px solid black;
+        width: 33%;
+        overflow-y: scroll;
+    }
+
+    .search-bar {
+        width: 80%;
+        padding-left: 10px;
     }
 
     .go-terms-selector {
         display: block;
+    }
+
+    .filtering-card-header h5 {
+        text-align: center;
+        padding-top: 5px;
+    }
+
+    .go-terms-selector {
+        padding-left: 5px;
+    }
+
+    .select-all {
+        padding-left: 2px;
     }
 </style>
