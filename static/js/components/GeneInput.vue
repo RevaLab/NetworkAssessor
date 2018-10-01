@@ -45,10 +45,14 @@
        >
             {{ analyzeButtonText[filtering] }}
        </button>
-        <!--IS ACTIVE IF THIS.GENELIST HAS LENGTH-->
+        <button class="button is-warning"
+           v-if="!geneListArr.length" disabled
+        >
+            Add genes to enable filtering
+        </button>
         <button class="button is-warning"
            v-on:click="filterGenes"
-           v-if="!filtering"
+           v-if="!filtering && geneListArr.length"
         >
             Filter genes
         </button>
