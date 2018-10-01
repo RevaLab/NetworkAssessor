@@ -220,23 +220,8 @@ const store = new Vuex.Store({
         queryListAndPWHit: false,
         GO: {
             cellularLocation: {
-                'GO:12345': {
-                    genes: ['CCNE1', 'CDKN1B', 'ASS1'], // input genes intersection GO term genes
-                    name: 'nucleus',
-                    selected: false,
-                },
-                'GO:23456': {
-                    genes: ['OAT', 'AKT1', 'BAD'],
-                    name: 'replication',
-                    selected: false,
-                },
             },
             molecularFunction: {
-                'GO:23456': {
-                    genes: ['RBP1'],
-                    name: 'replication',
-                    selected: false,
-                }
             },
             biologicalProcess: {}
         },
