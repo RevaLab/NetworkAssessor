@@ -245,6 +245,9 @@ const store = new Vuex.Store({
         'ADD_GENE_INPUT' (state, geneInput) {
             state.geneInput = geneInput
         },
+        'ADD_GO_TERMS' (state, goTerms) {
+            state.GO = goTerms
+        },
         'ADD_PATHWAYS_EDGE_COUNTS' (state, pathwaysEdgeCounts) {
             state.pathwaysEdgeCounts = pathwaysEdgeCounts
         },
@@ -347,6 +350,20 @@ const store = new Vuex.Store({
     actions: {
         addGeneInput(store, geneInput) {
             store.commit('ADD_GENE_INPUT', geneInput);
+        },
+        fetchGOTerms(store, geneList) {
+            api.post(`${apiRoot}/api/subnetwork/go-terms/`, geneList)
+                .then(
+                    response => {
+                        store.commit('ADD_GO_TERMS', response.body)
+                    }
+                )
+                .catch(
+                    error => {
+                        store.commit('API_FAIL', error);
+                    }
+                )
+            // store.commit('ADD_GO_TERMS', gene)
         },
         holdPreviousSelectedPathways(store, previousSelectedPathways) {
             store.commit('HOLD_PREVIOUS_SELECTED_PATHWAYS', previousSelectedPathways)
