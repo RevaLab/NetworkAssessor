@@ -16,13 +16,16 @@ import UserPathways from './PathwayMenu_UserPathways.vue';
 import PredefinedPathways from './PathwayMenu_PredefinedPathways.vue';
 
 export default {
-  name: "network-container",
-  components: {
-    NetworkAndStatistics,
-    NetworkControls,
-    UserPathways,
-    PredefinedPathways,
-  }
+    name: "network-container",
+    components: {
+      NetworkAndStatistics,
+      NetworkControls,
+      UserPathways,
+      PredefinedPathways,
+    },
+    mounted() {
+        document.querySelector('html').setAttribute('style', 'overflow-y: hidden;')
+    }
 }
 </script>
 

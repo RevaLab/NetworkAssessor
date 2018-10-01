@@ -37,31 +37,34 @@
             <!--v-model="title"-->
             <!--placeholder="Optional List Title"-->
         <!--/>-->
+        <div class="button-group">
+           <button class="button is-primary"
+               v-on:click="submitGeneList(filteredGeneList=false)"
+           >
+                {{ analyzeButtonText[filtering] }}
+           </button>
+            <button class="button is-warning"
+               v-if="!geneListArr.length" disabled
+            >
+                Add genes to enable filtering
+            </button>
+            <button class="button is-warning"
+               v-on:click="filterGenes"
+               v-if="!filtering && geneListArr.length"
+            >
+                Filter genes
+            </button>
+            <button class="button is-warning"
+                v-on:click="submitGeneList(filteredGeneList=true)"
+                v-if="filtering"
+            >
+                Analyze filtered genes (Up to 200)
+            </button>
+        </div>
+
         <div v-if="filtering">
             <filtering-container />
         </div>
-       <button class="button is-primary"
-           v-on:click="submitGeneList(filteredGeneList=false)"
-       >
-            {{ analyzeButtonText[filtering] }}
-       </button>
-        <button class="button is-warning"
-           v-if="!geneListArr.length" disabled
-        >
-            Add genes to enable filtering
-        </button>
-        <button class="button is-warning"
-           v-on:click="filterGenes"
-           v-if="!filtering && geneListArr.length"
-        >
-            Filter genes
-        </button>
-        <button class="button is-warning"
-            v-on:click="submitGeneList(filteredGeneList=true)"
-            v-if="filtering"
-        >
-            Analyze filtered genes
-        </button>
         <div class="lab-info">
             <div>Under development at: <strong>Reva Lab</strong> by Anna Calinawan
                 <br></div>
@@ -90,10 +93,10 @@
                 },
                 geneList: '',
                 filtering: false,
-                geneFiltering: {
-                    true: 'Analyze Filtered Genes (Up to 200)',
-                    false: 'Filter Genes'
-                },
+                // geneFiltering: {
+                //     true: 'Analyze Filtered Genes (Up to 200)',
+                //     false: 'Filter Genes'
+                // },
             }
         },
         computed: {
@@ -246,8 +249,14 @@
         width: 100%;
     }
 
-    .gene-input .button {
-        width: 95%;
+    .button-group {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .button-group .button {
+        width: 40%;
         margin: 10px auto;
     }
 

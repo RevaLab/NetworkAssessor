@@ -73,18 +73,16 @@
         },
         methods: {
             selectAll(event) {
-                for (let goTerm in this.goTerms) {
-                    if (this.goTerms.hasOwnProperty(goTerm)) {
-                        this.$store.dispatch(
-                            'updateGOTermSelection',
-                            {
-                                ontology: this.ontology,
-                                goTerm,
-                                selected: event.target.checked
-                            }
-                        );
-                    }
-                }
+                this.goTerms.forEach((goTerm) => {
+                    this.$store.dispatch(
+                        'updateGOTermSelection',
+                        {
+                            ontology: this.ontology,
+                            goTerm: goTerm.goId,
+                            selected: event.target.checked
+                        }
+                    );
+                });
             },
         },
         watch: {
