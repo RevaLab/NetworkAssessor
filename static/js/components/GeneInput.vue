@@ -72,15 +72,18 @@
             Contact: anna.calinawan@mssm.edu, boris.reva@mssm.edu
             </div>
         </div>
+        <bug-report></bug-report>
     </div>
 </template>
 
 <script>
     import UsageGuide from "./UsageGuide.vue";
     import FilteringContainer from "./FilteringContainer.vue"
+    import BugReport from "./BugReport.vue";
 
     export default {
         components: {
+            BugReport,
             UsageGuide,
             FilteringContainer
         },
