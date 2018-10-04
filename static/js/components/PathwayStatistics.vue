@@ -28,7 +28,7 @@
 
 <script>
     import pathwayMembers from './PathwayMembers.vue'
-    import _ from 'lodash'
+    import intersection from 'lodash/intersection.js'
 
     export default {
         name: "pathway-statistics",
@@ -49,10 +49,7 @@
             overlap() {
                 let pathwayMembers = this.$store.state.pathwayMembers[this.pathway];
                 let queryList = this.$store.state.userPathways['query_list']['genes'];
-                return _.intersection(queryList, pathwayMembers)
-            },
-            overlapStr() {
-              return this.overlap.join("\n")
+                return intersection(queryList, pathwayMembers)
             },
             notQueryList() {
                 return this.pathway !== 'query_list';
