@@ -9,12 +9,14 @@
             <span>{{ goTermData.genes.length }}</span>
          </a>
         <modal v-bind:name="goTerm">
-            <h3>{{ goTerm }}: {{ goTermData.name }}</h3>
-            <ul>
-                <li v-for="gene in goTermData.genes">
-                    {{ gene }}
-                </li>
-            </ul>
+            <div class="go-term-members">
+                <h3>{{ goTerm }}: {{ goTermData.name }}</h3>
+                <ul>
+                    <li v-for="gene in goTermData.genes">
+                        {{ gene }}
+                    </li>
+                </ul>
+            </div>
         </modal>
     </div>
 </template>
@@ -52,5 +54,9 @@
 </script>
 
 <style scoped>
+    .go-term-members {
+        height: 100%;
+        overflow-y: scroll;
+    }
 
 </style>
