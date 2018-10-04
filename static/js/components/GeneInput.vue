@@ -72,7 +72,7 @@
             Contact: anna.calinawan@mssm.edu, boris.reva@mssm.edu
             </div>
         </div>
-        <bug-report></bug-report>
+        <bug-report />
     </div>
 </template>
 
