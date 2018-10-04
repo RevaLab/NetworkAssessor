@@ -3,6 +3,10 @@
         <modal v-bind:name="modalName">
             <pathway-members v-bind:pathway="pathway"/>
         </modal>
+        <modal v-bind:name="overlapMembersModal">
+            <h3>{{ pathwayName }}</h3>
+            <div class="overlap-members">{{ overlap.join("\n") }}</div>
+        </modal>
         <div class="tooltip">
             <a v-on:click="showPathwayMembers">{{ pathwayMemberCount }}</a>
             <span class="tooltiptext">Pathway Members</span>
@@ -10,6 +14,10 @@
         <div class="tooltip" v-if="notQueryList">
             {{ pathwayEdgeCount }}
             <span class="tooltiptext">Edges between pathway and query list</span>
+        </div>
+        <div class="tooltip">
+            <a v-on:click="showOverlap">{{ overlap.length }}</a>
+            <span class="tooltiptext">Overlap between pathway and query list</span>
         </div>
         <div class="tooltip" v-if="pathwayPVal">
             {{ isMinPVal }}{{ pathwayPVal }}
@@ -20,12 +28,14 @@
 
 <script>
     import pathwayMembers from './PathwayMembers.vue'
+    import _ from 'lodash'
 
     export default {
         name: "pathway-statistics",
         data() {
             return {
                 isMinPVal: '',
+                // overlap: 'overlap',
             }
         },
         props: ['pathway'],
@@ -33,11 +43,25 @@
             pathwayMembers
         },
         computed: {
+            pathwayName() {
+                return this.$store.state.pathwayDisplayNames[this.pathway]
+            },
+            overlap() {
+                let pathwayMembers = this.$store.state.pathwayMembers[this.pathway];
+                let queryList = this.$store.state.userPathways['query_list']['genes'];
+                return _.intersection(queryList, pathwayMembers)
+            },
+            overlapStr() {
+              return this.overlap.join("\n")
+            },
             notQueryList() {
                 return this.pathway !== 'query_list';
             },
             modalName() {
               return this.pathway + "_members"
+            },
+            overlapMembersModal() {
+                return this.pathway + "_overlapMembers"
             },
             pathwayEdgeCount() {
                 return this.$store.state.pathwaysEdgeCounts[this.pathway];
@@ -68,6 +92,9 @@
         methods: {
             showPathwayMembers() {
                 this.$modal.show(this.modalName)
+            },
+            showOverlap() {
+                this.$modal.show(this.overlapMembersModal)
             }
         }
     }
@@ -111,5 +138,11 @@
 .pathway-statistics a:hover {
   text-decoration: underline;
 }
+
+    .overlap-members {
+        margin: 10px;
+        padding: 10px;
+        white-space: pre;
+    }
 
 </style>
