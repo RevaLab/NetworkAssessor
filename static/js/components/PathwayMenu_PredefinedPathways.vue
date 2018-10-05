@@ -1,8 +1,11 @@
 <template>
   <div class="predefined-pathways">
     <div class="predefined-pathways-header">
-      <div>Major Cancer Pathways</div>
-      <multiple-pathway-selector />
+      <div class="header-and-selector">
+        Major Cancer Pathways
+        <multiple-pathway-selector />
+      </div>
+      <div class="hover-caption">{{ labelHover }}</div>
     </div>
     <div id="predefined-pathway-menu">
       <pathway-menu v-bind:predefinedPathways="true" />
@@ -20,18 +23,34 @@ export default {
   components: {
     PathwayMenu,
     MultiplePathwaySelector
-  }
+  },
+    computed: {
+      labelHover() {
+        return this.$store.state.labelHover;
+      }
+    }
 }
 </script>
 
 <style>
-  .predefined-pathways-header {
+  .header-and-selector {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
   }
+
+  .hover-caption {
+    text-align: right;
+    font-size: small;
+    font-style: italic;
+    padding-top: 5px;
+  }
+  /*.predefined-pathways-header {*/
+
+
+    /*padding: 10px 0;*/
+  /*}*/
 
   .predefined-pathways-header {
     font-size: 1.2em;
