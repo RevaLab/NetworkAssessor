@@ -40,6 +40,7 @@ export default {
         cy
     ) {
         let queryListAndPathwayHit = false;
+        let queryListGenesInNetwork = [];
         // console.log(cy.edges())
         cy.nodes().forEach(node => {
             // node pathways intersection selected pathways
@@ -54,27 +55,12 @@ export default {
                 selectedPathwaysWithNode.includes('query_list') &&
                 selectedPathwaysWithNode.length === 1
             ) {
+                    queryListGenesInNetwork.push(node.id());
                     node.style('shape', 'rectangle');
                     node.style('width', '70px');
                     node.style('background-color', pathwayColors['query_list']);
                     node.style('text-valign', 'center');
                     node.style('text-halign', 'center');
-            // } else if (
-            //     selectedPathwaysWithNode.includes('query_list') &&
-            //     selectedPathwaysWithNode.length > 1
-            // ) {
-            //     queryListAndPathwayHit = true;
-            //     node.style('shape', 'star');
-            //     node.style('width', '50px');
-            //     node.style('height', '50px');
-            //     node.style('border-width', '1px');
-            //     node.style('border-style', 'solid');
-            //     node.style('border-color', 'black');
-            //     node.style('border-opacity', '.8');
-            //     // change pathway color to pathwayhit
-            //     node.style('background-color', pathwayColors['query_list']);
-            //     node.style('text-valign', 'center');
-            //     node.style('text-halign', 'center');
             } else if (
                 selectedPathwaysWithNode.length > 1
             ) {
@@ -95,6 +81,7 @@ export default {
                     node.style('border-opacity', '.8');
                     node.style('width', '55px');
                     node.style('height', '55px');
+                    queryListGenesInNetwork.push(node.id());
                 }
             } else {
                 node.style('shape','ellipse');
@@ -102,7 +89,7 @@ export default {
             }
         });
 
-        return queryListAndPathwayHit;
+        return { queryListAndPathwayHit, queryListGenesInNetwork };
     },
     applyMouseEvents(cy, queryGenes, queryListColor) {
         // let edgesWithQueryGenes, edgesWithoutQueryGenes, inhibitionEdges;

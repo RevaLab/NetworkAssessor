@@ -86,11 +86,12 @@
                     return;
                 }
                 this.runCytoscape(this.subnetwork, this.pathwayColors);
-                const queryListAndPWHit = cytoscapeOptions.colorPathwaysAndCheckForQLAndPWHits(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
+                const { queryListAndPWHit, queryListGenesInNetwork } = cytoscapeOptions.colorPathwaysAndCheckForQLAndPWHits(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
                 cytoscapeOptions.applyMouseEvents(cy, this.queryGenes, this.pathwayColors['query_list']);
                 cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
-                this.$store.dispatch('updateQueryListAndPathwayHit', queryListAndPWHit)
-                cytoscapeOptions.addRelationsToEdges(cy)
+                this.$store.dispatch('updateQueryListAndPathwayHit', queryListAndPWHit);
+                this.$store.dispatch('updateQueryListGenesInNetwork', queryListGenesInNetwork);
+                cytoscapeOptions.addRelationsToEdges(cy);
             }
         },
         methods: {

@@ -225,6 +225,7 @@ const store = new Vuex.Store({
             },
             biologicalProcess: {}
         },
+        queryListGenesInNetwork: [],
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
@@ -291,6 +292,9 @@ const store = new Vuex.Store({
         },
         'UPDATE_QL_AND_PW_HIT' (state, queryListAndPWHit) {
           state.queryListAndPWHit = queryListAndPWHit;
+        },
+        'UPDATE_QL_GENES_IN_NETWORK' (state, queryListGenesInNetwork) {
+            state.queryListGenesInNetwork = queryListGenesInNetwork;
         },
         'UPDATE_SELECTED_PATHWAYS' (state, selectedPathways) {
             state.selectedPathways = selectedPathways
@@ -396,6 +400,9 @@ const store = new Vuex.Store({
         },
         updateQueryListAndPathwayHit(store, queryListAndPWHit) {
             store.commit('UPDATE_QL_AND_PW_HIT', queryListAndPWHit)
+        },
+        updateQueryListGenesInNetwork (store, queryListGenesInNetwork) {
+            store.commit('UPDATE_QL_GENES_IN_NETWORK', queryListGenesInNetwork)
         },
         updateUserPathways(store, userPathways) {
             store.commit('UPDATE_USER_PATHWAYS', userPathways);
