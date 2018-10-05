@@ -1,21 +1,30 @@
 <template>
     <div class="pathway-statistics">
+        <div class=""></div>
         <modal v-bind:name="modalName">
             <pathway-members v-bind:pathway="pathway"/>
         </modal>
         <modal v-bind:name="overlapMembersModal">
-            <h3>{{ pathwayName }}</h3>
+            <h3 class="modal-header">{{ pathwayName }} &cap; Query List</h3>
             <div class="overlap-members">{{ overlap.join("\n") }}</div>
+        </modal>
+        <modal v-bind:name="queryListNetworkNodesModal">
+            <h3 class="modal-header">Query List Genes with Interactions</h3>
+            <div class="overlap-members">{{ queryListNetworkNodes.join("\n") }}</div>
         </modal>
         <div class="tooltip">
             <a v-on:click="showPathwayMembers">{{ pathwayMemberCount }}</a>
             <span class="tooltiptext">Pathway Members</span>
         </div>
+        <div class="tooltip" v-if="!notQueryList">
+            <a v-on:click="showQueryListNetworkNodes">{{ queryListNetworkNodes.length }}</a>
+            <span class="tooltiptext">Query list genes in the network</span>
+        </div>
         <div class="tooltip" v-if="notQueryList">
             {{ pathwayEdgeCount }}
             <span class="tooltiptext">Edges between pathway and query list</span>
         </div>
-        <div class="tooltip">
+        <div class="tooltip" v-if="notQueryList">
             <a v-on:click="showOverlap">{{ overlap.length }}</a>
             <span class="tooltiptext">Overlap between pathway and query list</span>
         </div>
@@ -51,6 +60,9 @@
                 let queryList = this.$store.state.userPathways['query_list']['genes'];
                 return intersection(queryList, pathwayMembers)
             },
+            queryListNetworkNodes() {
+                return this.$store.state.queryListGenesInNetwork
+            },
             notQueryList() {
                 return this.pathway !== 'query_list';
             },
@@ -59,6 +71,9 @@
             },
             overlapMembersModal() {
                 return this.pathway + "_overlapMembers"
+            },
+            queryListNetworkNodesModal() {
+                return this.pathway + "_query_list_members_modal"
             },
             pathwayEdgeCount() {
                 return this.$store.state.pathwaysEdgeCounts[this.pathway];
@@ -92,6 +107,11 @@
             },
             showOverlap() {
                 this.$modal.show(this.overlapMembersModal)
+            },
+            showQueryListNetworkNodes() {
+                // if (!this.notQueryList) {
+                    this.$modal.show(this.queryListNetworkNodesModal)
+                // }
             }
         }
     }
@@ -136,10 +156,15 @@
   text-decoration: underline;
 }
 
-    .overlap-members {
-        margin: 10px;
-        padding: 10px;
-        white-space: pre;
-    }
+.overlap-members {
+    margin: 10px;
+    padding: 10px;
+    white-space: pre;
+}
 
+.modal-header {
+    /*margin: 0 auto;*/
+    text-align: center;
+    padding-top: 5px;
+}
 </style>
