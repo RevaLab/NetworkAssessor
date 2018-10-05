@@ -13,23 +13,43 @@
             <div class="overlap-members">{{ queryListNetworkNodes.join("\n") }}</div>
         </modal>
         <div class="tooltip">
-            <a v-on:click="showPathwayMembers">{{ pathwayMemberCount }}</a>
+            <a v-on:click="showPathwayMembers"
+               v-on:mouseover="labelHover('Pathway Members')"
+               v-on:mouseleave="labelDoneHovering">
+                {{ pathwayMemberCount }}
+            </a>
             <span class="tooltiptext">Pathway Members</span>
         </div>
         <div class="tooltip" v-if="!notQueryList">
-            <a v-on:click="showQueryListNetworkNodes">{{ queryListNetworkNodes.length }}</a>
+            <a v-on:click="showQueryListNetworkNodes"
+               v-on:mouseover="labelHover('Query list genes with interactions')"
+               v-on:mouseleave="labelDoneHovering">
+                {{ queryListNetworkNodes.length }}
+            </a>
             <span class="tooltiptext">Query list genes in the network</span>
         </div>
         <div class="tooltip" v-if="notQueryList">
-            {{ pathwayEdgeCount }}
+            <p
+                v-on:mouseover="labelHover('Edges between pathway and query list')"
+                v-on:mouseleave="labelDoneHovering">
+                {{ pathwayEdgeCount }}
+            </p>
             <span class="tooltiptext">Edges between pathway and query list</span>
         </div>
         <div class="tooltip" v-if="notQueryList">
-            <a v-on:click="showOverlap">{{ overlap.length }}</a>
+            <a v-on:click="showOverlap"
+               v-on:mouseover="labelHover('Overlap between pathway and query list')"
+               v-on:mouseleave="labelDoneHovering">
+                {{ overlap.length }}
+            </a>
             <span class="tooltiptext">Overlap between pathway and query list</span>
         </div>
         <div class="tooltip" v-if="pathwayPVal">
+            <p
+                v-on:mouseover="labelHover('Significance')"
+                v-on:mouseleave="labelDoneHovering">
             {{ isMinPVal }}{{ pathwayPVal }}
+            </p>
             <span class="tooltiptext">Significance</span>
         </div>
     </div>
@@ -112,6 +132,12 @@
                 // if (!this.notQueryList) {
                     this.$modal.show(this.queryListNetworkNodesModal)
                 // }
+            },
+            labelHover(label) {
+                this.$store.dispatch('updateLabelHover', label)
+            },
+            labelDoneHovering() {
+                this.$store.dispatch('updateLabelHover', 'Hover over number for details')
             }
         }
     }
@@ -133,7 +159,7 @@
 
   /* Position the tooltip */
   position: absolute;
-  /*z-index: 1;*/
+  z-index: 1;
 }
 
 .tooltip:hover .tooltiptext {

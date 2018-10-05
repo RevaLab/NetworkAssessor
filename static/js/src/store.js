@@ -20,6 +20,7 @@ const store = new Vuex.Store({
         networkDegree: 'first_degree',
         networkDatabase: 'biogrid',
         selectedPathways: ['query_list'],
+        labelHover: 'Hover over number for details',
         pathwayColors: {
             'query_list': '#00ffff',
             'AKT_ext_path': '#ff9900',
@@ -290,6 +291,9 @@ const store = new Vuex.Store({
             }
 
         },
+        'UPDATE_LABEL_HOVER' (state, label) {
+            state.labelHover = label;
+        },
         'UPDATE_QL_AND_PW_HIT' (state, queryListAndPWHit) {
           state.queryListAndPWHit = queryListAndPWHit;
         },
@@ -403,6 +407,9 @@ const store = new Vuex.Store({
         },
         updateQueryListGenesInNetwork (store, queryListGenesInNetwork) {
             store.commit('UPDATE_QL_GENES_IN_NETWORK', queryListGenesInNetwork)
+        },
+        updateLabelHover(store, label) {
+            store.commit('UPDATE_LABEL_HOVER', label)
         },
         updateUserPathways(store, userPathways) {
             store.commit('UPDATE_USER_PATHWAYS', userPathways);
