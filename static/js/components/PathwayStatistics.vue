@@ -31,7 +31,8 @@
         <div class="tooltip" v-if="notQueryList">
             <p
                 v-on:mouseover="labelHover('Edges between pathway and query list')"
-                v-on:mouseleave="labelDoneHovering">
+                v-on:mouseleave="labelDoneHovering"
+            >
                 {{ pathwayEdgeCount }}
             </p>
             <span class="tooltiptext">Edges between pathway and query list</span>
@@ -193,4 +194,8 @@
     text-align: center;
     padding-top: 5px;
 }
+
+    .tooltip p {
+        cursor: default;
+    }
 </style>
