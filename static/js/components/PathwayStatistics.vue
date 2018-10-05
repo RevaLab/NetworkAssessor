@@ -14,7 +14,7 @@
         </modal>
         <div class="tooltip">
             <a v-on:click="showPathwayMembers"
-               v-on:mouseover="labelHover('Pathway Members')"
+               v-on:mouseover="labelHover('Pathway Members: click for genes')"
                v-on:mouseleave="labelDoneHovering">
                 {{ pathwayMemberCount }}
             </a>
@@ -38,7 +38,7 @@
         </div>
         <div class="tooltip" v-if="notQueryList">
             <a v-on:click="showOverlap"
-               v-on:mouseover="labelHover('Overlap between pathway and query list')"
+               v-on:mouseover="labelHover('Pathway \u2229 Query List: click for genes')"
                v-on:mouseleave="labelDoneHovering">
                 {{ overlap.length }}
             </a>
