@@ -8,6 +8,7 @@
             <!--</div>-->
         <!--</div>-->
         <div v-if="loading" class="loading">Loading&#8230;</div>
+        <div v-if="showIsolates"></div>
     </div>
 </template>
 
@@ -25,6 +26,7 @@
             return {
                 isolateCount: 0,
                 loading: true,
+                // localShowIsolates: this.$store.state.showIsolates
             }
         },
         components: {
@@ -49,6 +51,10 @@
             pathwayColors() {
                 return this.$store.state.pathwayColors;
             },
+            showIsolates() {
+                    console.log('UPDATTTINGG ISOLATES', this.$store.state.showIsolates);
+                    return this.$store.state.showIsolates;
+            },
             networkStatistics() {
                 let statistics = {
                     nodeLength: 'calculating...',
@@ -66,6 +72,17 @@
             },
         },
         watch: {
+            showIsolates() {
+                cy.nodes().forEach(node => {
+                    if (node.neighborhood().length === 0 &&
+                        node.data('pathways').includes('query_list'))
+                    {
+                        this.showIsolates ?
+                            node.style('visibility', 'visible') :
+                            node.style('visibility', 'hidden')
+                    }
+                })
+            },
             userPathways() {
                 this.updateNetwork();
             },
@@ -85,7 +102,7 @@
                 if (!this.pathwayColors) {
                     return;
                 }
-                this.runCytoscape(this.subnetwork, this.pathwayColors);
+                this.runCytoscape(this.subnetwork);
                 const { queryListAndPWHit, queryListGenesInNetwork } = cytoscapeOptions.colorPathwaysAndCheckForQLAndPWHits(this.subnetwork, this.pathwayColors, this.selectedPathways, cy);
                 cytoscapeOptions.applyMouseEvents(cy, this.queryGenes, this.pathwayColors['query_list']);
                 cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
@@ -138,19 +155,21 @@
 
                 let count = 0;
                 // REMOVES ISOLATES
-                cy.nodes().forEach(node => {
-                    if (
-                        node.neighborhood().length === 0 &&
-                        !node.data('pathways').includes('query_list')) {
-                        cy.remove(node);
-                        count += 1;
-                    }
-                });
+
                 this.isolateCount = count;
                 cy.fit();
                 // cy.center(cy.nodes());
                 this.loading = false;
             }
+        },
+        showIsolates() {
+            cy.nodes().forEach(node => {
+                if (
+                    node.neighborhood().length === 0 &&
+                    !node.data('pathways').includes('query_list')) {
+                    cy.remove(node);
+                }
+            });
         }
     }
 

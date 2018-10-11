@@ -19,8 +19,9 @@
         },
         methods: {
             toggleIsolates() {
-                alert('clicked toggle isolates!!')
                 this.shown = !this.shown;
+
+                this.$store.dispatch('updateShowIsolates', this.shown)
             }
         }
     }
