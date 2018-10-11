@@ -1,6 +1,6 @@
 <template>
     <div class="toggle-isolates">
-        <a class="button is-small" v-on:click="toggleIsolates">{{ buttonLabel }} Isolates</a>
+        <a class="button is-small" v-on:click="toggleIsolates">{{ buttonLabel }} Query List Isolates</a>
     </div>
 </template>
 
