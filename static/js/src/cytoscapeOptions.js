@@ -49,8 +49,6 @@ export default {
                     return selectedPathways.indexOf(n) !== -1;
                 });
 
-            // console.log(selectedPathwaysWithNode)
-
             if (
                 selectedPathwaysWithNode.includes('query_list') &&
                 selectedPathwaysWithNode.length === 1

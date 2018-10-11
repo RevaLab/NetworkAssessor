@@ -139,7 +139,9 @@
                 let count = 0;
                 // REMOVES ISOLATES
                 cy.nodes().forEach(node => {
-                    if (node.neighborhood().length === 0) {
+                    if (
+                        node.neighborhood().length === 0 &&
+                        !node.data('pathways').includes('query_list')) {
                         cy.remove(node);
                         count += 1;
                     }
