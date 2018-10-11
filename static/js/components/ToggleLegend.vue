@@ -33,12 +33,12 @@ export default {
 }
 </script>
 
-<style>
-.toggle-legend {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 10px 0;
-}
+<style scoped>
+/*.toggle-legend {*/
+  /*display: flex;*/
+  /*flex-direction: row;*/
+  /*justify-content: center;*/
+  /*margin: 10px 0;*/
+/*}*/
 
 </style>

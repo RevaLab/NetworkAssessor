@@ -59,7 +59,7 @@ def index(request):
         'pathways_p_vals': pathways_p_vals,
         'internal_p_val': internal_p_val
     }
-
+    print(len(subnetworks['first_degree']['elements']['nodes']))
     return JsonResponse(subnetwork_and_edge_counts)
 
 

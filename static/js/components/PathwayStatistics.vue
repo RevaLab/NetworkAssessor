@@ -26,7 +26,7 @@
                v-on:mouseleave="labelDoneHovering">
                 {{ queryListNetworkNodes.length }}
             </a>
-            <span class="tooltiptext">Query list genes in the network</span>
+            <span class="tooltiptext">Query list genes with interactions</span>
         </div>
         <div class="tooltip" v-if="notQueryList">
             <p
