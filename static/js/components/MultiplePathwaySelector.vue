@@ -11,9 +11,16 @@
         name: "multiple-pathway-selector",
         methods: {
           clearSelection() {
+
             const userPathways = this.$store.state.userPathways;
             const selectedPathways = this.$store.state.selectedPathways.slice();
             let selectedUserPathways = [];
+            if (selectedPathways.length === 1) {
+                return
+            }
+            if (!selectedPathways.length) {
+                return
+            }
 
             Object.keys(userPathways).forEach((pathway) => {
                 if (selectedPathways.includes(pathway)) {
@@ -25,9 +32,11 @@
           }
         },
         computed: {
+            // selectedPathways() {
+            //     return this.$store.state.selectedPathways.length
+            // },
             allChecked: {
                 get() {
-
                     const pathwaysEdgeCounts = Object.assign({}, this.$store.state.pathwaysEdgeCounts);
                     const predefinedPathways = this.$store.state.predefinedPathways.slice();
                     const selectedPathways = this.$store.state.selectedPathways.slice();
