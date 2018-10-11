@@ -43,6 +43,12 @@ export default {
         let queryListGenesInNetwork = [];
         // console.log(cy.edges())
         cy.nodes().forEach(node => {
+            if (
+                node.data('pathways').includes('query_list') &&
+                node.neighborhood().length > 0
+            ) {
+                queryListGenesInNetwork.push(node.id())
+            }
             // node pathways intersection selected pathways
             let selectedPathwaysWithNode =
                 node.data('pathways').filter(function(n) {
@@ -53,7 +59,6 @@ export default {
                 selectedPathwaysWithNode.includes('query_list') &&
                 selectedPathwaysWithNode.length === 1
             ) {
-                    queryListGenesInNetwork.push(node.id());
                     node.style('shape', 'rectangle');
                     node.style('width', '70px');
                     node.style('background-color', pathwayColors['query_list']);
@@ -79,7 +84,6 @@ export default {
                     node.style('border-opacity', '.8');
                     node.style('width', '55px');
                     node.style('height', '55px');
-                    queryListGenesInNetwork.push(node.id());
                 }
             } else {
                 node.style('shape','ellipse');

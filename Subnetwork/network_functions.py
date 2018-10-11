@@ -42,7 +42,6 @@ def normalize_user_pathways_by_gene(user_pathways):
 
 def collect_all_nodes_for_subgraph(center, pathways_to_add, db_pathways, user_pathways):
     all_nodes_for_subgraph = list(center)
-
     # for first degree: center is the center
     # for second degree: center = first_degree_nodes, pathways_to_add = maintained_pathways
 
