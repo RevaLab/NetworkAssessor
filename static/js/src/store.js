@@ -227,6 +227,7 @@ const store = new Vuex.Store({
             biologicalProcess: {}
         },
         queryListGenesInNetwork: [],
+        showIsolates: true,
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {
@@ -338,6 +339,10 @@ const store = new Vuex.Store({
             })
         {
             state.GO[ontology][goTerm].selected = selected;
+        },
+        'UPDATE_SHOW_ISOLATES' (state, shown) {
+            // state.showIsolates = shown;
+            state.showIsolates = shown;
         }
     },
     actions: {
@@ -424,6 +429,9 @@ const store = new Vuex.Store({
         },
         updateGOTermSelection(store, goTermData) {
             store.commit('UPDATE_GO_TERM_SELECTION', goTermData)
+        },
+        updateShowIsolates(store, shown) {
+            store.commit('UPDATE_SHOW_ISOLATES', shown)
         }
     },
 });
