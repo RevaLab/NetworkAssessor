@@ -155,22 +155,22 @@
 
                 let count = 0;
                 // REMOVES ISOLATES
-
+                cy.nodes().forEach(node => {
+                    if (node.neighborhood().length === 0 &&
+                        node.data('pathways').includes('query_list'))
+                    {
+                        this.showIsolates ?
+                            node.style('visibility', 'visible') :
+                            node.style('visibility', 'hidden')
+                    }
+                });
                 this.isolateCount = count;
                 cy.fit();
                 // cy.center(cy.nodes());
                 this.loading = false;
             }
         },
-        showIsolates() {
-            cy.nodes().forEach(node => {
-                if (
-                    node.neighborhood().length === 0 &&
-                    !node.data('pathways').includes('query_list')) {
-                    cy.remove(node);
-                }
-            });
-        }
+
     }
 
 </script>
