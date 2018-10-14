@@ -17,6 +17,7 @@
     import coseBilkent from 'cytoscape-cose-bilkent';
     import cytoscapeOptions from '../src/cytoscapeOptions.js'
 
+
     cytoscape.use( coseBilkent );
     let cy;
 
@@ -108,7 +109,7 @@
                 cytoscapeOptions.colorQueryGeneEdges(cy, this.queryGenes, this.pathwayColors['query_list']);
                 this.$store.dispatch('updateQueryListAndPathwayHit', queryListAndPWHit);
                 this.$store.dispatch('updateQueryListGenesInNetwork', queryListGenesInNetwork);
-                cytoscapeOptions.addRelationsToEdges(cy);
+                // cytoscapeOptions.addRelationsToEdges(cy);
             }
         },
         methods: {
