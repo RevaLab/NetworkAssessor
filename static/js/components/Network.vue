@@ -53,7 +53,6 @@
                 return this.$store.state.pathwayColors;
             },
             showIsolates() {
-                    console.log('UPDATTTINGG ISOLATES', this.$store.state.showIsolates);
                     return this.$store.state.showIsolates;
             },
             networkStatistics() {
