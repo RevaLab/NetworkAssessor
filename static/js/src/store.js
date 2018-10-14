@@ -227,7 +227,7 @@ const store = new Vuex.Store({
             biologicalProcess: {}
         },
         queryListGenesInNetwork: [],
-        showIsolates: true,
+        showIsolates: false,
     },
     mutations: {
         'ADD_GENE_INPUT' (state, geneInput) {

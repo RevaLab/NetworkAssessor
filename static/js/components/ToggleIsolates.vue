@@ -9,7 +9,7 @@
         name: "toggle-isolates",
         data() {
             return {
-              shown: true
+              shown: false
             }
         },
         computed: {
