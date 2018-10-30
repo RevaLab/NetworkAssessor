@@ -10,3 +10,4 @@ Pathway_distribution/
 Pathway_network/
 Pathway_distribution_sorted/
 .DS_Store
+go_server/kegg_biogrid.pkl
