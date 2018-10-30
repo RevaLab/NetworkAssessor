@@ -218,6 +218,7 @@ const store = new Vuex.Store({
             'WNT_ext_path': 'WNT Extension',
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 'MAP Kinase Signaling'
         },
+        queryGenesNotInPPI: [],
         queryListAndPWHit: false,
         GO: {
             cellularLocation: {
@@ -241,6 +242,9 @@ const store = new Vuex.Store({
         },
         'ADD_PATHWAYS_P_VALS' (state, pathwaysPVals) {
             state.pathwaysPVals = pathwaysPVals
+        },
+        'ADD_QUERY_GENES_NOT_IN_PPI' (state, queryGenesNotInPPI) {
+            state.queryGenesNotInPPI = queryGenesNotInPPI
         },
         'ADD_SUBNETWORK' (state, subnetwork) {
             state.subnetwork = subnetwork;
@@ -374,6 +378,7 @@ const store = new Vuex.Store({
                         store.commit('ADD_SUBNETWORK', subnetworkAndEdgeCounts['subnetwork']);
                         store.commit('ADD_PATHWAYS_EDGE_COUNTS', subnetworkAndEdgeCounts['pathways_edge_counts']);
                         store.commit('ADD_PATHWAYS_P_VALS', subnetworkAndEdgeCounts['pathways_p_vals']);
+                        store.commit('ADD_QUERY_GENES_NOT_IN_PPI', subnetworkAndEdgeCounts['query_genes_not_in_ppi_db']);
                     }
                 )
                 .catch(

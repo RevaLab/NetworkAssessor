@@ -12,6 +12,10 @@
             <h3 class="modal-header">Query List Genes with Interactions</h3>
             <div class="overlap-members">{{ queryListNetworkNodes.join("\n") }}</div>
         </modal>
+        <modal v-bind:name="queryListNotInPPIModal">
+            <h3 class="modal-header">Query List Genes not found in PPI db</h3>
+            <div class="overlap-members">{{ queryGenesNotInPPI.join("\n") }}</div>
+        </modal>
         <div class="tooltip">
             <a v-on:click="showPathwayMembers"
                v-on:mouseover="labelHover('Pathway Members: click for genes')"
@@ -20,6 +24,16 @@
             </a>
             <span class="tooltiptext">Pathway Members</span>
         </div>
+
+        <div class="tooltip" v-if="!notQueryList">
+            <a v-on:click="showQueryListNotInPPI"
+               v-on:mouseover="labelHover('Query list genes not found in PPI')"
+               v-on:mouseleave="labelDoneHovering">
+                {{ queryGenesNotInPPI.length }}
+            </a>
+            <span class="tooltiptext">Genes not in the PPI db</span>
+        </div>
+
         <div class="tooltip" v-if="!notQueryList">
             <a v-on:click="showQueryListNetworkNodes"
                v-on:mouseover="labelHover('Query list genes with interactions')"
@@ -28,6 +42,7 @@
             </a>
             <span class="tooltiptext">Query list genes with interactions</span>
         </div>
+
         <div class="tooltip" v-if="notQueryList">
             <p
                 v-on:mouseover="labelHover('Edges between pathway and query list')"
@@ -77,7 +92,6 @@
                 return this.$store.state.pathwayDisplayNames[this.pathway]
             },
             overlap() {
-                console.log('in overlap')
                 let pathwayMembers = this.$store.state.pathwayMembers[this.pathway];
                 if (this.pathway.indexOf('Chromatin_Remodeling') > -1) {
                     console.log(pathwayMembers)
@@ -86,7 +100,7 @@
                 return intersection(queryList, pathwayMembers)
             },
             queryListNetworkNodes() {
-                return this.$store.state.queryListGenesInNetwork
+                return this.$store.state.queryListGenesInNetwork;
             },
             notQueryList() {
                 return this.pathway !== 'query_list';
@@ -99,6 +113,12 @@
             },
             queryListNetworkNodesModal() {
                 return this.pathway + "_query_list_members_modal"
+            },
+            queryListNotInPPIModal() {
+                return this.pathway + "_query_list_not_in_ppi_modal"
+            },
+            queryGenesNotInPPI() {
+                return this.$store.state.queryGenesNotInPPI;
             },
             pathwayEdgeCount() {
                 return this.$store.state.pathwaysEdgeCounts[this.pathway];
@@ -137,6 +157,9 @@
                 // if (!this.notQueryList) {
                     this.$modal.show(this.queryListNetworkNodesModal)
                 // }
+            },
+            showQueryListNotInPPI() {
+                    this.$modal.show(this.queryListNotInPPIModal)
             },
             labelHover(label) {
                 this.$store.dispatch('updateLabelHover', label)

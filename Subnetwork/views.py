@@ -23,7 +23,8 @@ def index(request):
         data = {}
 
     # pull data from request
-    query_genes = list(set(data['userPathways']['query_list']['genes']))
+    query_genes_set = set(data['userPathways']['query_list']['genes'])
+    query_genes = list(query_genes_set)
     len_query_gene_set = len(query_genes)
     user_pathways = data['userPathways']
     pathway_list = data['pathways']  # all selected pathways
@@ -40,6 +41,9 @@ def index(request):
     # calculate graphs
     all_nodes_for_subgraph = collect_all_nodes_for_subgraph(query_genes, pathway_list, db_pathways, user_pathways)
     whole_graph = nx.Graph(interaction_db.subgraph(all_nodes_for_subgraph))
+    # find query genes that are not in the graph
+    query_genes_not_in_ppi_db = [node for node in query_genes if not whole_graph.has_node(node)]
+
     subnetworks = make_three_degrees_of_graphs(query_genes, whole_graph)
 
     # calculate internal p val
@@ -57,9 +61,9 @@ def index(request):
         'subnetwork': subnetworks,
         'pathways_edge_counts': pathways_edge_counts,
         'pathways_p_vals': pathways_p_vals,
-        'internal_p_val': internal_p_val
+        'internal_p_val': internal_p_val,
+        'query_genes_not_in_ppi_db': query_genes_not_in_ppi_db
     }
-    print(len(subnetworks['first_degree']['elements']['nodes']))
     return JsonResponse(subnetwork_and_edge_counts)
 
 

@@ -74,6 +74,9 @@
         watch: {
             showIsolates() {
                 cy.nodes().forEach(node => {
+                    if (node.neighborhood().length === 0 ) {
+                        console.log(node.id())
+                    }
                     if (node.neighborhood().length === 0 &&
                         node.data('pathways').includes('query_list'))
                     {
