@@ -77,7 +77,11 @@
                 return this.$store.state.pathwayDisplayNames[this.pathway]
             },
             overlap() {
+                console.log('in overlap')
                 let pathwayMembers = this.$store.state.pathwayMembers[this.pathway];
+                if (this.pathway.indexOf('Chromatin_Remodeling') > -1) {
+                    console.log(pathwayMembers)
+                }
                 let queryList = this.$store.state.userPathways['query_list']['genes'];
                 return intersection(queryList, pathwayMembers)
             },

@@ -96,10 +96,6 @@
                 },
                 geneList: '',
                 filtering: false,
-                // geneFiltering: {
-                //     true: 'Analyze Filtered Genes (Up to 200)',
-                //     false: 'Filter Genes'
-                // },
             }
         },
         computed: {
@@ -107,6 +103,7 @@
                 if (Array.isArray(this.geneList)) {
                     return this.geneList;
                 }
+
                 let geneListArr = [];
                 const trimmedGeneList = this.geneList.trim();
 

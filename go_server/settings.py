@@ -146,3 +146,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     'localhost:8000',
 #     '127.0.0.1:8000'
 # )
+
+
+# LOAD DATABASES
+
+import pickle
+
+KEGG_P_VALUES = pickle.load(open('/Users/calina01/PycharmProjects/go_server_sinai/go_server/kegg_biogrid.pkl', 'rb'))

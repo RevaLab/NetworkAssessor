@@ -15,15 +15,12 @@ export default {
   name: "pathway-menu",
   props: ['predefinedPathways'],
   computed: {
-    // userPathways() {
-    //     return this.$store.state.userPathways;
-    // }
     pathways() {
       const userPathways = this.$store.state.userPathways;
       const pathways =
-      this.predefinedPathways ?
-      this.$store.state.predefinedPathways :
-      Object.keys(userPathways);
+          this.predefinedPathways ?
+          this.$store.state.predefinedPathways :
+          Object.keys(userPathways);
 
       const pathwaysEdgeCounts = this.$store.state.pathwaysEdgeCounts;
       const pathwaysPVals = this.$store.state.pathwaysPVals;
@@ -31,13 +28,8 @@ export default {
       let sortable = [];
       let ordered_pathways = [];
 
-      // if (this.predefinedPathways) {
-      //     ordered_pathways.push('query_list')
-      // }
-
       pathways.forEach(pathway => {
         if (pathway === 'query_list') {
-          // ordered_pathways.push('query_list');
           return;
         }
         if (this.predefinedPathways) {
