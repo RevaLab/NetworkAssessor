@@ -103,7 +103,6 @@
                 if (Array.isArray(this.geneList)) {
                     return this.geneList;
                 }
-
                 let geneListArr = [];
                 const trimmedGeneList = this.geneList.trim();
 

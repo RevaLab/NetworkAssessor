@@ -218,7 +218,10 @@ const store = new Vuex.Store({
             'WNT_ext_path': 'WNT Extension',
             'Mitogen_Activated_Protein-MAP_Kinase_Signaling_path': 'MAP Kinase Signaling'
         },
+<<<<<<< HEAD
         queryGenesNotInPPI: [],
+=======
+>>>>>>> 227e16cef37016c4a994cc3cf3bcb9b4b11e4813
         queryListAndPWHit: false,
         GO: {
             cellularLocation: {

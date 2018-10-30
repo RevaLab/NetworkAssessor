@@ -16,6 +16,7 @@
             <h3 class="modal-header">Query List Genes not found in PPI db</h3>
             <div class="overlap-members">{{ queryGenesNotInPPI.join("\n") }}</div>
         </modal>
+
         <div class="tooltip">
             <a v-on:click="showPathwayMembers"
                v-on:mouseover="labelHover('Pathway Members: click for genes')"
@@ -93,14 +94,11 @@
             },
             overlap() {
                 let pathwayMembers = this.$store.state.pathwayMembers[this.pathway];
-                if (this.pathway.indexOf('Chromatin_Remodeling') > -1) {
-                    console.log(pathwayMembers)
-                }
                 let queryList = this.$store.state.userPathways['query_list']['genes'];
                 return intersection(queryList, pathwayMembers)
             },
             queryListNetworkNodes() {
-                return this.$store.state.queryListGenesInNetwork;
+                return this.$store.state.queryListGenesInNetwork
             },
             notQueryList() {
                 return this.pathway !== 'query_list';
@@ -184,7 +182,6 @@
   text-align: center;
   border-radius: 6px;
   padding: 5px 0;
-
   /* Position the tooltip */
   position: absolute;
   z-index: 1;
@@ -209,6 +206,7 @@
 .pathway-statistics a:hover {
   text-decoration: underline;
 }
+
 
 .overlap-members {
     margin: 10px;
