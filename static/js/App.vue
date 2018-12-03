@@ -23,10 +23,11 @@
         components: {},
         methods: {
             navigateHome() {
-               this.$router.push('/');
+               this.$router.go('/');
             }
         }
     }
+
 </script>
 
 <style>

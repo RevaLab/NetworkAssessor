@@ -20,11 +20,6 @@
                 'half-area': filtering,
                 'full-area': !filtering
                 }">
-            <!--<div>-->
-                <!--<div id="boop">-->
-                    <!--<h3 v-if="filtering">Boopidy boopidy</h3>-->
-                <!--</div>-->
-                <div>
                     <textarea
                         id="unfiltered-gene-list"
                         v-model="geneList"
@@ -50,8 +45,6 @@
                             Update filters (clears filtered list)
                         </button>
                     </div>
-                </div>
-                <!--</div>-->
             </div>
             <div v-if="filtering" v-bind:class="{ 'half-area': filtering }">
                 <textarea
@@ -129,6 +122,9 @@
             }
         },
         computed: {
+            getFullPath () {
+                return this.$route.path
+            },
             geneListArr() {
                 if (Array.isArray(this.geneList)) {
                     return this.geneList;
@@ -177,7 +173,7 @@
             },
             filteredGeneListStr() {
                 return this.filteredGeneList.join("\n")
-            }
+            },
         },
         methods: {
             viewUsageGuide() {
@@ -249,6 +245,11 @@
                 this.$router.push('/network');
             }
         },
+        watch: {
+            getFullPath () {
+              console.log("BOOOOP")
+            }
+        }
     }
 </script>
 
