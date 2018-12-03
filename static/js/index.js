@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueLocalStorage from 'vue-localstorage'
 import VueRouter from 'vue-router';
 import VModal from 'vue-js-modal';
+import { TileSpinner } from 'vue-spinners'
 
 import store from './src/store.js';
 
@@ -17,6 +18,8 @@ Vue.use(VueLocalStorage, {
   bind: true
 });
 Vue.use(VModal);
+
+Vue.component('spinner', TileSpinner);
 
 const routes = [
     { path: '/', component: GeneInput },

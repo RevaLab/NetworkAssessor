@@ -16,12 +16,17 @@
                 Select All
         </label>
         </div>
-        <div class="go-terms-selector" v-for="goTerm in goTerms">
-            <go-term-selector
-                    v-bind:goTerm="goTerm.goId"
-                    v-bind:goTermData="goTerm"
-                    v-bind:ontology="ontology"
-            ></go-term-selector>
+        <div id="filtering-card-loader-container" v-if="!goTermsLoaded">
+            <spinner></spinner>
+        </div>
+        <div v-if="goTermsLoaded">
+            <div class="go-terms-selector" v-for="goTerm in goTerms">
+                <go-term-selector
+                        v-bind:goTerm="goTerm.goId"
+                        v-bind:goTermData="goTerm"
+                        v-bind:ontology="ontology"
+                ></go-term-selector>
+            </div>
         </div>
     </div>
 </template>
@@ -42,6 +47,8 @@
                     'molecularFunction': 'Molecular Function',
                     'biologicalProcess': 'Biological Process'
                 },
+                // loadingTerms: true,
+                // anotherTest: true
             };
         },
         props: ['ontology'],
@@ -69,6 +76,9 @@
                 }
 
                 return unsortedTerms.sort(compare);
+            },
+            goTermsLoaded() {
+                return this.$store.state.goTermsLoaded;
             }
         },
         methods: {
@@ -126,4 +136,15 @@
     .select-all {
         padding-left: 2px;
     }
+
+    #filtering-card-loader-container {
+        /*height: 30%;*/
+        width: 100%;
+        margin-top: -20%;
+        /*background-color: pink;*/
+        display: flex;
+        flex-direction: column;
+    }
+
+
 </style>

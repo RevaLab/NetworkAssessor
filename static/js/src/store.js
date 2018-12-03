@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import api from './api.js'
 
-Vue.use(Vuex) // only required if you're using modules.
+Vue.use(Vuex); // only required if you're using modules.
               // We're using modules, so there you go.
 
 const apiRoot = '';
@@ -16,6 +16,7 @@ const store = new Vuex.Store({
             'whole': {'elements': {'nodes': []}},
         },
         geneInput: [],
+        goTermsLoaded: false,
         listName: '',
         networkDegree: 'first_degree',
         networkDatabase: 'biogrid',
@@ -235,7 +236,8 @@ const store = new Vuex.Store({
             state.geneInput = geneInput
         },
         'ADD_GO_TERMS' (state, goTerms) {
-            state.GO = goTerms
+            state.GO = goTerms;
+            state.goTermsLoaded = true;
         },
         'ADD_PATHWAYS_EDGE_COUNTS' (state, pathwaysEdgeCounts) {
             state.pathwaysEdgeCounts = pathwaysEdgeCounts
@@ -357,7 +359,7 @@ const store = new Vuex.Store({
             api.post(`${apiRoot}/api/subnetwork/go-terms/`, geneList)
                 .then(
                     response => {
-                        store.commit('ADD_GO_TERMS', response.body)
+                        store.commit('ADD_GO_TERMS', response.body);
                     }
                 )
                 .catch(
