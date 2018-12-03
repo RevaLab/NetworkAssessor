@@ -257,13 +257,13 @@
     #gene-input-texts {
         display: flex;
         flex-direction: row;
-        width: 100%;
+        justify-content: space-evenly;
     }
 
     .half-area {
         display: flex;
         flex-direction: column;
-        width: 50%;
+        width: 48%;
         position: relative;
     }
 
@@ -280,8 +280,9 @@
     }
 
     .gene-input textarea {
-        margin: 20px 2px auto;
+        margin: 20px 5px auto;
         border: 1px solid;
+        padding: 1%;
         height: 30vh;
         width: 100%;
     }
@@ -317,6 +318,7 @@
         display: flex;
         flex-direction: row;
     }
+
     .lab-info {
         display: inline-block;
         font-size: small;
@@ -340,4 +342,5 @@
         justify-content: space-between;
         margin: 2px;
     }
+
 </style>
