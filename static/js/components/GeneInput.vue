@@ -15,14 +15,43 @@
                 </button>
         </div>
         <div id="gene-input-texts">
-            <div v-bind:class="{ 'half-area': filtering, 'full-area': !filtering }">
-                <textarea
-                    id="unfiltered-gene-list"
-                    v-model="geneList"
-                    placeholder="Enter Query Gene List"
-                >
-                </textarea>
-                <label class="gene-input-filter" v-if="filtering" for="unfiltered-gene-list">Unfiltered: {{ geneListArr.length }} genes</label>
+            <div id="original-gene-input"
+                v-bind:class="{
+                'half-area': filtering,
+                'full-area': !filtering
+                }">
+            <!--<div>-->
+                <!--<div id="boop">-->
+                    <!--<h3 v-if="filtering">Boopidy boopidy</h3>-->
+                <!--</div>-->
+                <div>
+                    <textarea
+                        id="unfiltered-gene-list"
+                        v-model="geneList"
+                        placeholder="Enter Query Gene List"
+                        v-bind:disabled="filtering && !editingUnfilteredList"
+                        v-bind:class="{
+                            'gray-overlay': filtering && !editingUnfilteredList,
+                        }"
+                    >
+                    </textarea>
+                    <div id="unfiltered-gene-list-label">
+                        <label v-if="filtering" for="unfiltered-gene-list">Unfiltered: {{ geneListArr.length }} genes</label>
+                        <button class="button is-dark is-small"
+                           v-on:click="editUnfilteredList"
+                           v-if="filtering && !editingUnfilteredList"
+                        >
+                            Edit unfiltered list
+                        </button>
+                        <button class="button is-dark is-small"
+                           v-on:click="updateFilters"
+                           v-if="filtering && editingUnfilteredList"
+                        >
+                            Update filters (clears filtered list)
+                        </button>
+                    </div>
+                </div>
+                <!--</div>-->
             </div>
             <div v-if="filtering" v-bind:class="{ 'half-area': filtering }">
                 <textarea
@@ -96,6 +125,7 @@
                 },
                 geneList: '',
                 filtering: false,
+                editingUnfilteredList: false
             }
         },
         computed: {
@@ -164,6 +194,13 @@
                 );
                 this.filtering = true
             },
+            editUnfilteredList() {
+                this.editingUnfilteredList = true;
+            },
+            updateFilters() {
+                this.filterGenes();
+                this.editingUnfilteredList = false;
+            },
             submitGeneList(filteredGeneList) {
 
                 if (filteredGeneList) {
@@ -226,6 +263,7 @@
         display: flex;
         flex-direction: column;
         width: 50%;
+        position: relative;
     }
 
     .full-area {
@@ -239,7 +277,6 @@
         max-width: 80%;
         min-width: 450px;
     }
-
 
     .gene-input textarea {
         margin: 20px 2px auto;
@@ -292,4 +329,14 @@
         margin: 2px auto
     }
 
+    .gray-overlay {
+        background-color: lightgray;
+    }
+
+    #unfiltered-gene-list-label {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 2px;
+    }
 </style>
