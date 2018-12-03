@@ -23,7 +23,8 @@
         components: {},
         methods: {
             navigateHome() {
-               this.$router.go('/');
+               this.$router.push('/');
+               window.location.reload(true);
             }
         }
     }

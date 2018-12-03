@@ -31,7 +31,10 @@
                     >
                     </textarea>
                     <div id="unfiltered-gene-list-label">
-                        <label v-if="filtering" for="unfiltered-gene-list">Unfiltered: {{ geneListArr.length }} genes</label>
+                        <label v-if="filtering"
+                               for="unfiltered-gene-list">
+                            Unfiltered: {{ geneListArr.length }} genes
+                        </label>
                         <button class="button is-dark is-small"
                            v-on:click="editUnfilteredList"
                            v-if="filtering && !editingUnfilteredList"
@@ -46,12 +49,16 @@
                         </button>
                     </div>
             </div>
+
             <div v-if="filtering" v-bind:class="{ 'half-area': filtering }">
                 <textarea
                     id="filtered-gene-list"
                     v-model="filteredGeneListStr"
                 ></textarea>
-                <label class="gene-input-filter"  for="filtered-gene-list">Filtered: {{ filteredGeneList.length }}</label>
+                <label class="gene-input-filter"
+                       for="filtered-gene-list">
+                    Filtered: {{ filteredGeneList.length }}
+                </label>
             </div>
         </div>
         <!--<input-->
@@ -79,6 +86,7 @@
             <button class="button is-warning"
                 v-on:click="submitGeneList(filteredGeneList=true)"
                 v-if="filtering"
+                v-bind:disabled="!filteredGeneList.length"
             >
                 Analyze filtered genes (Up to 200)
             </button>
@@ -122,9 +130,6 @@
             }
         },
         computed: {
-            getFullPath () {
-                return this.$route.path
-            },
             geneListArr() {
                 if (Array.isArray(this.geneList)) {
                     return this.geneList;
@@ -245,11 +250,6 @@
                 this.$router.push('/network');
             }
         },
-        watch: {
-            getFullPath () {
-              console.log("BOOOOP")
-            }
-        }
     }
 </script>
 
