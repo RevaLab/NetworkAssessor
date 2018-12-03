@@ -10,6 +10,7 @@
                 <button id="try-example"
                         class="button is-info"
                         v-on:click="addExampleList"
+                        v-bind:disabled="filtering && !editingUnfilteredList"
                 >
                     Try Example
                 </button>
